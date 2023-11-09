@@ -1,16 +1,16 @@
 import * as React from "react";
-import { Image } from "expo-image";
-import {
+import {Image} from "expo-image";
+import 
+{
   StyleSheet,
-  StatusBar,
   ImageBackground,
   TextInput,
   View,
 } from "react-native";
-import { Button } from "@rneui/themed";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Padding, Color, Border } from "../GlobalStyles";
+
+import {Button} from "@rneui/themed";
+import {useNavigation} from "@react-navigation/native";
+import {FontSize, FontFamily, Padding, Color, Border} from "../GlobalStyles";
 
 const ResetPassword = () => {
   const navigation = useNavigation();
@@ -18,53 +18,49 @@ const ResetPassword = () => {
   return (
     <View style={styles.resetPassword}>
       <Image
-        style={[styles.resetPasswordChild, styles.resetPosition]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
+
       <Image
-        style={[styles.resetPasswordItem, styles.resetPosition]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
+
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
+
       <Button
         title="Reset Password"
         radius={30}
         iconPosition="left"
         type="solid"
         color="#428df8"
-        titleStyle={styles.frameButtonBtn}
+        titleStyle={styles.resetBtnText}
         onPress={() => navigation.navigate("LoginPage")}
-        containerStyle={styles.frameButtonBtn1}
-        buttonStyle={styles.frameButtonBtn2}
+        containerStyle={styles.resetBtnCont}
+        buttonStyle={styles.resetBtn}
       />
+
       <TextInput
-        style={[styles.resetPasswordInner, styles.resetShadowBox]}
+        style={[styles.userBox, styles.textInput]}
         placeholder="Enter Username"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
-        style={[styles.frameTextinput, styles.resetShadowBox]}
+        style={[styles.passBox, styles.textInput]}
         placeholder="Enter New Password"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
-        style={[styles.resetPasswordChild1, styles.resetShadowBox]}
+        style={[styles.rePassBox, styles.textInput]}
         placeholder="Re-Enter Password"
         placeholderTextColor="#0a0806"
       />
@@ -72,23 +68,30 @@ const ResetPassword = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  frameButtonBtn: {
+const styles = StyleSheet.create(
+  {
+  resetBtnText: 
+  {
     color: "#fff",
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "300",
     fontFamily: "Nunito-Light",
   },
-  frameButtonBtn1: {
-    left: 69,
+
+  resetBtnCont: 
+  {
+    left: 65,
     padding: 10,
-    top: 585,
+    top: 570,
     position: "absolute",
   },
-  frameButtonBtn2: {
+
+  resetBtn: 
+  {
     borderRadius: 30,
     shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOffset: {
+    shadowOffset: 
+    {
       width: 0,
       height: 20,
     },
@@ -101,12 +104,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  resetPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
-  resetShadowBox: {
+
+  textInput: 
+  {
     fontSize: FontSize.body15Regular_size,
     fontFamily: FontFamily.nunitoLight,
     fontWeight: "300",
@@ -118,47 +118,69 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 30,
     shadowRadius: 30,
-    shadowOffset: {
+    shadowOffset: 
+    {
       width: 0,
       height: 20,
     },
     shadowColor: "rgba(0, 0, 0, 0.15)",
     backgroundColor: Color.colorWhitesmoke_200,
     borderRadius: Border.br_11xl,
-    left: 69,
+    left: 76,
     position: "absolute",
   },
-  resetPasswordChild: {
-    top: 0,
-    height: 455,
+
+  ellipse1: 
+  {
+    top: -150,
+    height: 600,
+    width: 500,
+    position: "absolute",
+    left: 130,
   },
-  resetPasswordItem: {
-    top: 422,
-    height: 430,
+
+  ellipse2: 
+  {
+    top: 450,
+    height: 600,
+    width: 500,
+    left: -146,
+    position: "absolute",
   },
-  logoIcon: {
+
+  logoIcon: 
+  {
     top: 44,
-    left: 80,
+    left: 85,
     width: 233,
     height: 238,
     position: "absolute",
   },
-  resetPasswordInner: {
+
+  userBox: 
+  {
     top: 316,
   },
-  frameTextinput: {
+
+  passBox: 
+  {
     top: 401,
   },
-  resetPasswordChild1: {
+
+  rePassBox: 
+  {
     top: 485,
   },
-  resetPassword: {
+
+  resetPassword: 
+  {
     backgroundColor: Color.labelDarkPrimary,
     flex: 1,
     width: "100%",
     height: 852,
     overflow: "hidden",
   },
-});
+}
+);
 
 export default ResetPassword;
