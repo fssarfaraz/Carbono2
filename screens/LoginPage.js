@@ -1,19 +1,18 @@
 import * as React from "react";
-import { Image } from "expo-image";
-import {
+import {Image} from "expo-image";
+import 
+{
   StyleSheet,
-  StatusBar,
   ImageBackground,
-  Pressable,
   Text,
   TouchableOpacity,
   TextInput,
   View,
 } from "react-native";
-import { Button } from "@rneui/themed";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { useNavigation } from "@react-navigation/native";
-import { FontSize, Color, FontFamily, Padding, Border } from "../GlobalStyles";
+
+import {Button} from "@rneui/themed";
+import {useNavigation} from "@react-navigation/native";
+import {FontSize, Color, FontFamily, Padding, Border} from "../GlobalStyles";
 
 const LoginPage = () => {
   const navigation = useNavigation();
@@ -21,110 +20,116 @@ const LoginPage = () => {
   return (
     <View style={styles.loginPage}>
       <Image
-        style={[styles.loginPageChild, styles.loginPosition]}
+        style={[styles.loginPageChild]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
+
       <Image
-        style={[styles.loginPageItem, styles.loginPosition]}
+        style={[styles.loginPageItem]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
+
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
+      
       <TouchableOpacity
         style={styles.loginWrapper}
         activeOpacity={0.2}
         onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
+          navigation.navigate("BottomTabsRoot", {screen: "UserProfile"})
         }
       >
         <Text style={styles.login}>Login</Text>
       </TouchableOpacity>
+
       <TextInput
         style={[styles.loginPageInner, styles.loginPageInnerShadowBox]}
         placeholder="Username"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
         style={[styles.frameTextinput, styles.loginPageInnerShadowBox]}
         placeholder="Password"
         placeholderTextColor="#0a0806"
       />
+
       <Button
         title="Don’t have an account? Register Now"
         radius="5"
         iconPosition="left"
         type="clear"
-        titleStyle={styles.frameButton1Btn}
+        titleStyle={styles.regsBtnText}
         onPress={() => navigation.navigate("RegistrationPage")}
-        containerStyle={styles.frameButton1Btn1}
-        buttonStyle={styles.frameButton1Btn2}
+        containerStyle={styles.regsBtnCont}
+        buttonStyle={styles.regsBtn}
       />
+
       <Button
         title="Click here to Reset Password"
         radius="5"
         iconPosition="left"
         type="clear"
-        titleStyle={styles.frameButton2Btn}
+        titleStyle={styles.resetBtnText}
         onPress={() => navigation.navigate("ResetPassword")}
-        containerStyle={styles.frameButton2Btn1}
-        buttonStyle={styles.frameButton2Btn2}
+        containerStyle={styles.resetBtnCont}
+        buttonStyle={styles.resetBtn}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  frameButton1Btn: {
+const styles = StyleSheet.create(
+  {
+  regsBtnText: 
+  {
     color: "#000",
-    fontSize: 20,
+    fontSize: 17,
   },
-  frameButton1Btn1: {
-    left: 27,
+
+  regsBtnCont: 
+  {
+    left: 35,
     padding: 10,
     top: 622,
     position: "absolute",
   },
-  frameButton1Btn2: {
+
+  regsBtn: 
+  {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-  frameButton2Btn: {
+
+  resetBtnText: 
+  {
     color: "#000",
-    fontSize: 20,
+    fontSize: 17,
   },
-  frameButton2Btn1: {
-    left: 50,
+
+  resetBtnCont: 
+  {
+    left: 58,
     padding: 10,
     top: 670,
     position: "absolute",
   },
-  frameButton2Btn2: {
+
+  resetBtn: 
+  {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-  loginPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
-  loginPageInnerShadowBox: {
+
+  loginPageInnerShadowBox: 
+  {
     fontSize: FontSize.body15Regular_size,
     backgroundColor: Color.colorWhitesmoke_200,
     fontFamily: FontFamily.nunitoLight,
@@ -137,7 +142,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 30,
     shadowRadius: 30,
-    shadowOffset: {
+    shadowOffset: 
+    {
       width: 0,
       height: 20,
     },
@@ -146,30 +152,46 @@ const styles = StyleSheet.create({
     left: 69,
     position: "absolute",
   },
-  loginPageChild: {
-    top: 0,
-    height: 455,
+
+  loginPageChild: 
+  {
+    top: -150,
+    height: 600,
+    width: 500,
+    position: "absolute",
+    left: 130,
   },
-  loginPageItem: {
-    top: 422,
-    height: 430,
+
+  loginPageItem: 
+  {
+    top: 450,
+    height: 600,
+    width: 500,
+    left: -146,
+    position: "absolute",
   },
-  logoIcon: {
-    top: 44,
+
+  logoIcon: 
+  {
+    top: 75,
     left: 80,
     width: 233,
     height: 238,
     position: "absolute",
   },
-  login: {
-    fontSize: FontSize.size_11xl,
+
+  login: 
+  {
+    fontSize: 24,
     letterSpacing: 0,
     color: Color.labelDarkPrimary,
     textAlign: "center",
     fontFamily: FontFamily.nunitoLight,
     fontWeight: "300",
   },
-  loginWrapper: {
+
+  loginWrapper: 
+  {
     top: 537,
     backgroundColor: Color.colorDodgerblue_100,
     justifyContent: "center",
@@ -181,7 +203,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 30,
     shadowRadius: 30,
-    shadowOffset: {
+    shadowOffset: 
+    {
       width: 0,
       height: 20,
     },
@@ -190,13 +213,19 @@ const styles = StyleSheet.create({
     left: 69,
     position: "absolute",
   },
-  loginPageInner: {
+
+  loginPageInner: 
+  {
     top: 365,
   },
-  frameTextinput: {
+
+  frameTextinput: 
+  {
     top: 451,
   },
-  loginPage: {
+
+  loginPage: 
+  {
     backgroundColor: Color.labelDarkPrimary,
     flex: 1,
     width: "100%",
