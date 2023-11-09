@@ -8,7 +8,6 @@ import
   View,
 } from "react-native";
 
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import {FontFamily, Color} from "../GlobalStyles";
 
 const LoadingScreen3 = () => {
@@ -26,18 +25,6 @@ const LoadingScreen3 = () => {
         style={[styles.loadingScreen3Item]}
         contentFit="cover"
         source={require("../assets/ellipse-25.png")}
-      />
-
-      {/*Setting up dark mode for younger audience*/}
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="null"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
       />
 
       {/*logo*/}
