@@ -1,78 +1,91 @@
 import * as React from "react";
-import { Image } from "expo-image";
-import {
+import {Image} from "expo-image";
+import 
+{
   StyleSheet,
-  StatusBar,
   ImageBackground,
   Text,
   View,
 } from "react-native";
+
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { FontFamily, Color } from "../GlobalStyles";
+import {FontFamily, Color} from "../GlobalStyles";
 
 const LoadingScreen3 = () => {
   return (
     <View style={styles.loadingScreen3}>
+      {/*Ellipse 1 that forms part of the background*/}
       <Image
-        style={[styles.loadingScreen3Child, styles.loadingPosition]}
+        style={[styles.loadingScreen3Child]}
         contentFit="cover"
         source={require("../assets/ellipse-15.png")}
       />
+
+      {/*Ellipse 2 that forms part of the background*/}
       <Image
-        style={[styles.loadingScreen3Item, styles.loadingPosition]}
+        style={[styles.loadingScreen3Item]}
         contentFit="cover"
         source={require("../assets/ellipse-25.png")}
       />
+
+      {/*Setting up dark mode for younger audience*/}
       <StyleDefaultDarkModeTrue
         styleDefaultDarkModeTrueAlignSelf="unset"
         styleDefaultDarkModeTruePosition="absolute"
         styleDefaultDarkModeTrueTop={0}
         styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
+        styleDefaultDarkModeTrueBackgroundColor="null"
         styleDefaultDarkModeTrueWidth={375}
         styleDefaultDarkModeTrueMarginLeft="unset"
         styleDefaultDarkModeTrueMarginTop="unset"
       />
+
+      {/*logo*/}
       <ImageBackground
-        style={[styles.logoIcon, styles.carbonoLayout]}
+        style={[styles.logoIcon]}
         resizeMode="cover"
         source={require("../assets/logo2.png")}
       />
-      <Text style={[styles.carbono, styles.carbonoLayout]} numberOfLines={1}>
+
+      {/*App name*/}
+      <Text style={[styles.carbono]} numberOfLines={1}>
         CARBONO
       </Text>
     </View>
   );
 };
 
+//container styles for every element
 const styles = StyleSheet.create({
-  loadingPosition: {
-    position: "absolute",
-    left: 0,
-  },
-  carbonoLayout: {
-    width: 393,
-    position: "absolute",
-  },
-  loadingScreen3Child: {
-    top: 0,
+  loadingScreen3Child: 
+  {
+    top: -75,
     width: 569,
     height: 716,
     left: 0,
   },
-  loadingScreen3Item: {
-    top: 170,
+  
+  loadingScreen3Item: 
+  {
+    top: 370,
     width: 559,
-    height: 682,
-    left: 0,
+    height: 597,
+    left: -131,
+    flex: 1,
   },
-  logoIcon: {
+
+  logoIcon: 
+  {
     top: 218,
     height: 417,
     left: 0,
+    width: 393,
+    position: "absolute",
   },
-  carbono: {
-    top: 669,
+
+  carbono: 
+  {
+    top: 600,
     left: 1,
     fontSize: 70,
     letterSpacing: 0,
@@ -80,9 +93,13 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     color: Color.colorDarkslateblue_100,
     textAlign: "center",
-    height: 56,
+    height: 89,
+    width: 393,
+    position: "absolute",
   },
-  loadingScreen3: {
+
+  loadingScreen3: 
+  {
     backgroundColor: Color.labelDarkPrimary,
     flex: 1,
     width: "100%",
