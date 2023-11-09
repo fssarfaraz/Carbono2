@@ -1,17 +1,16 @@
 import * as React from "react";
-import { Image } from "expo-image";
-import {
+import {Image} from "expo-image";
+import 
+{
   StyleSheet,
-  StatusBar,
   ImageBackground,
   TextInput,
   Text,
   View,
 } from "react-native";
-import { Button } from "@rneui/themed";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { useNavigation } from "@react-navigation/native";
-import { FontSize, Padding, Color, Border, FontFamily } from "../GlobalStyles";
+import {Button} from "@rneui/themed";
+import {useNavigation} from "@react-navigation/native";
+import {FontSize, Padding, Color, Border, FontFamily} from "../GlobalStyles";
 
 const RegistrationPage = () => {
   const navigation = useNavigation();
@@ -19,113 +18,108 @@ const RegistrationPage = () => {
   return (
     <View style={styles.registrationPage}>
       <Image
-        style={[styles.registrationPageChild, styles.registrationPosition]}
+        style={[styles.registrationPageChild]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
+
       <Image
-        style={[styles.registrationPageItem, styles.registrationPosition]}
+        style={[styles.registrationPageItem]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
+
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
+
       <Button
         title="Register Now"
         radius={30}
         iconPosition="left"
         type="solid"
         color="#428df8"
-        titleStyle={styles.frameButtonBtn}
+        titleStyle={styles.regsBtnText}
         onPress={() => navigation.navigate("LoginPage")}
-        containerStyle={styles.frameButtonBtn1}
-        buttonStyle={styles.frameButtonBtn2}
+        containerStyle={styles.regsBtnCont}
+        buttonStyle={styles.regsBtn}
       />
+
       <TextInput
-        style={[
-          styles.registrationPageInner,
-          styles.registrationChildShadowBox,
-        ]}
+        style={[styles.emailBox, styles.textBox,]}
         placeholder="Email Address *"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
-        style={[styles.frameTextinput, styles.registrationChildShadowBox]}
+        style={[styles.passBox, styles.textBox,]}
         placeholder="Password *"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
-        style={[
-          styles.registrationPageChild1,
-          styles.registrationChildShadowBox,
-        ]}
+        style={[styles.genderBox, styles.textBox,]}
         placeholder="Gender"
         placeholderTextColor="#0a0806"
       />
+      
       <TextInput
-        style={[
-          styles.registrationPageChild2,
-          styles.registrationChildShadowBox,
-        ]}
+        style={[styles.addressBox, styles.textBox,]}
         placeholder="Address"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
-        style={[
-          styles.registrationPageChild3,
-          styles.registrationChildShadowBox,
-        ]}
+        style={[styles.nameBox, styles.textBox,]}
         placeholder="Name *"
         placeholderTextColor="#0a0806"
       />
+
       <TextInput
-        style={[
-          styles.registrationPageChild4,
-          styles.registrationChildShadowBox,
-        ]}
+        style={[styles.userBox, styles.textBox,]}
         placeholder="Username *"
         placeholderTextColor="#0a0806"
       />
+
       <Text
-        style={[styles.byRegisteringWith, styles.byRegisteringWithTypo]}
-      >{`By registering with Carbono, you agree to the T&Cs`}</Text>
-      <Text style={[styles.mandatoryFieldsAre, styles.byRegisteringWithTypo]}>
+        style={[styles.tAndCs]}>
+        {`By registering with Carbono, you agree to the T&Cs`}
+      </Text>
+
+      <Text 
+        style={[styles.mandatory]}>
         Mandatory Fields are marked with *
       </Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  frameButtonBtn: {
+const styles = StyleSheet.create(
+  {
+  regsBtnText: 
+  {
     color: "#fff",
-    fontSize: 30,
+    fontSize: 23,
     fontWeight: "300",
     fontFamily: "Nunito-Light",
   },
-  frameButtonBtn1: {
+
+  regsBtnCont: 
+  {
     left: 69,
     padding: 10,
-    top: 708,
+    top: 700,
     position: "absolute",
   },
-  frameButtonBtn2: {
+
+  regsBtn: 
+  {
     borderRadius: 30,
     shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOffset: {
+    shadowOffset: 
+    {
       width: 0,
       height: 20,
     },
@@ -133,17 +127,14 @@ const styles = StyleSheet.create({
     elevation: 30,
     shadowOpacity: 1,
     width: 256,
-    height: 50,
+    height: 46,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-  registrationPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
-  registrationChildShadowBox: {
+
+  textBox: 
+  {
     fontSize: FontSize.body15Regular_size,
     padding: Padding.p_3xs,
     alignItems: "center",
@@ -153,80 +144,116 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 30,
     shadowRadius: 30,
-    shadowOffset: {
+    shadowOffset: 
+    {
       width: 0,
       height: 20,
     },
     shadowColor: "rgba(0, 0, 0, 0.15)",
     backgroundColor: Color.colorWhitesmoke_200,
     borderRadius: Border.br_11xl,
-    left: 69,
+    left: 78,
     fontFamily: FontFamily.nunitoLight,
     fontWeight: "300",
     position: "absolute",
   },
-  byRegisteringWithTypo: {
-    textAlign: "center",
-    color: Color.black,
-    letterSpacing: 0,
-    fontSize: FontSize.body15Regular_size,
+
+  registrationPageChild: 
+  {
+    top: -150,
+    height: 600,
+    width: 500,
+    position: "absolute",
+    left: 130,
+  },
+
+  registrationPageItem: 
+  {
+    top: 450,
+    height: 600,
+    width: 500,
+    left: -146,
     position: "absolute",
   },
-  registrationPageChild: {
-    top: 0,
-    height: 455,
-  },
-  registrationPageItem: {
-    top: 422,
-    height: 430,
-  },
-  logoIcon: {
+
+  logoIcon: 
+  {
     top: 44,
     width: 233,
     height: 238,
-    left: 80,
+    left: 90,
     position: "absolute",
   },
-  registrationPageInner: {
+
+  emailBox: 
+  {
     top: 331,
   },
-  frameTextinput: {
+
+  passBox: 
+  {
     top: 479,
   },
-  registrationPageChild1: {
+
+  genderBox: 
+  {
     top: 555,
   },
-  registrationPageChild2: {
+
+  addressBox: 
+  {
     top: 629,
   },
-  registrationPageChild3: {
+
+  nameBox: 
+  {
     top: 257,
   },
-  registrationPageChild4: {
+
+  userBox: 
+  {
     top: 405,
   },
-  byRegisteringWith: {
-    top: 812,
+
+  tAndCs: 
+  {
+    top: 805,
     left: 35,
     fontFamily: FontFamily.nunitoLight,
     fontWeight: "300",
     textAlign: "center",
     color: Color.black,
     letterSpacing: 0,
+    textAlign: "center",
+    color: Color.black,
+    letterSpacing: 0,
+    fontSize: FontSize.body15Regular_size,
+    position: "absolute",
   },
-  mandatoryFieldsAre: {
-    top: 787,
+
+  mandatory: 
+  {
+    top: 777,
     fontWeight: "500",
     fontFamily: FontFamily.nunitoMedium,
-    left: 80,
+    left: 85,
+    textAlign: "center",
+    color: Color.black,
+    letterSpacing: 0,
+    fontSize: FontSize.body15Regular_size,
+    position: "absolute",
   },
-  registrationPage: {
+
+  registrationPage: 
+  {
     backgroundColor: Color.labelDarkPrimary,
     flex: 1,
     width: "100%",
     height: 852,
     overflow: "hidden",
   },
-});
+}
+);
 
 export default RegistrationPage;
+
