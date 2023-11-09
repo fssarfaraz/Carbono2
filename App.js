@@ -24,9 +24,9 @@ import Icons from "./components/Icons";
 import Surface from "./components/Surface";
 import IconCalculator from "./components/IconCalculator";
 import IconPersonOutline1 from "./components/IconPersonOutline1";
-import IconBookSaved2 from "./components/IconBookSaved2";
+import IconBookSaved2 from "./components/IconBookSaved";
 import IconDiscussion2 from "./components/IconDiscussion2";
-import IconGameControllerOutline2 from "./components/IconGameControllerOutline2";
+import IconGameControllerOutline2 from "./components/IconGameControllerOutline";
 import IconDiscussion from "./components/IconDiscussion";
 import Games from "./screens/Games";
 import AllGames from "./screens/AllGames";
@@ -560,3 +560,4 @@ const App = () => {
   );
 };
 export default App;
+
