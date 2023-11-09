@@ -2,7 +2,6 @@ import * as React from "react";
 import {View, StyleSheet, ImageBackground} from "react-native";
 import {Image} from "expo-image";
 import {Button} from "@rneui/themed";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import {useNavigation} from "@react-navigation/native";
 import {Color} from "../GlobalStyles";
 
@@ -27,17 +26,6 @@ const MainPage = () => {
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo1.png")}
-      />
-
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="null"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
       />
 
       <Button
@@ -126,7 +114,7 @@ const styles = StyleSheet.create(
     width: 151,
     height: 61,
   },
-    
+
   mainPageChild: 
   {
     top: -150,
@@ -166,3 +154,4 @@ const styles = StyleSheet.create(
 );
 
 export default MainPage;
+
