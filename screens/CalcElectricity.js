@@ -1,256 +1,246 @@
 import React, { useState } from "react";
-import { Image } from "expo-image";
-import {
-  StyleSheet,
-  View,
-  Pressable,
-  TouchableHighlight,
-  StatusBar,
-  Text,
-  TextInput,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { FontSize, FontFamily, Padding, Color, Border } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcElectricity = () => {
-  const [frameTextInput, setFrameTextInput] = useState("Consumption in kWh");
+  const [ConsumptionKwh, setConsumptionKwh] = useState("");
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.calcElectricity}>
+    <View style={styles.container}>
+      {/* Background Image */}
       <Image
-        style={[styles.calcElectricityChild, styles.calcLayout]}
-        contentFit="cover"
+        style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
+
+      {/* Content Container */}
+      <View style={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+        </View>
+
+        <Text style={styles.headerTitle}>ENTER YOUR ELECTRICITY USAGE BELOW</Text>
+
+        {/* Saly6 Image */}
+        <View style={styles.saly3Container}>
+          <Image
+            style={styles.saly3Icon}
+            source={require("../assets/1-1.png")}
+          />
+        </View>
+
+        {/* Vehicle Type Input */}
+        <LinearGradient
+          style={styles.inputContainer}
+          locations={[0, 1]}
+          colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
+        >
+          <TextInput
+            style={styles.textInput}
+            value={ConsumptionKwh}
+            onChangeText={setConsumptionKwh}
+            placeholder="Consumption in kWh"
+            placeholderTextColor="#fff"
+            fontWeight="700"
+            textAlign="center"
+            fontSize={FontSize.size_3xl}
+          />
+        </LinearGradient>
+
+        {/* Next Button */}
+        <Pressable
+          style={styles.nextButton}
+          onPress={() => handleNavigation("CalcElectricity2")}
+        >
+          <LinearGradient
+            style={styles.gradientButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={["#428DF8", "#5A09C1"]}
+          >
+            <Text style={styles.nextButtonText}>Next</Text>
+          </LinearGradient>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
       <Image
-        style={[styles.calcElectricityItem, styles.calcLayout]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr22.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <TouchableHighlight
-        style={styles.iconCalculatorWrapper}
-        underlayColor="#fff"
-        activeOpacity={0.2}
-        onPress={() => navigation.navigate("Calculator")}
-      >
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator1.png")}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
-      </TouchableHighlight>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Text style={styles.enterYourElectricity}>{`ENTER YOUR ELECTRICITY USAGE
-BELOW`}</Text>
-      <Pressable
-        style={[styles.materialSymbolsarrowBackIo, styles.iconLayout2]}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/materialsymbolsarrowbackios.png")}
-        />
-      </Pressable>
-      <LinearGradient
-        style={styles.wrapper}
-        locations={[0, 1]}
-        colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-      >
-        <TextInput
-          style={[styles.textinput, styles.next1Typo]}
-          value={frameTextInput}
-          onChangeText={setFrameTextInput}
-          placeholder="Consumption in kWh"
-          placeholderTextColor="#fff"
-        />
-      </LinearGradient>
-      <Image
-        style={styles.bulb1Icon}
-        contentFit="cover"
-        source={require("../assets/bulb-1.png")}
-      />
-      <Pressable style={styles.saly19}>
-        <Image
-          style={[styles.icon1, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/1-1.png")}
-        />
-      </Pressable>
-      <TouchableHighlight
-        style={styles.container}
-        underlayColor="#fff"
-        activeOpacity={0.2}
-        onPress={() => navigation.navigate("CalcElectricity2")}
-      >
-        <Image
-          style={[styles.icon2, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/rectangle-7.png")}
-        />
-      </TouchableHighlight>
-      <Pressable
-        style={styles.next}
-        onPress={() => navigation.navigate("CalcElectricity2")}
-      >
-        <Text style={[styles.next1, styles.next1Typo]}>Next</Text>
       </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  backgroundImage: {
     position: "absolute",
-  },
-  iconLayout1: {
-    width: 33,
-    marginLeft: 72,
-  },
-  iconLayout2: {
-    height: 30,
-    width: 30,
-  },
-  next1Typo: {
-    fontSize: FontSize.size_5xl,
-    justifyContent: "center",
-    alignItems: "center",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-  },
-  iconLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
     height: "100%",
-    overflow: "hidden",
     width: "100%",
   },
-  calcElectricityChild: {
-    top: 0,
+  contentContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 16,
   },
-  calcElectricityItem: {
-    top: 545,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 40,
   },
-  iconCalculator: {
-    width: 41,
-    height: 45,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
   },
-  iconCalculatorWrapper: {
-    top: 745,
-    left: 165,
-    padding: Padding.p_3xs,
-    position: "absolute",
-  },
-  enterYourElectricity: {
-    top: 124,
-    left: 28,
+  headerTitle: {
     fontSize: FontSize.size_3xl,
     color: Color.colorDarkslateblue_100,
     textAlign: "center",
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
+    top: 120,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 16,
   },
-  icon: {
-    height: "100%",
-    overflow: "hidden",
-    width: "100%",
+  saly3Container: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 50,
   },
-  materialSymbolsarrowBackIo: {
-    left: 23,
-    top: 50,
-    position: "absolute",
+  saly3Icon: {
+    // margin: 50,
+    height: 280,
+    width: 280,
   },
-  textinput: {
-    paddingHorizontal: Padding.p_xs,
-    paddingVertical: Padding.p_8xs,
+  inputContainer: {
+    borderRadius: 10,
+    marginBottom: 16,
+    width: "94%",
+    alignSelf: "center",
+  },
+  textInput: {
     backgroundColor: "transparent",
-    borderRadius: Border.br_31xl,
+    color: "#fff",
+    padding: 16,
+    borderRadius: 10,
+  },
+  nextButton: {
+    borderRadius: 10,
+    marginTop: 16,
+    marginBottom: 100,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
     flexDirection: "row",
-    overflow: "hidden",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
   },
-  wrapper: {
-    left: 70,
-    top: 587,
-    position: "absolute",
-  },
-  bulb1Icon: {
-    top: 278,
-    left: 108,
-    width: 194,
-    height: 214,
-    display: "none",
-    position: "absolute",
-  },
-  icon1: {
-    top: "0%",
-    right: "-0.66%",
-    bottom: "0%",
-    left: "0.66%",
-    position: "absolute",
-  },
-  saly19: {
-    top: 158,
-    left: -3,
-    width: 453,
-    height: 392,
-    position: "absolute",
-  },
-  icon2: {
-    borderRadius: Border.br_31xl,
-  },
-  container: {
-    left: "30.28%",
-    top: "76.64%",
-    right: "28.75%",
-    bottom: "17.37%",
-    width: "40.97%",
-    height: "5.99%",
-    position: "absolute",
-  },
-  next1: {
-    lineHeight: 36,
-    color: Color.labelDarkPrimary,
-    display: "flex",
-    width: 215,
-    height: 41,
-    textAlign: "center",
-  },
-  next: {
-    left: 90,
-    top: 659,
-    position: "absolute",
-  },
-  calcElectricity: {
-    backgroundColor: Color.labelDarkPrimary,
+  surfaceIcon: {
     flex: 1,
-    height: 852,
-    overflow: "hidden",
     width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 

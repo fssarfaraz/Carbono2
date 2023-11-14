@@ -1,118 +1,144 @@
 import React, { useState } from "react";
-import { Image } from "expo-image";
-import {
-  StyleSheet,
-  View,
-  Pressable,
-  TouchableHighlight,
-  StatusBar,
-  Text,
-  TextInput,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcAir = () => {
-  const [rectangleTextInput, setRectangleTextInput] = useState("Arrival");
-  const [rectangleTextInput1, setRectangleTextInput1] = useState("Departure");
+  const [departure, SetDepature] = useState("");
+  const [arrival, setArrival] = useState("");
+  // const [vehicleModel, setVehicleModel] = useState("");
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.calcAir}>
+    <View style={styles.container}>
+      {/* Background Image */}
       <Image
-        style={[styles.calcAirChild, styles.calcLayout]}
-        contentFit="cover"
+        style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
+
+      {/* Content Container */}
+      <View style={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+        </View>
+
+        <Text style={styles.headerTitle}>ENTER TRAVEL ROUTE AS THREE DIGIT AIRPORT CODES</Text>
+
+        {/* Saly6 Image */}
+        <View style={styles.saly6Container}>
+          <Image
+            style={styles.saly6Icon}
+            resizeMode="contain"
+            source={require("../assets/saly1.png")}
+          />
+        </View>
+
+        {/* Vehicle Type Input */}
+        <LinearGradient
+          style={styles.inputContainer}
+          locations={[0, 1]}
+          colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
+        >
+          <TextInput
+            style={styles.textInput}
+            value={departure}
+            onChangeText={SetDepature}
+            placeholder="Departure"
+            placeholderTextColor="#fff"
+            fontWeight="700"
+            textAlign="center"
+            fontSize={FontSize.size_3xl}
+          />
+        </LinearGradient>
+
+        {/* Vehicle Make Input */}
+        <LinearGradient
+          style={styles.inputContainer}
+          locations={[0, 1]}
+          colors={["#0682ef", "#094ed3"]}
+        >
+          <TextInput
+            style={styles.textInput}
+            value={arrival}
+            onChangeText={setArrival}
+            placeholder="Arrival"
+            placeholderTextColor="#fff"
+            fontWeight="700"
+            textAlign="center"
+            fontSize={FontSize.size_3xl}
+          />
+        </LinearGradient>
+
+        {/* Next Button */}
+        <Pressable
+          style={styles.nextButton}
+          onPress={() => handleNavigation("CalcAir2")}
+        >
+          <LinearGradient
+            style={styles.gradientButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={["#428DF8", "#5A09C1"]}
+          >
+            <Text style={styles.nextButtonText}>Next</Text>
+          </LinearGradient>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
       <Image
-        style={[styles.calcAirItem, styles.calcLayout]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr2.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <TouchableHighlight
-        style={styles.iconCalculatorWrapper}
-        underlayColor="#fff"
-        activeOpacity={0.2}
-        onPress={() => navigation.navigate("Calculator")}
-      >
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator8.png")}
-        />
-      </TouchableHighlight>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Text style={styles.enterTravelRoute}>{`ENTER TRAVEL ROUTE AS THREE 
-DIGIT AIRPORT CODES`}</Text>
-      <Pressable
-        style={[styles.group, styles.iconLayout2]}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={styles.iconLayout}
-          contentFit="cover"
-          source={require("../assets/materialsymbolsarrowbackios.png")}
-        />
-      </Pressable>
-      <LinearGradient
-        style={[styles.wrapper, styles.wrapperLayout]}
-        locations={[0, 1]}
-        colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-      >
-        <TextInput
-          style={[styles.textinput, styles.iconLayout]}
-          value={rectangleTextInput}
-          onChangeText={setRectangleTextInput}
-          placeholder="Arrival"
-          secureTextEntry={true}
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.container, styles.wrapperLayout]}
-        locations={[0, 1]}
-        colors={["#0682ef", "#094ed3"]}
-      >
-        <TextInput
-          style={[styles.textinput, styles.iconLayout]}
-          value={rectangleTextInput1}
-          onChangeText={setRectangleTextInput1}
-          placeholder="Departure"
-          secureTextEntry={true}
-        />
-      </LinearGradient>
-      <Image
-        style={[styles.calcAirInner, styles.saly1IconLayout]}
-        contentFit="cover"
-        source={require("../assets/rectangle-7.png")}
-      />
-      <Text style={styles.next}>Next</Text>
-      <Text style={[styles.departure, styles.arrivalTypo]}>Departure</Text>
-      <Text style={[styles.arrival, styles.arrivalTypo]}>Arrival</Text>
-      <Pressable style={styles.saly1}>
-        <Image
-          style={[styles.saly1Icon, styles.saly1IconLayout]}
-          contentFit="cover"
-          source={require("../assets/saly1.png")}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
     </View>
@@ -120,152 +146,121 @@ DIGIT AIRPORT CODES`}</Text>
 };
 
 const styles = StyleSheet.create({
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  backgroundImage: {
     position: "absolute",
-  },
-  iconLayout1: {
-    width: 33,
-    marginLeft: 72,
-  },
-  iconLayout2: {
-    height: 30,
-    width: 30,
-  },
-  wrapperLayout: {
-    width: "73.54%",
-    height: "5.99%",
-    position: "absolute",
-  },
-  iconLayout: {
     height: "100%",
     width: "100%",
   },
-  saly1IconLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    position: "absolute",
-    overflow: "hidden",
+  contentContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 16,
   },
-  arrivalTypo: {
-    width: 187,
-    height: 41,
-    justifyContent: "center",
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    display: "flex",
-    textAlign: "center",
-    color: Color.labelDarkPrimary,
-    lineHeight: 36,
-    fontSize: FontSize.size_5xl,
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    position: "absolute",
   },
-  calcAirChild: {
-    top: 0,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+    top: -4,
   },
-  calcAirItem: {
-    top: 545,
-  },
-  iconCalculator: {
-    width: 41,
-    height: 45,
-  },
-  iconCalculatorWrapper: {
-    top: 745,
-    left: 165,
-    padding: Padding.p_3xs,
-    position: "absolute",
-  },
-  enterTravelRoute: {
-    top: 116,
-    left: 29,
+  headerTitle: {
     fontSize: FontSize.size_3xl,
     color: Color.colorDarkslateblue_100,
-    textAlign: "left",
+    textAlign: "center",
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
+    top: 110,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 30,
   },
-  group: {
-    left: 23,
-    top: 50,
-    position: "absolute",
-  },
-  textinput: {
-    backgroundColor: "transparent",
-    borderRadius: Border.br_31xl,
-  },
-  wrapper: {
-    left: "12.72%",
-    top: "67.49%",
-    right: "13.74%",
-    bottom: "26.53%",
-    height: "5.99%",
-  },
-  container: {
-    left: "12.47%",
-    top: "57.51%",
-    right: "13.99%",
-    bottom: "36.5%",
-    height: "5.99%",
-  },
-  calcAirInner: {
-    width: "40.97%",
-    top: "77.7%",
-    right: "30.28%",
-    bottom: "16.31%",
-    left: "28.75%",
-    borderRadius: Border.br_31xl,
-    height: "5.99%",
-  },
-  next: {
-    top: 668,
-    left: 84,
-    width: 215,
-    height: 41,
+  saly6Container: {
     justifyContent: "center",
     alignItems: "center",
-    display: "flex",
-    textAlign: "center",
-    color: Color.labelDarkPrimary,
-    lineHeight: 36,
-    fontSize: FontSize.size_5xl,
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    position: "absolute",
+    // marginBottom: 20,
   },
-  departure: {
-    top: 494,
-    left: 100,
-  },
-  arrival: {
-    top: 582,
-    left: 106,
-  },
-  saly1Icon: {
-    top: "0%",
-    right: "-4.66%",
-    bottom: "0%",
-    left: "4.66%",
-    height: "100%",
+  saly6Icon: {
+    height: 340,
     width: "100%",
   },
-  saly1: {
-    top: 93,
-    left: -19,
-    width: 408,
-    height: 423,
-    position: "absolute",
+  inputContainer: {
+    borderRadius: 10,
+    marginBottom: 16,
+    width: "94%",
+    alignSelf: "center",
   },
-  calcAir: {
-    backgroundColor: Color.labelDarkPrimary,
-    flex: 1,
-    height: 852,
+  textInput: {
+    backgroundColor: "transparent",
+    color: "#fff",
+    padding: 16,
+    borderRadius: 10,
+  },
+  nextButton: {
+    borderRadius: 10,
+    marginTop: 16,
+    marginBottom: 100,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
     overflow: "hidden",
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
     width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 

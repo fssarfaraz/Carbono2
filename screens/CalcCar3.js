@@ -1,97 +1,105 @@
-import * as React from "react";
-import { Image } from "expo-image";
-import {
-  StyleSheet,
-  View,
-  Pressable,
-  TouchableHighlight,
-  StatusBar,
-  Text,
-} from "react-native";
+import React, { useState } from "react";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { FontFamily, Padding, FontSize, Color, Border } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcCar3 = () => {
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.calcCar3}>
+    <View style={styles.container}>
+      {/* Background Image */}
       <Image
-        style={[styles.calcCar3Child, styles.calcLayout]}
-        contentFit="cover"
+        style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
+
+      {/* Content Container */}
+      <View style={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+        </View>
+
+        <Text style={styles.headerTitle}>YOUR CARBON FOOTPRINT</Text>
+
+        {/* Saly6 Image */}
+        <View style={styles.saly26Container}>
+          <Image
+            style={styles.saly26Icon}
+            resizeMode="contain"
+            source={require("../assets/saly26.png")}
+          />
+        </View>
+
+        {/* Next Button */}
+        <Pressable
+          style={styles.nextButton}
+          onPress={() => handleNavigation("TravelTrackReport")}
+        >
+          <LinearGradient
+            style={styles.gradientButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={["#428DF8", "#5A09C1"]}
+          >
+            <Text style={styles.nextButtonText}>Footprint</Text>
+          </LinearGradient>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
       <Image
-        style={[styles.calcCar3Item, styles.calcLayout]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr2.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <TouchableHighlight
-        style={styles.iconCalculatorWrapper}
-        underlayColor="#fff"
-        activeOpacity={0.2}
-        onPress={() => navigation.navigate("Calculator")}
-      >
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator1.png")}
-        />
-      </TouchableHighlight>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Text style={[styles.yourCarbonFootprint, styles.footprintTypo]}>
-        YOUR CARBON FOOTPRINT
-      </Text>
-      <Pressable
-        style={[styles.materialSymbolsarrowBackIo, styles.iconLayout2]}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={[styles.icon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/materialsymbolsarrowbackios.png")}
-        />
-      </Pressable>
-      <LinearGradient
-        style={styles.wrapper}
-        locations={[0, 1]}
-        colors={["rgba(66, 141, 248, 0.73)", "#01427a"]}
-      >
-        <TouchableHighlight
-          style={[styles.touchablehighlight, styles.iconLayout]}
-          underlayColor="#fff"
-          activeOpacity={0.2}
-          onPress={() => navigation.navigate("TravelTrackReport")}
-        >
-          <View />
-        </TouchableHighlight>
-      </LinearGradient>
-      <Text style={[styles.footprint, styles.footprintTypo]}>Footprint</Text>
-      <Pressable style={styles.saly26}>
-        <Image
-          style={[styles.saly26Icon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/saly26.png")}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
     </View>
@@ -99,110 +107,112 @@ const CalcCar3 = () => {
 };
 
 const styles = StyleSheet.create({
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  backgroundImage: {
     position: "absolute",
-  },
-  iconLayout1: {
-    width: 33,
-    marginLeft: 72,
-  },
-  iconLayout2: {
-    height: 30,
-    width: 30,
-  },
-  footprintTypo: {
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    position: "absolute",
-  },
-  iconLayout: {
     height: "100%",
     width: "100%",
   },
-  calcCar3Child: {
-    top: 0,
+  contentContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 16,
   },
-  calcCar3Item: {
-    top: 545,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 80,
   },
-  iconCalculator: {
-    width: 41,
-    height: 45,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+    paddingBottom: 18,
   },
-  iconCalculatorWrapper: {
-    top: 745,
-    left: 165,
-    padding: Padding.p_3xs,
-    position: "absolute",
-  },
-  yourCarbonFootprint: {
-    top: 131,
-    left: 29,
+  headerTitle: {
     fontSize: FontSize.size_3xl,
     color: Color.colorDarkslateblue_100,
-    textAlign: "left",
-  },
-  icon: {
-    overflow: "hidden",
-  },
-  materialSymbolsarrowBackIo: {
-    left: 23,
-    top: 50,
-    position: "absolute",
-  },
-  touchablehighlight: {
-    borderRadius: Border.br_31xl,
-    backgroundColor: "transparent",
-  },
-  wrapper: {
-    left: "12.98%",
-    top: "76.64%",
-    right: "13.49%",
-    bottom: "17.37%",
-    width: "73.54%",
-    height: "5.99%",
-    position: "absolute",
-  },
-  footprint: {
-    top: 658,
-    left: 104,
-    fontSize: FontSize.size_5xl,
-    lineHeight: 36,
-    color: "rgba(255, 255, 255, 0.57)",
     textAlign: "center",
-    display: "flex",
-    alignItems: "center",
+    fontFamily: FontFamily.nunitoBold,
+    fontWeight: "700",
+    position: "absolute",
+    top: 120,
+    left: 0,
+    right: 0,
+  },
+  saly26Container: {
     justifyContent: "center",
-    width: 187,
-    height: 41,
+    alignItems: "center",
+    margin: 50,
   },
   saly26Icon: {
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    position: "absolute",
+    height: 280,
+    width: 280,
+  },
+  nextButton: {
+    borderRadius: 10,
+    marginTop: 16,
+    marginBottom: 100,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
     overflow: "hidden",
+    marginBottom: 120,
   },
-  saly26: {
-    top: 193,
-    left: 25,
-    width: 342,
-    height: 425,
-    position: "absolute",
+  nextButtonText: {
+    fontSize: FontSize.size_3xl,
+    color: "#fff",
+    fontWeight: "700",
   },
-  calcCar3: {
-    backgroundColor: Color.labelDarkPrimary,
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
     flex: 1,
-    height: 852,
-    overflow: "hidden",
     width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 
 export default CalcCar3;
+

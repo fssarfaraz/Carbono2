@@ -1,98 +1,113 @@
 import React, { useState } from "react";
-import { Image } from "expo-image";
-import {
-  StyleSheet,
-  View,
-  StatusBar,
-  Text,
-  Pressable,
-  TextInput,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { useNavigation } from "@react-navigation/native";
-import { FontFamily, Padding, FontSize, Color, Border } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcEnergy = () => {
-  const [frameTextInput, setFrameTextInput] = useState("Electricity");
+  // const [foodName, setFoodName] = useState("");
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.calcEnergy}>
-      <Image
-        style={[styles.calcEnergyChild, styles.calcLayout]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
-      />
-      <Image
-        style={[styles.calcEnergyItem, styles.calcLayout]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
-      />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr2.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={styles.iconCalculatorWrapper}>
+    <View style={styles.container}>
+      {/* Background Image */}
+      <View style={styles.backgroundImage}>
         <Image
-          style={styles.iconCalculator}
+          style={[styles.calcEnergyItem, styles.calcLayout]}
           contentFit="cover"
-          source={require("../assets/-icon-calculator1.png")}
+          source={require("../assets/ellipse-3.png")}
+        />
+        <Image
+          style={[styles.iconLayout2, styles.calcLayout]}
+          contentFit="cover"
+          source={require("../assets/ellipse-3.png")}
         />
       </View>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Text
-        style={[styles.selectTypeOf, styles.textinputTypo]}
-      >{`SELECT TYPE OF ENERGY
-CONSUMPTION`}</Text>
-      <Pressable
-        style={[styles.materialSymbolsarrowBackIo, styles.selectTypeOfPosition]}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={styles.iconLayout}
-          contentFit="cover"
-          source={require("../assets/materialsymbolsarrowbackios.png")}
-        />
-      </Pressable>
-      <LinearGradient
-        style={styles.wrapper}
-        locations={[0, 1]}
-        colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-      >
-        <TextInput
-          style={[styles.textinput, styles.textinputTypo]}
-          value={frameTextInput}
-          onChangeText={setFrameTextInput}
-          placeholder="Electricity"
-          secureTextEntry={true}
-          placeholderTextColor="#fff"
-        />
-      </LinearGradient>
+
+      {/* Content Container */}
+      <View style={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+        </View>
+
+        <Text style={styles.headerTitle}>SELECT TYPE OF ENERGY CONSUMPTION</Text>
+
+        {/* Saly6 Image */}
+        <View style={styles.saly3Container}>
+          <Image
+            style={styles.saly3Icon}
+            source={require("../assets/saly25.png")}
+          />
+        </View>
+
+        {/* Next Button */}
+        <Pressable
+          style={styles.nextButton}
+          onPress={() => handleNavigation("CalcElectricity")}
+        >
+          <LinearGradient
+            style={styles.gradientButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={["#E187F5C7", "#5A09C1E3"]}
+          >
+            <Text style={styles.nextButtonText}>Electricity</Text>
+          </LinearGradient>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
       <Image
-        style={styles.lightningBolt1}
-        contentFit="cover"
-        source={require("../assets/lightning-bolt-11.png")}
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
       />
-      <Pressable style={styles.saly25}>
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
-          style={[styles.saly25Icon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/saly25.png")}
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
     </View>
@@ -100,6 +115,15 @@ CONSUMPTION`}</Text>
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  backgroundImage: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+  },
   calcLayout: {
     height: 330,
     width: 400,
@@ -114,96 +138,109 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  textinputTypo: {
-    alignItems: "center",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-  },
-  selectTypeOfPosition: {
-    left: 23,
-    position: "absolute",
-  },
-  iconLayout: {
-    height: "100%",
-    overflow: "hidden",
-    width: "100%",
-  },
   calcEnergyChild: {
     top: 0,
   },
   calcEnergyItem: {
     top: 545,
   },
-  iconCalculator: {
-    width: 41,
-    height: 45,
+  contentContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 16,
   },
-  iconCalculatorWrapper: {
-    top: 745,
-    left: 165,
-    padding: Padding.p_3xs,
-    position: "absolute",
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: -239,
+    marginBottom: 40,
   },
-  selectTypeOf: {
-    top: 124,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  headerTitle: {
     fontSize: FontSize.size_3xl,
     color: Color.colorDarkslateblue_100,
-    textAlign: "left",
-    display: "flex",
-    width: 302,
-    left: 23,
+    textAlign: "center",
+    fontFamily: FontFamily.nunitoBold,
+    fontWeight: "700",
     position: "absolute",
+    top: 120,
+    left: 0,
+    right: 0,
   },
-  materialSymbolsarrowBackIo: {
-    top: 50,
-    height: 30,
-    width: 30,
-  },
-  textinput: {
-    borderRadius: Border.br_31xl,
+  saly3Container: {
     justifyContent: "center",
-    paddingHorizontal: 51,
-    paddingVertical: Padding.p_8xs,
-    fontSize: FontSize.size_5xl,
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    overflow: "hidden",
-  },
-  wrapper: {
-    left: 99,
-    top: 548,
-    position: "absolute",
-  },
-  lightningBolt1: {
-    top: 284,
-    left: 109,
-    width: 194,
-    height: 194,
-    display: "none",
-    position: "absolute",
-  },
-  saly25Icon: {
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    position: "absolute",
-  },
-  saly25: {
-    top: 271,
-    left: 24,
-    width: 343,
-    height: 188,
-    position: "absolute",
-  },
-  calcEnergy: {
-    backgroundColor: Color.labelDarkPrimary,
-    flex: 1,
-    height: 852,
-    overflow: "hidden",
+    alignItems: "center",
     width: "100%",
+  },
+  saly3Icon: {
+    top: -100,
+    height: 188,
+    width: "100%",
+    transform: [{ rotate: "-50deg" }],
+  },
+  nextButton: {
+    borderRadius: 10,
+    marginTop: 16,
+    marginBottom: 100,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+    marginBottom: 120,
+  },
+  nextButtonText: {
+    fontSize: FontSize.size_3xl,
+    color: "#fff",
+    fontWeight: "700",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 
