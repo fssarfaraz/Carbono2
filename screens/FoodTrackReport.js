@@ -1,373 +1,428 @@
-import * as React from "react";
-import { Image } from "expo-image";
-import { StyleSheet, View, Pressable, StatusBar, Text } from "react-native";
+import React, { useState } from "react";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { FontFamily, FontSize, Color, Padding, Border } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const FoodTrackReport = () => {
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.foodTrackReport}>
+    <View style={styles.container}>
+      {/* Background Image */}
       <Image
-        style={styles.foodTrackReportChild}
-        contentFit="cover"
+        style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
+
+      {/* Content Container */}
+      <View style={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.backButtonContainer}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+        </View>
+
+        <View style={styles.profileContainer}>
+          {/* Ellipse Icon */}
+          <View style={styles.ellipseIconContainer}>
+            <Image
+              style={styles.ellipseIcon} 
+              resizeMode="cover" 
+              source={require("../assets/ellipse-5.png")} />
+          </View>
+
+          {/* Hello John */}          
+          <View style={styles.headerContainer}>
+            <Text style={styles.helloJohn1} numberOfLines={1}>
+              {"Hello, John"}
+            </Text>
+          </View>
+
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.checkYourTravel1} numberOfLines={1}>
+              Check your food report
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.description2Container}>
+          <Text style={styles.soFarThis1} numberOfLines={1}>
+            So far this month
+          </Text>
+        </View>
+
+        <View style={styles.ellipseParent}>
+      	  <Image style={[styles.groupChild, styles.groupPosition]} 
+            resizeMode="cover" 
+            source={require("../assets/ellipse-2322.png")} />
+      		<Image style={[styles.groupItem, styles.groupPosition]} 
+            resizeMode="cover" 
+            source={require("../assets/ellipse-2325.png")} />
+      		<Image style={styles.groupInner} 
+            resizeMode="cover" 
+            source={require("../assets/ellipse-2324.png")} />
+      		<Text style={styles.co}>CO₂</Text>
+
+          <Image style={styles.foodIcon11} 
+            resizeMode="cover" 
+            source={require("../assets/food-icon-1.png")} />
+
+
+          <Text style={styles.kg}>67 kg</Text>
+
+          <View style={styles.downFromLastMonth1}>
+      			<Text style={[styles.text1, styles.text1Typo]}>{"17% "}</Text>
+      			<Text style={[styles.fromLastMonth1, styles.text1Typo]}>{"  from last month"}</Text>
+      			
+            <Image style={styles.downArrowIcon1} 
+              resizeMode="cover" 
+              source={require("../assets/up-arrow.png")} />
+    		  </View>
+
+          <Text style={styles.consumption1}>Consumption</Text>
+    		</View>
+
+
+
+        {/* Report Button */}
+        <Pressable
+          style={styles.ReportButton}
+          onPress={() => handleNavigation("WeeklyReport")}
+        >
+          <LinearGradient
+            style={styles.gradientButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={["#E187F5C7", "#5A09C1E3"]}
+          >
+            <Text style={styles.ReportButtonText}>Weekly Report</Text>
+          </LinearGradient>
+        </Pressable>
+
+        <Pressable
+          style={styles.ReportButton}
+          onPress={() => handleNavigation("MonthlyReport")}
+        >
+          <LinearGradient
+            style={styles.gradientButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            colors={["#E187F5C7", "#5A09C1E3"]}
+          >
+            <Text style={styles.ReportButtonText}>Monthly Report</Text>
+          </LinearGradient>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
       <Image
-        style={styles.foodTrackReportItem}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr2.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
+
+      {/* Calculator Icon */}
       <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
+        onPress={() => handleNavigation("Calculator")}
+        style={styles.iconCalculatorParent}
       >
         <Image
           style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator6.png")}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Image
-        style={styles.foodTrackReportInner}
-        contentFit="cover"
-        source={require("../assets/ellipse-53.png")}
-      />
-      <Text
-        style={[styles.helloJohn, styles.helloJohnTypo]}
-      >{`Hello, John `}</Text>
-      <Text style={[styles.consumption, styles.weeklyPosition]}>
-        Consumption
-      </Text>
-      <Text style={styles.checkYourFood}>Check your food report</Text>
-      <Image
-        style={[styles.ellipseIcon, styles.ellipseIconPosition]}
-        contentFit="cover"
-        source={require("../assets/ellipse-2322.png")}
-      />
-      <Image
-        style={[styles.foodTrackReportChild1, styles.ellipseIconPosition]}
-        contentFit="cover"
-        source={require("../assets/ellipse-23232.png")}
-      />
-      <Image
-        style={styles.foodTrackReportChild2}
-        contentFit="cover"
-        source={require("../assets/ellipse-2324.png")}
-      />
-      <Text style={styles.co}>CO₂</Text>
-      <Text style={[styles.kg, styles.kgTypo]}>67 kg</Text>
-      <Text style={[styles.soFarThis, styles.kgTypo]}>So far this month</Text>
-      <View style={styles.downFromLastMonth}>
-        <Text style={[styles.text, styles.textTypo]}>{`17% `}</Text>
-        <Text style={[styles.fromLastMonth, styles.textTypo]}>
-          from last month
-        </Text>
-        <Image
-          style={styles.upArrowIcon}
-          contentFit="cover"
-          source={require("../assets/up-arrow2.png")}
-        />
-      </View>
-      <LinearGradient
-        style={[styles.wrapper, styles.wrapperLayout]}
-        locations={[0, 1]}
-        colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.iconLayout]}
-          onPress={() => navigation.navigate("WeeklyReport")}
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.container, styles.wrapperLayout]}
-        locations={[0, 1]}
-        colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.iconLayout]}
-          onPress={() => navigation.navigate("MonthlyReport")}
-        />
-      </LinearGradient>
-      <Text style={[styles.weekly, styles.weeklyTypo]}>Weekly</Text>
-      <Pressable
-        style={styles.monthly}
-        onPress={() => navigation.navigate("MonthlyReport")}
-      >
-        <Text style={styles.weeklyTypo}>Monthly</Text>
-      </Pressable>
-      <Pressable
-        style={[styles.materialSymbolsarrowBackIo, styles.iconLayout1]}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={[styles.icon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/materialsymbolsarrowbackios.png")}
-        />
-      </Pressable>
-      <Image
-        style={styles.foodIcon1}
-        contentFit="cover"
-        source={require("../assets/food-icon-11.png")}
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  iconLayout1: {
-    height: 30,
-    width: 30,
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF",
   },
-  helloJohnTypo: {
-    width: 209,
-    textAlign: "left",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    fontSize: FontSize.size_13xl,
-    color: Color.colorDarkslateblue_100,
-  },
-  weeklyPosition: {
-    left: 100,
+  backgroundImage: {
+    // position: "absolute",
+    // height: "100%",
+    // width: "100%",
+    top: -130,
     position: "absolute",
-  },
-  ellipseIconPosition: {
-    left: 53,
-    position: "absolute",
-  },
-  kgTypo: {
-    fontSize: FontSize.size_5xl,
-    fontFamily: FontFamily.nunitoSemiBold,
-    fontWeight: "600",
-    textAlign: "left",
-    position: "absolute",
-  },
-  textTypo: {
-    color: Color.colorBlueviolet_100,
-    fontSize: FontSize.size_5xl,
-    fontFamily: FontFamily.nunitoSemiBold,
-    fontWeight: "600",
-    textAlign: "left",
-    top: 0,
-    position: "absolute",
-  },
-  wrapperLayout: {
-    height: "5.99%",
-    width: "73.54%",
-    position: "absolute",
-  },
-  iconLayout: {
-    height: "100%",
+    flex: 1,
     width: "100%",
+    height: 650
   },
-  weeklyTypo: {
-    height: 41,
-    width: 187,
-    justifyContent: "center",
-    textAlign: "center",
-    color: Color.labelDarkPrimary,
-    lineHeight: 36,
-    fontSize: FontSize.size_5xl,
+  contentContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    padding: 16,
+  },
+  backButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    display: "flex",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-  },
-  foodTrackReportChild: {
-    top: 495,
-    height: 357,
-    width: 400,
-    left: 0,
     position: "absolute",
+    top: 54,
+    left: 16,
   },
-  foodTrackReportItem: {
-    height: 330,
-    top: 0,
-    width: 400,
-    left: 0,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+    // paddingBottom: 18,
+  },
+  profileContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     position: "absolute",
+    top: 120,
+    left: 35,
   },
-  iconCalculator: {
-    width: 41,
-    height: 45,
-  },
-  iconCalculatorWrapper: {
-    top: 745,
-    left: 165,
-    padding: Padding.p_3xs,
+  ellipseIconContainer: {
     position: "absolute",
-  },
-  foodTrackReportInner: {
-    left: 27,
-    width: 68,
-    height: 80,
-    top: 111,
-    position: "absolute",
-  },
-  helloJohn: {
-    left: 109,
-    width: 209,
-    textAlign: "left",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    fontSize: FontSize.size_13xl,
-    top: 111,
-    position: "absolute",
-  },
-  consumption: {
-    top: 519,
-    width: 209,
-    textAlign: "left",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    fontSize: FontSize.size_13xl,
-    color: Color.colorDarkslateblue_100,
-  },
-  checkYourFood: {
-    top: 159,
-    color: Color.colorGray_100,
-    width: 286,
-    height: 32,
-    fontFamily: FontFamily.nunitoSemiBold,
-    fontWeight: "600",
-    fontSize: FontSize.primaryText_size,
-    left: 106,
-    textAlign: "left",
-    position: "absolute",
+    top:1
   },
   ellipseIcon: {
-    top: 276,
-    width: 296,
-    height: 265,
+    width: 100,
+    height: 100,
   },
-  foodTrackReportChild1: {
-    top: 298,
-    width: 70,
-    height: 112,
-  },
-  foodTrackReportChild2: {
-    top: 277,
-    left: 92,
-    width: 51,
-    height: 50,
+  headerContainer: {
     position: "absolute",
+    top: 5,
+    left: 110,
+  },
+  helloJohn1: {
+    fontSize: 32,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#01427a",
+    textAlign: "left",
+    width: 209,
+  },
+  descriptionContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 60,
+    left: 110,
+    // marginBottom: 80,
+  },
+  checkYourTravel1: {
+    fontSize: 20,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#1e1f1f",
+    textAlign: "left",
+    width: 286,
+    height: 32,
+  },
+  description2Container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 250,
+    alignSelf: "center",
+    // marginBottom: 80,
+  },
+  soFarThis1: {
+    fontSize: 24,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#01427a",
+    textAlign: "left",
+  },
+  groupPosition: {
+		left: 34,
+		position: "absolute"
+  },
+  groupChild: {
+		top: 42,
+  },
+  groupItem: {
+		top: 65,
+  },
+  groupInner: {
+		top: 40,
+		left: 90,
+		width: 51,
+		height: 50,
+		position: "absolute"
   },
   co: {
-    top: 286,
-    fontWeight: "800",
-    fontFamily: FontFamily.robotoBlack,
-    color: Color.colorWhitesmoke_200,
-    width: 35,
-    alignItems: "center",
-    display: "flex",
-    fontSize: FontSize.primaryText_size,
-    left: 100,
-    textAlign: "left",
-    height: 31,
+		top: 50,
+		left: 100,
+		fontSize: 20,
+		fontWeight: "800",
+		fontFamily: "Roboto-Black",
+		color: "#eee",
+		textAlign: "left",
+		display: "flex",
+		alignItems: "center",
+		width: 35,
+		height: 31,
+		position: "absolute"
+  },
+  ellipseParent: {
+		flex: 1,
+		width: "100%",
+		height: 350,
+    top: 250,
+  },
+  foodIcon11: {
+    flex: 1,
     position: "absolute",
+    top: 85,
+    alignSelf: "center",
+    width: 100,
+    height: 100,
   },
   kg: {
-    top: 395,
-    left: 164,
-    color: Color.colorGray_300,
+    fontSize: 24,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#060c12",
+    textAlign: "center",
+    top: 180,
   },
-  soFarThis: {
-    top: 217,
-    color: Color.colorDarkslateblue_100,
-    fontSize: FontSize.size_5xl,
-    left: 109,
+  text1Typo: {
+    textAlign: "left",
+    color: "#8b2cf5",
+    fontFamily: "Nunito-SemiBold",
+    fontWeight: "600",
+    fontSize: 24,
+    top: 0,
+    position: "absolute"
   },
-  text: {
-    left: 0,
-    color: Color.colorBlueviolet_100,
+  text1: {
+    left: 0
   },
-  fromLastMonth: {
-    left: 77,
+  fromLastMonth1: {
+    left: 61
   },
-  upArrowIcon: {
+  downArrowIcon1: {
     top: 3,
-    left: 48,
+    left: 45,
     width: 32,
     height: 23,
     position: "absolute",
+    transform: [{ rotate: "180deg" }],
   },
-  downFromLastMonth: {
-    top: 448,
-    left: 63,
-    width: 253,
-    height: 33,
-    position: "absolute",
-  },
-  pressable: {
-    borderRadius: Border.br_31xl,
-    backgroundColor: "transparent",
-  },
-  wrapper: {
-    left: "13.23%",
-    top: "68.31%",
-    right: "13.23%",
-    bottom: "25.7%",
-  },
-  container: {
-    left: "12.98%",
-    top: "76.64%",
-    right: "13.49%",
-    bottom: "17.37%",
-  },
-  weekly: {
-    top: 587,
-    left: 100,
-    position: "absolute",
-  },
-  monthly: {
-    top: 660,
-    left: 106,
-    position: "absolute",
-  },
-  icon: {
-    overflow: "hidden",
-  },
-  materialSymbolsarrowBackIo: {
-    left: 14,
-    top: 73,
-    position: "absolute",
-  },
-  foodIcon1: {
-    top: 308,
-    left: 159,
-    width: 78,
-    height: 78,
-    position: "absolute",
-  },
-  foodTrackReport: {
-    backgroundColor: Color.labelDarkPrimary,
+  downFromLastMonth1: {
     flex: 1,
-    height: 852,
-    overflow: "hidden",
     width: "100%",
+    height: 33,
+    top: 180,
+    // margin horizontal: to keep it in the middle of the screen
+    marginHorizontal: 70,
+  },
+  consumption1: {
+    fontSize: 32,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#01427a",
+    width: 209,
+    position: "absolute",
+    top: 260,
+    textAlign: "center",
+    alignSelf: "center",
+  },
+  ReportButton: {
+    marginTop: 10,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+    borderRadius: 50,
+    bottom: 70,
+  },
+  ReportButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "700",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 

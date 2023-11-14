@@ -77,7 +77,7 @@ import IconPersonOutline2 from "./components/IconPersonOutline2";
 import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
-
+ 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   View,
@@ -86,9 +86,29 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-
+ 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+ 
+//firebase code starts here
+import {initializeApp, getAuth} from "firebase/app";
+import {getDatabase} from "firebase/database";
+ 
+const firebaseConfig = {
+  apiKey: "AIzaSyANC83ccuZFwUKGBAgpwRXZoDPEehiiBTs",
+  authDomain: "carbono-6409e.firebaseapp.com",
+  projectId: "carbono-6409e",
+  storageBucket: "carbono-6409e.appspot.com",
+  messagingSenderId: "828463853315",
+  appId: "1:828463853315:web:873d0fb00c77486d504336",
+  measurementId: "G-MEX5QYKN1Y",
+  databaseURL: "https://carbono-6409e-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+ 
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+//firebase code ends here
+ 
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
   const [bottomTabItemsNormal] = React.useState([
@@ -155,10 +175,10 @@ function BottomTabsRoot({ navigation }) {
     </Tab.Navigator>
   );
 }
-
+ 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(false);
-
+ 
   const [fontsLoaded, error] = useFonts({
     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
@@ -182,24 +202,24 @@ const App = () => {
     "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
     "OpenSans-SemiBold": require("./assets/fonts/OpenSans-SemiBold.ttf"),
   });
-
+ 
   React.useEffect(() => {
     setTimeout(() => {
       setHideSplashScreen(true);
     }, 3000);
   }, []);
-
+ 
   function MaterialIcon({ name, style }) {
     const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
     return (
       <MIcon name={name} size={height} color={tintColor} style={iconStyle} />
     );
   }
-
+ 
   const IconProvider = (name) => ({
     toReactElement: (props) => MaterialIcon({ name, ...props }),
   });
-
+ 
   function createIconsMap() {
     return new Proxy(
       {},
@@ -214,11 +234,11 @@ const App = () => {
     name: "material",
     icons: createIconsMap(),
   };
-
+ 
   if (!fontsLoaded && !error) {
     return null;
   }
-
+ 
   return (
     <>
       <IconRegistry icons={[MaterialIconsPack]} />
@@ -560,4 +580,4 @@ const App = () => {
   );
 };
 export default App;
-
+ 
