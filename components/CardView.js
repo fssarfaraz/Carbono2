@@ -1,10 +1,64 @@
 import * as React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Image } from "expo-image";
-import { Button } from "@rneui/themed";
-import { Border, FontSize, FontFamily, Color } from "../GlobalStyles";
+import {View, StyleSheet, Text} from "react-native";
+import {Image} from "expo-image";
+import {Border, FontSize, FontFamily, Color} from "../GlobalStyles";
+import { app } from "../App";
+import {useState} from "react";
+import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import {getDatabase, ref, onValue} from 'firebase/database';
 
 const CardView = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+
+  const auth = getAuth(app);
+  const database = getDatabase();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if(user) 
+      {
+        setCurrentUser(user);
+      }
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  useEffect(() => {
+    if (currentUser) 
+    {
+      const user = auth.currentUser;
+      console.log('Current user:', user);
+
+      // Get email from current user
+      const email = user.email;
+      console.log('Current user email:', email);
+
+      const userRef = ref(database, 'users/');
+      console.log('User reference:', userRef);
+      console.log('User UID:', user.uid);
+
+      onValue(userRef, (snapshot) => {
+        // Find matching user
+        const users = snapshot.val();
+        const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+
+        if (matchingUser) 
+        {
+          setName(matchingUser.name);
+          setAddress(matchingUser.address);
+        } 
+        else 
+        {
+          console.log('User not found in the database');
+        }
+      });
+    }
+  }, [currentUser, database]);
+
   return (
     <View style={styles.card}>
       <View style={[styles.subtract, styles.subtractLayout]}>
@@ -23,61 +77,49 @@ const CardView = () => {
               />
             </View>
             <View style={styles.mediaContent}>
-              <Text style={styles.frankEsteban}>Savannah Nguyen</Text>
-              <Text style={styles.webDevelopment}>Sydney, Australia</Text>
+              <Text style={styles.userName}>{name}</Text>
+              {address ? <Text style={styles.userLocation}>{address}</Text> : null}
             </View>
           </View>
           <View style={styles.mediaOption} />
-        </View>
-        <View style={styles.iconCamera}>
-          <Button
-            radius="5"
-            iconPosition="left"
-            type="clear"
-            color="#212121"
-            icon={{ name: "camera-outline", type: "material-community" }}
-            containerStyle={styles.vectorIconBtn}
-            buttonStyle={styles.vectorIconBtn1}
-          />
         </View>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  vectorIconBtn: {
-    left: "0%",
-    right: "0%",
-    top: "0%",
-    bottom: "0%",
-    position: "absolute",
-  },
-  vectorIconBtn1: {
-    height: "100%",
-    width: "100%",
-  },
-  subtractLayout: {
+const styles = StyleSheet.create(
+  {
+  subtractLayout: 
+  {
     height: 214,
     width: 360,
   },
-  avatarIcon: {
+
+  avatarIcon: 
+  {
     borderRadius: Border.br_31xl,
     width: 100,
     height: 100,
   },
-  avatar: {
+
+  avatar: 
+  {
     flexDirection: "row",
     alignItems: "center",
   },
-  frankEsteban: {
+  
+  userName: 
+  {
     fontSize: FontSize.paragraphH1Reg_size,
     fontWeight: "500",
     fontFamily: FontFamily.robotoMedium,
     color: Color.black,
     textAlign: "center",
   },
-  webDevelopment: {
+
+  userLocation: 
+  {
     fontSize: FontSize.body15Regular_size,
     letterSpacing: 1,
     lineHeight: 26,
@@ -87,24 +129,32 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "stretch",
   },
-  mediaContent: {
+
+  mediaContent: 
+  {
     marginTop: 10,
     alignSelf: "stretch",
     alignItems: "center",
     overflow: "hidden",
   },
-  mediaBody: {
+
+  mediaBody: 
+  {
     alignSelf: "stretch",
     alignItems: "center",
     overflow: "hidden",
   },
-  mediaOption: {
+
+  mediaOption: 
+  {
     justifyContent: "center",
     marginTop: 5,
     alignItems: "center",
     overflow: "hidden",
   },
-  media: {
+
+  media: 
+  {
     marginTop: 46,
     width: "107.5%",
     top: "50%",
@@ -114,21 +164,16 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     position: "absolute",
   },
-  iconCamera: {
-    height: "13.13%",
-    width: "8.33%",
-    top: "4.21%",
-    right: "1.67%",
-    bottom: "82.66%",
-    left: "90%",
-    position: "absolute",
-  },
-  subtract: {
+
+  subtract: 
+  {
     top: 0,
     left: 0,
     position: "absolute",
   },
-  card: {
+
+  card: 
+  {
     top: 112,
     left: 17,
     borderRadius: Border.br_xl,
@@ -138,6 +183,8 @@ const styles = StyleSheet.create({
     width: 360,
     position: "absolute",
   },
-});
+}
+);
 
 export default CardView;
+

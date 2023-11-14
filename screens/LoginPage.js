@@ -13,11 +13,43 @@ import
 import {Button} from "@rneui/themed";
 import {useNavigation} from "@react-navigation/native";
 import {FontSize, Color, FontFamily, Padding, Border} from "../GlobalStyles";
+import {getAuth, signInWithEmailAndPassword, initializeAuth} from 'firebase/auth';
+import {ScrollView} from 'react-native';
+import {useState} from "react";
+import { app } from "../App";
 
 const LoginPage = () => {
   const navigation = useNavigation();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => 
+  {
+    const auth = getAuth(app);
+
+    try 
+    {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => 
+        {
+          // User logged in
+          navigation.navigate("BottomTabsRoot", {screen: "UserProfile"});  
+        })
+        .catch((error) => 
+        {
+          alert(error.message);
+        });
+  
+    } catch (error) 
+    {
+      alert(error.message);
+    }
+  };
+
   return (
+    <ScrollView>
+
     <View style={styles.loginPage}>
       <Image
         style={[styles.loginPageChild]}
@@ -36,27 +68,31 @@ const LoginPage = () => {
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
-      
+    
+    
       <TouchableOpacity
         style={styles.loginWrapper}
         activeOpacity={0.2}
-        onPress={() =>
-          navigation.navigate("BottomTabsRoot", {screen: "UserProfile"})
-        }
+        onPress={handleLogin}
       >
         <Text style={styles.login}>Login</Text>
       </TouchableOpacity>
 
       <TextInput
         style={[styles.loginPageInner, styles.loginPageInnerShadowBox]}
-        placeholder="Username"
+        placeholder="Email"
         placeholderTextColor="#0a0806"
+        onChangeText={setEmail}
+        value={email}
       />
 
       <TextInput
+        secureTextEntry 
         style={[styles.frameTextinput, styles.loginPageInnerShadowBox]}
         placeholder="Password"
         placeholderTextColor="#0a0806"
+        onChangeText={setPassword}
+        value={password}
       />
 
       <Button
@@ -81,6 +117,7 @@ const LoginPage = () => {
         buttonStyle={styles.resetBtn}
       />
     </View>
+    </ScrollView>
   );
 };
 
@@ -222,6 +259,36 @@ const styles = StyleSheet.create(
   frameTextinput: 
   {
     top: 451,
+  },
+
+  logBtnText: 
+  {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "300",
+    fontFamily: "Nunito-Light",
+  },
+
+  logBtnCont: 
+  {
+    left: 26,
+    top: 701,
+    position: "absolute",
+  },
+
+  logBtn: 
+  {
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    shadowOffset: 
+    {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 4,
+    elevation: 4,
+    shadowOpacity: 1,
+    width: 151,
+    height: 61,
   },
 
   loginPage: 

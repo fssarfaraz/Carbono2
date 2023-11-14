@@ -11,11 +11,107 @@ import
 import {Button} from "@rneui/themed";
 import {useNavigation} from "@react-navigation/native";
 import {FontSize, Padding, Color, Border, FontFamily} from "../GlobalStyles";
+import {getDatabase, ref, set} from "firebase/database";
+import {useState} from "react";
+import {KeyboardAvoidingView, ScrollView} from 'react-native';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { app } from "../App";
 
 const RegistrationPage = () => {
   const navigation = useNavigation();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [gender, setGender] = useState('');
+  const [address, setAddress] = useState('');
+
+  const handleRegister = () => 
+  {
+    // Log the values of the input fields
+    console.log(`Email: ${email}`);
+    console.log(`Password: ${password}`);
+    console.log(`Name: ${name}`);
+    console.log(`Username: ${username}`);
+
+    // Check if all mandatory fields are filled
+    if (!email || !password || !name || !username) 
+    {
+      alert("Please fill in all mandatory fields marked with *");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRegex.test(email)) 
+    {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    // Validate password strength
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    if (!passwordRegex.test(password)) 
+    {
+      alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+      return;
+    }
+
+    // Get a reference to the database
+    const database = getDatabase();
+
+    // Create a new user object
+    const user = {
+      email,
+      password,
+      name,
+      username,
+      gender,
+      address,
+    };
+
+    // Remove gender and address fields if they are empty
+    if (gender === '') 
+    {
+      delete user.gender;
+    }
+
+    if (address === '') 
+    {
+      delete user.address;
+    }
+
+    // Log the user object
+    console.log(user);
+
+    // Set the user data in the database
+    set(ref(database, 'users/' + username), user).then(() => 
+    {
+      // Create user in Firebase Authentication
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+      .then(() => 
+      {
+        // User successfully created
+        alert("Registration successful!");
+        // Navigate to the login page
+        navigation.navigate("LoginPage");
+      })
+      .catch((authError) => {
+        // An error occurred in Firebase Authentication
+        alert("Error creating user in authentication: " + authError.message);
+      });
+    }).catch((error) => 
+    {
+      // An error occurred
+      alert("Error creating user in database: " + error.message);
+    });
+  };
+
   return (
+    <ScrollView>
+    
     <View style={styles.registrationPage}>
       <Image
         style={[styles.registrationPageChild]}
@@ -42,7 +138,7 @@ const RegistrationPage = () => {
         type="solid"
         color="#428df8"
         titleStyle={styles.regsBtnText}
-        onPress={() => navigation.navigate("LoginPage")}
+        onPress={handleRegister}
         containerStyle={styles.regsBtnCont}
         buttonStyle={styles.regsBtn}
       />
@@ -51,36 +147,49 @@ const RegistrationPage = () => {
         style={[styles.emailBox, styles.textBox,]}
         placeholder="Email Address *"
         placeholderTextColor="#0a0806"
+        onChangeText={setEmail}
+        value={email}
       />
 
       <TextInput
+        secureTextEntry 
         style={[styles.passBox, styles.textBox,]}
         placeholder="Password *"
         placeholderTextColor="#0a0806"
+        onChangeText={setPassword}
+        value={password}
       />
 
       <TextInput
         style={[styles.genderBox, styles.textBox,]}
         placeholder="Gender"
         placeholderTextColor="#0a0806"
+        onChangeText={setGender}
+        value={gender}
       />
       
       <TextInput
         style={[styles.addressBox, styles.textBox,]}
         placeholder="Address"
         placeholderTextColor="#0a0806"
+        onChangeText={setAddress}
+        value={address}
       />
 
       <TextInput
         style={[styles.nameBox, styles.textBox,]}
         placeholder="Name *"
         placeholderTextColor="#0a0806"
+        onChangeText={setName}
+        value={name}
       />
 
       <TextInput
         style={[styles.userBox, styles.textBox,]}
         placeholder="Username *"
         placeholderTextColor="#0a0806"
+        onChangeText={setUsername}
+        value={username}
       />
 
       <Text
@@ -93,6 +202,7 @@ const RegistrationPage = () => {
         Mandatory Fields are marked with *
       </Text>
     </View>
+    </ScrollView>
   );
 };
 
@@ -256,4 +366,5 @@ const styles = StyleSheet.create(
 );
 
 export default RegistrationPage;
+
 
