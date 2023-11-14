@@ -152,6 +152,7 @@ const RegistrationPage = () => {
       />
 
       <TextInput
+        secureTextEntry 
         style={[styles.passBox, styles.textBox,]}
         placeholder="Password *"
         placeholderTextColor="#0a0806"

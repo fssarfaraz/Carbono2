@@ -123,6 +123,7 @@ const ResetPassword = () => {
       />
 
       <TextInput
+        secureTextEntry 
         style={[styles.passBox, styles.textInput]}
         placeholder="Enter New Password"
         placeholderTextColor="#0a0806"
@@ -131,6 +132,7 @@ const ResetPassword = () => {
       />
 
       <TextInput
+        secureTextEntry 
         style={[styles.rePassBox, styles.textInput]}
         placeholder="Re-Enter Password"
         placeholderTextColor="#0a0806"

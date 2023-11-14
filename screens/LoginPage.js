@@ -87,6 +87,7 @@ const LoginPage = () => {
       />
 
       <TextInput
+        secureTextEntry 
         style={[styles.frameTextinput, styles.loginPageInnerShadowBox]}
         placeholder="Password"
         placeholderTextColor="#0a0806"
