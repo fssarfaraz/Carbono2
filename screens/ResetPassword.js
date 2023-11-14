@@ -11,11 +11,78 @@ import
 import {Button} from "@rneui/themed";
 import {useNavigation} from "@react-navigation/native";
 import {FontSize, FontFamily, Padding, Color, Border} from "../GlobalStyles";
+import { getAuth, sendPasswordResetEmail, updatePassword } from "firebase/auth";
+import { getDatabase, ref, update, onValue } from "firebase/database";
+import { app } from "../App";
+import {useState} from "react";
+import {ScrollView} from 'react-native';
 
 const ResetPassword = () => {
   const navigation = useNavigation();
 
+  const [email, setEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleResetPassword = async () => 
+  {
+    if (newPassword !== confirmPassword) 
+    {
+      alert("Error", "New passwords do not match. Please try again.");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    if (!passwordRegex.test(newPassword)) 
+    {
+      alert("Error", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+      return;
+    }
+
+    const auth = getAuth(app);
+    const database = getDatabase();
+    const usersRef = ref(database, 'users');
+
+    try 
+    {
+      onValue(usersRef, (snapshot) => 
+      {
+        const users = snapshot.val();
+
+        for (const user in users) 
+        {
+          if (users[user].email === email) 
+          {
+            if (newPassword === users[user].password) 
+            {
+              alert("Error", "New password cannot be the same as the existing password.");
+              return;
+            }
+            else
+            {
+              updatePassword(users[user], newPassword);
+              update(ref(database, 'users/' + user), 
+              {
+                password: newPassword,
+              });
+              alert("Success", "Password updated successfully.");
+              navigation.navigate("LoginPage");
+              break;
+            }
+          }
+        }
+      });
+    } catch (error)   
+    {
+      console.error(error);
+      alert("Error", error.message);
+    }
+  };
+
+
   return (
+    <ScrollView>
+
     <View style={styles.resetPassword}>
       <Image
         style={[styles.ellipse1]}
@@ -42,29 +109,36 @@ const ResetPassword = () => {
         type="solid"
         color="#428df8"
         titleStyle={styles.resetBtnText}
-        onPress={() => navigation.navigate("LoginPage")}
+        onPress={handleResetPassword}
         containerStyle={styles.resetBtnCont}
         buttonStyle={styles.resetBtn}
       />
 
       <TextInput
         style={[styles.userBox, styles.textInput]}
-        placeholder="Enter Username"
+        placeholder="Enter Email"
         placeholderTextColor="#0a0806"
+        onChangeText={setEmail}
+        value={email}
       />
 
       <TextInput
         style={[styles.passBox, styles.textInput]}
         placeholder="Enter New Password"
         placeholderTextColor="#0a0806"
+        onChangeText={setNewPassword}
+        value={newPassword}
       />
 
       <TextInput
         style={[styles.rePassBox, styles.textInput]}
         placeholder="Re-Enter Password"
         placeholderTextColor="#0a0806"
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
       />
     </View>
+    </ScrollView>
   );
 };
 
