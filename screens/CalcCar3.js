@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { useRoute } from '@react-navigation/native';
 
 const CalcCar3 = () => {
   const navigation = useNavigation();
@@ -11,6 +12,9 @@ const CalcCar3 = () => {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+
+  const route = useRoute();
+  const { result } = route.params;
 
   return (
     <View style={styles.container}>
@@ -43,7 +47,7 @@ const CalcCar3 = () => {
           />
         </View>
 
-        {/* Next Button */}
+        {/* Footprint Result */}
         <Pressable
           style={styles.nextButton}
           onPress={() => handleNavigation("TravelTrackReport")}
@@ -54,7 +58,7 @@ const CalcCar3 = () => {
             end={{ x: 1, y: 0 }}
             colors={["#428DF8", "#5A09C1"]}
           >
-            <Text style={styles.nextButtonText}>Footprint</Text>
+            <Text style={styles.nextButtonText}>{result} kg of CO2e</Text>
           </LinearGradient>
         </Pressable>
       </View>
@@ -215,4 +219,3 @@ const styles = StyleSheet.create({
 });
 
 export default CalcCar3;
-
