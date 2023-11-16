@@ -1,130 +1,140 @@
 import * as React from "react";
-import { Image } from "expo-image";
-import { StyleSheet, View, Pressable, StatusBar, Text } from "react-native";
+import { Image, ScrollView, StyleSheet, View, Pressable, Text, TouchableHighlight } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import Property1HomeImage from "../components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
+import { FontAwesome5 } from "@expo/vector-icons";
 import EnergyCard from "../components/EnergyCard";
 import { FontFamily, Color, FontSize, Padding, Border } from "../GlobalStyles";
 
 const Calculator = () => {
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
     <View style={styles.calculator}>
-      <Image
-        style={[styles.calculatorChild, styles.calculatorLayout]}
-        contentFit="cover"
+       {/* Background Images */}
+       <Image style={[styles.calcTrackChild, styles.calcLayout]} 
+        contentFit="cover" 
+        source={require("../assets/ellipse-3.png")} 
+        />
+
+      <Image style={[styles.calcTrackItem, styles.calcLayout]} 
+        contentFit="contain" 
         source={require("../assets/ellipse-3.png")}
-      />
-      <Image
-        style={[styles.calculatorItem, styles.calculatorLayout]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
-      />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr8.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View
-        style={[styles.iconPersonOutlineParent, styles.travelWrapperFlexBox]}
-      >
-        <Image
-          style={styles.iconLayout1}
-          contentFit="cover"
-          source={require("../assets/-icon-person-outline.png")}
         />
-        <Image
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-book-saved2.png")}
-        />
-        <Image
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          contentFit="cover"
-          source={require("../assets/-icon-discussion.png")}
-        />
-        <Image
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-game-controller-outline7.png")}
-        />
+
+      {/* Back Button */}
+      <View style={styles.backButtonContainer}>
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
       </View>
-      <Pressable style={styles.iconCalculatorWrapper}>
-        <Image
-          style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator2.png")}
-        />
-      </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Text
-        style={[styles.carbonFootprintCalculator, styles.selectCategoryTypo]}
-      >{`Carbon Footprint 
-Calculator`}</Text>
-      <EnergyCard
-        imageDescription={require("../assets/rectangle-56.png")}
-        itemDimensions="Energy"
-        onCommunityCard4Press={() => navigation.navigate("CalcEnergy")}
-      />
-      <Pressable
-        style={[styles.communityCard3, styles.communityLayout]}
-        onPress={() => navigation.navigate("CalcTravel")}
+
+      {/* Header Buttons */}
+      <View style={styles.headerButton}>
+        <TouchableHighlight
+          style={[styles.trackingSwitch, styles.trackingLayout]}
+          underlayColor="#fff"
+          activeOpacity={0.2}
+          onPress={() => navigation.navigate("Calculator")}
+        >
+          <>
+            <LinearGradient
+              style={[styles.trackingSwitchChild, styles.trackingLayout]}
+              locations={[0, 1]}
+              colors={["#fff", "rgba(255, 255, 255, 0.46)"]}
+            />
+            <Text style={styles.calculate}>Calculate</Text>
+          </>
+        </TouchableHighlight>
+
+        <Pressable style={[styles.alternativesSwitch, styles.trackingLayout]}>
+          <LinearGradient
+            style={[styles.trackingSwitchChild, styles.trackingLayout]}
+            locations={[0, 1]}
+            colors={["#428df8", "rgba(66, 141, 248, 0.42)"]}
+          />
+          <Text style={[styles.track, styles.trackTypo]}>Track</Text>
+        </Pressable>
+      </View>
+    
+      <View style={styles.carbonFootprintCalculator}>
+        <Text style={styles.selectCategoryTypo}>{"Carbon Footprint Calculator"}</Text>
+        <Text style={styles.selectCategory}>SELECT CATEGORY</Text>
+      </View>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.scrollContainer}
       >
-        <View style={[styles.communityCard3Child, styles.communityLayout]} />
-        <Image
-          style={styles.communityCard3Item}
-          contentFit="cover"
-          source={require("../assets/rectangle-561.png")}
-        />
-        <Text style={[styles.select, styles.selectTypo]}>Select</Text>
-        <View style={[styles.travelWrapper, styles.travelWrapperFlexBox]}>
-          <Text style={[styles.travel, styles.selectTypo]}>Travel</Text>
-        </View>
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("CalcEnergy")}>
+          {/* Replace this with your EnergyCard component */}
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/rectangle-56.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Energy</Text>
+          </View>
+        </Pressable>
+
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("CalcTravel")}>
+          {/* Replace this with your TravelCard component */}
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/rectangle-561.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Travel</Text>
+          </View>
+        </Pressable>
+
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("CalcFood")}>
+          {/* Replace this with your FoodCard component */}
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/rectangle-562.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Food</Text>
+          </View>
+        </Pressable>
+      </ScrollView>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-person-outline.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-book-saved3.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-discussion.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-game-controller-outline6.png")} />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image style={styles.surfaceIcon} resizeMode="cover" source={require("../assets/navigation-barr2.png")} />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image style={styles.iconCalculator} resizeMode="cover" source={require("../assets/-icon-calculator.png")} />
       </Pressable>
-      <EnergyCard
-        imageDescription={require("../assets/rectangle-562.png")}
-        itemDimensions="Food"
-        propTop={287}
-        propLeft={17}
-        onCommunityCard4Press={() => navigation.navigate("CalcFood")}
-      />
-      <Text style={[styles.selectCategory, styles.selectCategoryTypo]}>
-        SELECT CATEGORY
-      </Text>
-      <Pressable style={[styles.trackingSwitch, styles.trackingLayout]}>
-        <LinearGradient
-          style={[styles.trackingSwitchChild, styles.trackingLayout]}
-          locations={[0, 1]}
-          colors={["#428df8", "rgba(66, 141, 248, 0.42)"]}
-        />
-        <Text style={[styles.calculate, styles.trackTypo]}>Calculate</Text>
-      </Pressable>
-      <Pressable
-        style={[styles.alternativesSwitch, styles.trackingLayout]}
-        onPress={() => navigation.navigate("CalcTrack")}
-      >
-        <LinearGradient
-          style={[styles.trackingSwitchChild, styles.trackingLayout]}
-          locations={[0, 1]}
-          colors={["#fff", "#fff9f9"]}
-        />
-        <Text style={[styles.track, styles.trackTypo]}>Track</Text>
-      </Pressable>
+
     </View>
   );
 };
@@ -135,6 +145,33 @@ const styles = StyleSheet.create({
     width: 400,
     left: 0,
     position: "absolute",
+  },
+  calcTrackItem: {
+    // top: 545,
+    top: 400,
+    height: 430
+  },
+  calcLayout: {
+    width: 430,
+  },
+  calcTrackChild: {
+    height: 255,
+    top: 0,
+    right: 140,
+  },
+  backButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 54,
+    left: 16,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
   },
   travelWrapperFlexBox: {
     flexDirection: "row",
@@ -148,10 +185,27 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  selectCategoryTypo: {
+  carbonFootprintCalculator: {
+    top: 200,
+    alignItems: "left",
+    justifyContent: "left",
     textAlign: "left",
-    fontWeight: "700",
     position: "absolute",
+    paddingHorizontal: Padding.p_2xl,
+  },
+  selectCategoryTypo: {
+    fontSize: 30,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    textAlign: "left"
+  },
+  selectCategory: {
+    fontSize: 20,
+    fontWeight: "700",
+    fontFamily: "Roboto-Bold",
+    color: "#01427a",
+    textAlign: "left",
+    top: 40,
   },
   communityLayout: {
     height: 185,
@@ -209,12 +263,6 @@ const styles = StyleSheet.create({
     padding: Padding.p_3xs,
     position: "absolute",
   },
-  carbonFootprintCalculator: {
-    top: 139,
-    left: 25,
-    fontSize: FontSize.size_11xl,
-    fontFamily: FontFamily.nunitoBold,
-  },
   communityCard3Child: {
     borderRadius: Border.br_base,
     backgroundColor: Color.colorWhitesmoke_100,
@@ -253,13 +301,6 @@ const styles = StyleSheet.create({
     top: 379,
     left: 211,
   },
-  selectCategory: {
-    top: 235,
-    fontFamily: FontFamily.robotoBold,
-    color: Color.colorDarkslateblue_100,
-    fontSize: FontSize.primaryText_size,
-    left: 24,
-  },
   trackingSwitchChild: {
     borderRadius: Border.br_sm,
     backgroundColor: "transparent",
@@ -296,6 +337,156 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 852,
     overflow: "hidden",
+  },
+  trackTypo: {
+    color: Color.labelDarkPrimary,
+    textAlign: "center",
+    // fontSize: FontSize.bodyBody1,
+    fontSize: 18,
+  },
+  track: {
+    left: 60,
+    fontWeight: "500",
+    fontFamily: FontFamily.poppinsMedium,
+    top: 13,
+    color: Color.labelDarkPrimary,
+    position: "absolute",
+  },
+  trackingSwitchChild: {
+    borderRadius: Border.br_sm,
+    backgroundColor: "transparent",
+    width: 165,
+    left: 0,
+    top: 0,
+  },
+  trackingLayout: {
+    height: 51,
+    width: 165,
+    position: "absolute",
+  },
+  alternativesSwitch: {
+    left: 205,
+    top: 71,
+    width: 165,
+  },
+  calculate: {
+    left: 43,
+    fontWeight: "600",
+    fontFamily: FontFamily.poppinsSemiBold,
+    color: Color.colorGray_400,
+    textAlign: "center",
+    fontSize: FontSize.bodyBody1_size,
+    top: 13,
+    position: "absolute",
+  },
+  trackingLayout: {
+    height: 51,
+    width: 165,
+    position: "absolute",
+  },
+  trackingSwitch: {
+    left: 20,
+    top: 71,
+    width: 165,
+  },
+  headerButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 54,
+    width: "100%",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    top: 70,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  scrollContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 16,
+    bottom: 200,
+    height: 225,
+    position: "absolute",
+    // height: "100%",
+  },
+  communityCard1: {
+    width: 164,
+    marginRight: 10,
+    // height: "100%",
+  },
+  communityCard1Child: {
+    top: 0,
+    left: 0,
+    borderRadius: 16,
+    backgroundColor: "#f2f2f2",
+    width: 164,
+    position: "absolute",
+    height: 225,
+  },
+  communityCard1Item: {
+    top: 15,
+    left: 15,
+    borderRadius: 12,
+    width: 134,
+    position: "absolute",
+    height: "65%",
+  },
+  food: {
+    fontSize: 20,
+    fontWeight: "500",
+    fontFamily: "Nunito-Medium",
+    color: "#fff",
+    textAlign: "center",
+  },
+  foodWrapper: {
+    top: 180,
+    left: 39,
+    borderRadius: 6,
+    backgroundColor: "#428df8",
+    overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 21,
+    paddingVertical: 0,
+    position: "absolute",
   },
 });
 
