@@ -121,9 +121,6 @@ const CalcTrack = () => {
 };
 
 const styles = StyleSheet.create({
-  calcLayout: {
-    width: 600,
-  },
   iconLayout: {
     width: 33,
     marginLeft: 72,
@@ -132,15 +129,18 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  calcTrackChild: {
-    height: 255,
-    top: 0,
-    right: 140,
-  },
   calcTrackItem: {
     // top: 545,
     top: 400,
     height: 430
+  },
+  calcLayout: {
+    width: 600,
+  },
+  calcTrackChild: {
+    height: 255,
+    top: 0,
+    right: 140,
   },
   backButtonContainer: {
     flexDirection: "row",
