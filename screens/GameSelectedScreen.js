@@ -6,9 +6,15 @@ import Property1HomeImage from "../components/Property1HomeImage";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const GameSelectedScreen = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
     <View style={[styles.gameSelectedScreen, styles.stChildLayout]}>
@@ -22,116 +28,120 @@ const GameSelectedScreen = () => {
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <View style={[styles.st, styles.stPosition]}>
+
+      {/* Header */}
+      <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+      </View>
+
+      <View style={[styles.st]}>
         <Image
-          style={[styles.stChild, styles.stPosition]}
+          style={[styles.stChild]}
           contentFit="cover"
           source={require("../assets/rectangle-45.png")}
         />
-      </View>
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr14.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={styles.iconPersonOutlineParent}>
         <Image
-          style={styles.iconLayout1}
+          style={styles.monumnetValley2Logo2}
           contentFit="cover"
-          source={require("../assets/-icon-person-outline.png")}
-        />
-        <Image
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-book-saved1.png")}
-        />
-        <Image
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          contentFit="cover"
-          source={require("../assets/-icon-discussion.png")}
-        />
-        <Image
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-game-controller-outline13.png")}
+          source={require("../assets/monumnet-valley-2-logo-1.png")}
         />
       </View>
+
+      <View style={[styles.textContainer]}>
+        <View style={[styles.titleContainer]}>
+          <Text style={[styles.title]}>Monument Valley 2</Text>
+        </View>
+
+        <View style={[styles.informationContainer]}>
+          <Text style={[styles.information]}>Information</Text>
+        </View>
+
+        <View style={[styles.itemContainer]}>
+          <View style={[styles.genreContainer]}>
+            <Text style={[styles.genre1]}>Genre</Text>
+            <Text style={[styles.adventure]}>Adventure</Text>
+          </View>
+
+          <View style={styles.separator1} />
+
+          <View style={[styles.createdContainer]}>
+            <Text style={[styles.created]}>Created</Text>
+            <Text style={[styles.date]}>09 Sept 2023</Text>
+          </View>
+
+          <View style={styles.separator2} />
+
+          <View style={[styles.updatedContainer]}>
+            <Text style={[styles.updated]}>Updated</Text>
+            <Text style={[styles.date1]}>16 Oct 2023</Text>
+          </View>
+        </View>
+      </View>
+
       <Pressable
-        style={[styles.iconCalculatorWrapper, styles.wrapperSpaceBlock]}
-      >
+            style={styles.nextButton1}
+            onPress={() => handleNavigation("")}
+          >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#428DF8", "#428df8"]}
+            >
+              <Text style={styles.nextButtonText}>Let's Play!</Text>
+            </LinearGradient>
+      </Pressable>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator1.png")}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <Image
-        style={styles.vectorIcon}
-        contentFit="cover"
-        source={require("../assets/vector6.png")}
-      />
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Button
-        radius={5}
-        iconPosition="left"
-        type="solid"
-        color="#fff"
-        icon={{ name: "chevron-left", type: "material-community" }}
-        onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "Games" })
-        }
-        containerStyle={styles.materialSymbolsarrowBackIoIconBtn}
-        buttonStyle={styles.materialSymbolsarrowBackIoIconBtn1}
-      />
-      <Text style={[styles.monumentValley2, styles.informationTypo]}>
-        Monument Valley 2
-      </Text>
-      <Text style={[styles.information, styles.informationTypo]}>
-        Information
-      </Text>
-      <View style={[styles.genre, styles.genrePosition]}>
-        <Text style={[styles.genre1, styles.genre1Typo]}>Genre</Text>
-        <Text style={styles.adventure}>Adventure</Text>
-      </View>
-      <View style={[styles.created, styles.genrePosition]}>
-        <Text style={[styles.sept2023, styles.oct2023Typo]}>09 Sept 2023</Text>
-        <Text style={[styles.created1, styles.genre1Typo]}>Created</Text>
-      </View>
-      <View style={styles.updated}>
-        <Text style={[styles.oct2023, styles.oct2023Typo]}>16 Oct 2023</Text>
-        <Text style={[styles.updated1, styles.genre1Typo]}>Updated</Text>
-      </View>
-      <Image
-        style={styles.monumnetValley2Logo2}
-        contentFit="cover"
-        source={require("../assets/monumnet-valley-2-logo-1.png")}
-      />
-      <View style={[styles.letsPlayWrapper, styles.wrapperSpaceBlock]}>
-        <Text style={[styles.letsPlay, styles.genre1Typo]}>Let’s Play!</Text>
-      </View>
-      <Image
-        style={[styles.thinLine1, styles.thinPosition]}
-        contentFit="cover"
-        source={require("../assets/thin-line-1.png")}
-      />
-      <Image
-        style={[styles.thinLine3, styles.thinPosition]}
-        contentFit="cover"
-        source={require("../assets/thin-line-3.png")}
-      />
-    </View>
+
+  </View>
   );
 };
 
@@ -155,10 +165,6 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
-  stPosition: {
-    top: "0%",
-    position: "absolute",
-  },
   iconLayout: {
     width: 33,
     marginLeft: 72,
@@ -171,38 +177,6 @@ const styles = StyleSheet.create({
     padding: Padding.p_3xs,
     position: "absolute",
   },
-  informationTypo: {
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-    fontFamily: FontFamily.nunitoMedium,
-    fontWeight: "500",
-    fontSize: FontSize.size_13xl,
-    width: "73.54%",
-    position: "absolute",
-  },
-  genrePosition: {
-    right: "-7.38%",
-    height: "3.87%",
-    position: "absolute",
-  },
-  genre1Typo: {
-    fontFamily: FontFamily.nunitoLight,
-    fontWeight: "300",
-  },
-  oct2023Typo: {
-    top: "9.09%",
-    fontFamily: FontFamily.nunitoExtraLight,
-    fontWeight: "200",
-    fontSize: FontSize.primaryText_size,
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-    position: "absolute",
-  },
-  thinPosition: {
-    height: 528,
-    left: 0,
-    position: "absolute",
-  },
   gameSelectedScreenChild: {
     top: 0,
     height: 455,
@@ -211,23 +185,30 @@ const styles = StyleSheet.create({
     top: 422,
     height: 430,
   },
+  st: {
+    top: 0,
+    height: "35%",
+    position: "absolute",
+    width: "100%",
+    alignSelf: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   stChild: {
     height: "100%",
-    right: "-10.11%",
-    bottom: "0%",
-    left: "10.11%",
     borderRadius: Border.br_31xl,
     maxWidth: "100%",
     maxHeight: "100%",
     overflow: "hidden",
     width: "100%",
   },
-  st: {
-    height: "34.62%",
-    width: "125.9%",
-    right: "-13.18%",
-    bottom: "65.38%",
-    left: "-12.72%",
+  monumnetValley2Logo2: {
+    top: 127,
+    width: 194,
+    height: 62,
+    position: "absolute",
+    zIndex: 1,
   },
   iconBookSaved: {
     height: 31,
@@ -263,94 +244,7 @@ const styles = StyleSheet.create({
     height: 10,
     position: "absolute",
   },
-  monumentValley2: {
-    top: "37.09%",
-    left: "12.72%",
-  },
-  information: {
-    top: "46.13%",
-    left: "3.56%",
-  },
-  genre1: {
-    width: "70.83%",
-    fontSize: FontSize.size_5xl,
-    left: "0%",
-    fontFamily: FontFamily.nunitoLight,
-    fontWeight: "300",
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-    top: "0%",
-    position: "absolute",
-  },
-  adventure: {
-    width: "37.99%",
-    top: "12.12%",
-    left: "62.01%",
-    fontFamily: FontFamily.nunitoExtraLight,
-    fontWeight: "200",
-    fontSize: FontSize.primaryText_size,
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-    position: "absolute",
-  },
-  genre: {
-    width: "103.82%",
-    top: "53.05%",
-    bottom: "43.08%",
-    left: "3.56%",
-  },
-  sept2023: {
-    width: "37.71%",
-    left: "62.29%",
-  },
-  created1: {
-    width: "70.32%",
-    fontSize: FontSize.size_5xl,
-    left: "0%",
-    fontFamily: FontFamily.nunitoLight,
-    fontWeight: "300",
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-    top: "0%",
-    position: "absolute",
-  },
-  created: {
-    width: "104.58%",
-    top: "59.86%",
-    bottom: "36.27%",
-    left: "2.8%",
-  },
-  oct2023: {
-    width: "37.8%",
-    left: "62.2%",
-  },
-  updated1: {
-    width: "70.49%",
-    fontSize: FontSize.size_5xl,
-    left: "0%",
-    fontFamily: FontFamily.nunitoLight,
-    fontWeight: "300",
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-    top: "0%",
-    position: "absolute",
-  },
-  updated: {
-    width: "104.33%",
-    top: "66.2%",
-    right: "-7.89%",
-    bottom: "29.93%",
-    height: "3.87%",
-    left: "3.56%",
-    position: "absolute",
-  },
-  monumnetValley2Logo2: {
-    top: 127,
-    left: 100,
-    width: 194,
-    height: 62,
-    position: "absolute",
-  },
+  
   letsPlay: {
     fontSize: FontSize.size_11xl,
     letterSpacing: 0,
@@ -376,19 +270,197 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
-  thinLine1: {
-    top: 212,
-    width: 550,
-  },
-  thinLine3: {
-    top: 269,
-    width: 545,
-  },
   gameSelectedScreen: {
     backgroundColor: Color.labelDarkPrimary,
     flex: 1,
     height: 852,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 60,
+    left: 20,
+    zIndex: 1,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  textContainer: {
+    top: 300,
+    left: 20,
+    width: 335,
+    // height: 300,
+    position: "absolute",
+  },
+  titleContainer: {
+    width: 335,
+    position: "absolute",
+    alignSelf: "center",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    top: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "500",
+    fontFamily: "Nunito-Medium",
+    color: "#01427a",
+    textAlign: "center",
+    width: 289
+  },
+  informationContainer: {
+    top: 95,
+    left: 0,
+    width: 335,
+    position: "absolute",
+    paddingLeft: 20,
+  },
+  information: {
+    fontSize: 32,
+    fontWeight: "500",
+    fontFamily: "Nunito-Medium",
+    color: "#01427a",
+    textAlign: "left",
+    width: 289
+  },
+  itemContainer: {
+    top: 65,
+    width: 335,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  genreContainer: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    top: 85,
+  },
+  genre1: {
+    fontSize: 24,
+    fontWeight: "300",
+    fontFamily: "Nunito-Light"
+  },
+  adventure: {
+    fontSize: 20,
+    fontWeight: "200",
+    fontFamily: "Nunito-ExtraLight"
+  },
+  createdContainer: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    top: 95,
+  },
+  created: {
+    fontSize: 24,
+    fontWeight: "300",
+    fontFamily: "Nunito-Light"
+  },
+  date: {
+    fontSize: 20,
+    fontWeight: "200",
+    fontFamily: "Nunito-ExtraLight"
+  },
+  updatedContainer: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    top: 105,
+  },
+  updated: {
+    fontSize: 24,
+    fontWeight: "300",
+    fontFamily: "Nunito-Light"
+  },
+  date1: {
+    fontSize: 20,
+    fontWeight: "200",
+    fontFamily: "Nunito-ExtraLight"
+  },
+  separator1: {
+    height: 1,
+    backgroundColor: 'gray', // Set your desired color for the separator
+    marginTop: 5,
+    marginBottom: 5,
+    top: 95,
+  },
+  separator2: {
+    height: 1,
+    backgroundColor: 'gray', // Set your desired color for the separator
+    marginTop: 5,
+    marginBottom: 5,
+    top: 105,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+    top: 733,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  nextButton1: {
+    borderRadius: 30,
+    width: "60%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 165,
+    // height: 50,
+  },
+  nextButtonText: {
+    fontSize: 26,
+    letterSpacing: 0,
+    fontWeight: "300",
+    fontFamily: "Nunito-Light",
+    color: "#fff",
+    textAlign: "center",
+  },
+  gradientButton: {
+    padding: 10,
+    alignItems: "center",
+  },
+
 });
 
 export default GameSelectedScreen;

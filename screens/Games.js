@@ -1,13 +1,28 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Pressable, View, Text, StatusBar } from "react-native";
+import { StyleSheet, Pressable, View, Text, StatusBar, ScrollView } from "react-native";
 import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Border, FontFamily, Color, Padding, FontSize } from "../GlobalStyles";
+import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Games = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
+  const gamesData = [
+    { id: 1, name: "Space Voyagers 1", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
+    { id: 2, name: "Space Voyagers 2", image: require("../assets/23brc4s1egslauncherpdp2560x14402560x144070cf344c9005-2.png") },
+    { id: 2, name: "Space Voyagers 3", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
+    { id: 2, name: "Space Voyagers 4", image: require("../assets/marvelsspiderman2playstation52021games3840x21601585-1.png") },
+    // Add more games as needed
+    // 
+  ];
 
   return (
     <View style={styles.games}>
@@ -16,150 +31,101 @@ const Games = () => {
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr8.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={[styles.iconPersonOutlineParent, styles.parentFlexBox]}>
-        <Pressable
-          style={styles.iconLayout3}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
-        >
-          <Image
-            style={styles.iconLayout2}
-            contentFit="cover"
-            source={require("../assets/-icon-person-outline.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.iconBookSaved, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
-          <Image
-            style={styles.iconLayout2}
-            contentFit="cover"
-            source={require("../assets/-icon-book-saved2.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout3]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
-          <Image
-            style={styles.iconLayout2}
-            contentFit="cover"
-            source={require("../assets/-icon-discussion.png")}
-          />
-        </Pressable>
-      </View>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Image
-          style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator2.png")}
-        />
-      </Pressable>
+
       <Image
         style={styles.gamesItem}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <View style={[styles.rectangleParent, styles.parentFlexBox]}>
-        <View style={styles.frameChild} />
-        <View style={styles.frameItem} />
-        <View style={styles.frameItem} />
-        <View style={styles.frameItem} />
-        <View style={styles.frameItem} />
+
+      {/* Header */}
+      <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
       </View>
-      <Image
-        style={styles.brC4s1EgsLauncherPdp2560xIcon}
-        contentFit="cover"
-        source={require("../assets/23brc4s1egslauncherpdp2560x14402560x144070cf344c9005-1.png")}
-      />
-      <Image
-        style={styles.brC4s1EgsLauncherPdp2560xIcon1}
-        contentFit="cover"
-        source={require("../assets/23brc4s1egslauncherpdp2560x14402560x144070cf344c9005-2.png")}
-      />
-      <View style={styles.marvelsSpiderMan2Playstati} />
-      <Image
-        style={[styles.egsDestiny2lightfallBungieAIcon, styles.iconLayout]}
-        contentFit="cover"
-        source={require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png")}
-      />
-      <Image
-        style={[styles.marvelsSpiderMan2PlaystatiIcon, styles.iconLayout]}
-        contentFit="cover"
-        source={require("../assets/marvelsspiderman2playstation52021games3840x21601585-1.png")}
-      />
-      <View style={[styles.popularParent, styles.parentFlexBox]}>
-        <Pressable onPress={() => navigation.navigate("PopularGames")}>
-          <Text style={[styles.popular1, styles.popular1Typo]}>Popular</Text>
-        </Pressable>
+
+      <View style={styles.readyToPlayContainer}>
+        <Text style={[styles.readyToPlay]}>
+          READY TO PLAY?
+        </Text>
+
         <Pressable
-          style={styles.new}
-          onPress={() => navigation.navigate("NewGames")}
+          style={styles.vector}
+          onPress={() => navigation.navigate("SearchQuery")}
         >
-          <Text style={[styles.popular1, styles.popular1Typo]}>New</Text>
-        </Pressable>
-        <Pressable
-          style={styles.new}
-          onPress={() => navigation.navigate("RecommendedGames")}
-        >
-          <Text style={[styles.popular1, styles.popular1Typo]}>
-            Recommended
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.new}
-          onPress={() => navigation.navigate("AllGames")}
-        >
-          <Text style={[styles.allGames1, styles.allGames1Typo]}>
-            All Games
-          </Text>
+          <Image
+            style={[styles.icon3]}
+            contentFit="cover"
+            source={require("../assets/vector5.png")}
+          />
         </Pressable>
       </View>
-      <Pressable
-        style={styles.vector}
-        onPress={() => navigation.navigate("SearchQuery")}
-      >
+
+      {/* Horizontal Pressables */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {gamesData.map((game) => (
+          <View key={game.id} style={styles.gameContainer}>
+            <Pressable
+              style={styles.gamePressable}
+              onPress={() => handleNavigation("GameSelectedScreen", { gameId: game.id })}
+            >
+              <Image style={styles.gameImage} contentFit="cover" source={game.image} />
+            </Pressable>
+            <View style={styles.gameNameContainer}>
+              <Text style={styles.gameName}>{game.name}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+     
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
-          style={[styles.icon3, styles.iconLayout2]}
-          contentFit="cover"
-          source={require("../assets/vector5.png")}
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <Text style={[styles.readyToPlay, styles.allGames1Typo]}>
-        Ready To Play?
-      </Text>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <View style={styles.spaceVoyagersWrapper}>
-        <Text style={[styles.spaceVoyagers, styles.popular1Typo]}>
-          Space Voyagers
-        </Text>
-      </View>
+
     </View>
   );
 };
@@ -188,16 +154,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "600",
   },
-  allGames1Typo: {
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    textAlign: "left",
-    color: Color.colorDarkslateblue_100,
-  },
-  iconLayout2: {
-    height: "100%",
-    width: "100%",
-  },
+  
   gamesChild: {
     top: 422,
     height: 430,
@@ -304,25 +261,33 @@ const styles = StyleSheet.create({
     top: 172,
     left: 13,
   },
-  icon3: {
-    maxWidth: "100%",
-    maxHeight: "100%",
-    overflow: "hidden",
+  readyToPlayContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    top: 90,
+    paddingLeft: 40,
+    paddingRight: 30,
   },
   vector: {
-    left: "86.34%",
-    top: "12.12%",
-    right: "8.7%",
-    bottom: "85.59%",
-    width: "4.96%",
-    height: "2.29%",
-    position: "absolute",
+    marginRight: 10,
+  },
+  icon3: {
+    width: 24,
+    height: 24,
   },
   readyToPlay: {
-    top: 93,
-    left: 37,
+    fontSize: 18,
+    fontFamily: FontFamily.nunitoBold,
+    fontWeight: "700",
+    // textAlign: "left",
+    color: Color.colorDarkslateblue_100,
+    // top: 130,
+    // left: 37,
     fontSize: FontSize.size_11xl,
-    position: "absolute",
+    // position: "absolute",
   },
   spaceVoyagers: {
     fontSize: FontSize.size_smi,
@@ -347,6 +312,85 @@ const styles = StyleSheet.create({
     height: 852,
     overflow: "hidden",
     width: "100%",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 60,
+    left: 20,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  gameContainer: {
+    top: 150,
+    alignItems: "center",
+    marginRight: 20,
+  },
+  gamePressable: {
+    borderRadius: Border.br_11xl,
+    overflow: "hidden",
+  },
+  gameImage: {
+    width: 200,
+    height: 350,
+  },
+  gameNameContainer: {
+    backgroundColor: Color.colorDarkslateblue_100,
+    borderRadius: Border.br_11xl,
+    overflow: "hidden",
+    top: 15,
+    paddingRight: 5,
+    paddingLeft: 5,
+  },
+  gameName: {
+    color: "#FFF",
+    fontFamily: FontFamily.nunitoBold,
+    fontSize: 20,
+    padding: 15,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+    // top: 730,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 
