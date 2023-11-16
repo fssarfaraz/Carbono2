@@ -7,9 +7,14 @@ import Property1HomeImage from "../components/Property1HomeImage";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const CalcTravel = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
     <View style={styles.calcTravel}>
@@ -23,121 +28,131 @@ const CalcTravel = () => {
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr2.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={styles.iconPersonOutlineParent}>
-        <Image
-          style={styles.iconLayout3}
-          contentFit="cover"
-          source={require("../assets/-icon-person-outline.png")}
-        />
-        <Image
-          style={[styles.iconBookSaved, styles.iconLayout2]}
-          contentFit="cover"
-          source={require("../assets/-icon-book-saved3.png")}
-        />
-        <Image
-          style={[styles.iconDiscussion, styles.iconLayout3]}
-          contentFit="cover"
-          source={require("../assets/-icon-discussion.png")}
-        />
-        <Image
-          style={[styles.iconGameControllerOutline, styles.iconLayout2]}
-          contentFit="cover"
-          source={require("../assets/-icon-game-controller-outline6.png")}
-        />
+
+      {/* Header */}
+      <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
       </View>
-      <Pressable style={styles.iconCalculatorWrapper}>
+
+      <Text style={styles.selectTypeOf}>SELECT TYPE OF TRANSPORT</Text>
+      
+      <View style={styles.contentContainer}>
+        <View style={styles.saly6Container}>
+            <Image
+              style={styles.saly6Icon}
+              resizeMode="contain"
+              source={require("../assets/-emoji-northeast-facing-airplane.png")}
+            />
+          </View>
+
+          <Pressable
+            style={styles.nextButton}
+            onPress={() => handleNavigation("CalcAir")}
+            >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#E187F5C7", "#5A09C1E3"]}
+            >
+              <Text style={styles.nextButtonText}>Air Travel</Text>
+            </LinearGradient>
+          </Pressable>
+
+          <View style={styles.saly6Container}>
+            <Image
+              style={styles.saly6Icon}
+              resizeMode="contain"
+              source={require("../assets/-icon-bus.png")}
+            />
+          </View>
+
+          <Pressable
+            style={styles.nextButton}
+            onPress={() => handleNavigation("CalcBus")}
+            >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#0682EF", "#094ED3"]}
+            >
+              <Text style={styles.nextButtonText}>Public Transport</Text>
+            </LinearGradient>
+          </Pressable>
+
+          <View style={styles.saly6Container}>
+            <Image
+              style={styles.saly6Icon}
+              resizeMode="contain"
+              source={require("../assets/group5.png")}
+            />
+          </View>
+
+          <Pressable
+            style={styles.nextButton}
+            onPress={() => handleNavigation("CalcCar")}
+            >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#428DF8", "#428DF8"]} 
+            >
+              <Text style={styles.nextButtonText}>Car/Motor Vehicle</Text>
+            </LinearGradient>
+          </Pressable>
+        </View>
+
+        {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator4.png")}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Text style={styles.selectTypeOf}>SELECT TYPE OF TRANSPORT</Text>
-      <Button
-        radius={5}
-        iconPosition="left"
-        type="solid"
-        color="#fff"
-        icon={{ name: "chevron-left", type: "material-community" }}
-        onPress={() => navigation.navigate("Calculator")}
-        containerStyle={styles.materialSymbolsarrowBackIoIconBtn}
-        buttonStyle={styles.materialSymbolsarrowBackIoIconBtn1}
-      />
-      <LinearGradient
-        style={[styles.wrapper, styles.frameLayout]}
-        locations={[0, 1]}
-        colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.iconLayout1]}
-          onPress={() => navigation.navigate("CalcAir")}
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.container, styles.frameLayout]}
-        locations={[0, 1]}
-        colors={["#0682ef", "#094ed3"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.iconLayout1]}
-          onPress={() => navigation.navigate("CalcBus")}
-        />
-      </LinearGradient>
-      <Pressable
-        style={[styles.frame, styles.frameLayout]}
-        onPress={() => navigation.navigate("CalcCar")}
-      >
-        <Image
-          style={[styles.icon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/rectangle-46.png")}
-        />
-      </Pressable>
-      <Image
-        style={[styles.emojiNorthEastFacingAirpl, styles.iconLayout]}
-        contentFit="cover"
-        source={require("../assets/-emoji-northeast-facing-airplane.png")}
-      />
-      <Image
-        style={[styles.groupIcon, styles.iconPosition]}
-        contentFit="cover"
-        source={require("../assets/group5.png")}
-      />
-      <Image
-        style={[styles.iconBus, styles.iconPosition]}
-        contentFit="cover"
-        source={require("../assets/-icon-bus.png")}
-      />
-      <Text style={[styles.airTravel, styles.airTravelTypo]}>Air Travel</Text>
-      <Pressable
-        style={styles.carmotorVehicles}
-        onPress={() => navigation.navigate("CalcCar")}
-      >
-        <Text style={[styles.carmotorVehicles1, styles.airTravelTypo]}>
-          Car/Motor Vehicles
-        </Text>
-      </Pressable>
-      <Text style={[styles.publicTransport, styles.airTravelTypo]}>
-        Public Transport
-      </Text>
+
     </View>
   );
 };
@@ -237,14 +252,15 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   selectTypeOf: {
-    top: 131,
-    left: 29,
-    fontSize: FontSize.size_3xl,
-    color: Color.colorDarkslateblue_100,
-    textAlign: "left",
-    fontFamily: FontFamily.nunitoBold,
-    fontWeight: "700",
-    position: "absolute",
+      fontSize: FontSize.size_3xl,
+      color: Color.colorDarkslateblue_100,
+      textAlign: "center",
+      fontFamily: FontFamily.nunitoBold,
+      fontWeight: "700",
+      position: "absolute",
+      top: 130,
+      left: 0,
+      right: 0,
   },
   pressable: {
     backgroundColor: "transparent",
@@ -347,6 +363,91 @@ const styles = StyleSheet.create({
     height: 852,
     overflow: "hidden",
     width: "100%",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 60,
+    left: 20,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  saly6Container: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  saly6Icon: {
+    height: 80,
+    width: 80,
+  },
+  nextButton: {
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 10,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: 0.5,
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
   },
 });
 
