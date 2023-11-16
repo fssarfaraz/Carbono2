@@ -1,17 +1,111 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { calcCar } from "../components/API";
+import { useRoute } from '@react-navigation/native';
+import {getDatabase, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
+
 
 const CalcCar2 = () => {
-  const [distanceKM, setDistanceKM] = useState("");
+  const [distance, setDistanceKM] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+
+  const route = useRoute();
+
+  const { vehicleMake, vehicleModel } = route.params;
+
+  // Create a reference to the database
+  const database = getDatabase();
+  console.log('connected to database');
+  const auth = getAuth(app);
+  console.log('got auth');
+  const user = auth.currentUser; 
+  console.log('got current user');
+  const email = user.email; 
+  console.log('User email: ', email);
+  // Split email on "@" 
+  const emailParts = email.split('@');
+  // Get first part (before "@")
+  const emailName = emailParts[0];
+  console.log(emailName);
+
+  const addToDatabase = async (result) => {
+      // Get the current date
+      const date = new Date();
+      const formattedDate = date.toISOString().split('T')[0];
+      console.log(formattedDate);
+      const type = 'car';
+      const key = `${formattedDate}-${emailName}-${type}`;
+      console.log('Defined key', key);
+      const entry = 
+      {
+        email: email,
+        type: type,
+        date: formattedDate,
+        result: result
+      };
+      console.log('Defined entry')
+      // Set the user data in the database
+      set(ref(database, 'footprint-travel/' + key), entry).then(() => 
+      {
+      }).catch((error) => 
+      {
+        // An error occurred
+        alert("Error adding to database: " + error.message);
+      });
+  }
+
+  const handleSubmit = async () => {
+    if(!distance) 
+    {
+      alert('Please enter distance');
+      return;
+    }
+
+    // Check if distance is a valid number
+    if (isNaN(distance)) 
+    {
+      alert('Please enter a valid number for distance');
+      return;
+    }
+
+    // convert to number
+    const distanceNum = parseInt(distance);
+    try 
+    {
+      console.log('Calling calcCar with:', vehicleMake, vehicleModel, distanceNum);
+      console.log(typeof vehicleMake, typeof vehicleModel, typeof distanceNum);
+      console.log('CalcCar called');
+      const result = await calcCar(vehicleMake, vehicleModel, distanceNum);
+      try
+      {
+        console.log('calling database');
+        await addToDatabase(result);
+        console.log('Added to database');
+      }
+      catch (error)
+      {
+        console.error(error);
+        alert('Error adding to the database');
+      }
+      navigation.navigate('CalcCar3', {result});
+    } 
+    catch (error) 
+    {
+      console.error(error);
+      alert('Error calculating');
+      return;
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -51,7 +145,7 @@ const CalcCar2 = () => {
         >
           <TextInput
             style={styles.textInput}
-            value={distanceKM}
+            value={distance}
             onChangeText={setDistanceKM}
             placeholder="Distance in KM"
             placeholderTextColor="#fff"
@@ -64,7 +158,7 @@ const CalcCar2 = () => {
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcCar3")}
+          onPress={handleSubmit}
         >
           <LinearGradient
             style={styles.gradientButton}

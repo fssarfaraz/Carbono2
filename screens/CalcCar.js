@@ -6,7 +6,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcCar = () => {
-  const [vehicleType, setVehicleType] = useState("");
   const [vehicleMake, setVehicleMake] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
   const navigation = useNavigation();
@@ -45,24 +44,6 @@ const CalcCar = () => {
             source={require("../assets/saly6.png")}
           />
         </View>
-
-        {/* Vehicle Type Input */}
-        <LinearGradient
-          style={styles.inputContainer}
-          locations={[0, 1]}
-          colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-        >
-          <TextInput
-            style={styles.textInput}
-            value={vehicleType}
-            onChangeText={setVehicleType}
-            placeholder="Vehicle Type"
-            placeholderTextColor="#fff"
-            fontWeight="700"
-            textAlign="center"
-            fontSize={FontSize.size_3xl}
-          />
-        </LinearGradient>
 
         {/* Vehicle Make Input */}
         <LinearGradient
@@ -103,7 +84,7 @@ const CalcCar = () => {
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcCar2")}
+          onPress={() => {navigation.navigate('CalcCar2', {vehicleMake, vehicleModel});}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -279,5 +260,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 });
+
+export const { vehicleMake, vehicleModel } = { vehicleMake, vehicleModel };
 
 export default CalcCar;
