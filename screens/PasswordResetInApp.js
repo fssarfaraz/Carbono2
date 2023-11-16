@@ -13,9 +13,15 @@ import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const PasswordResetInApp = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
     <View style={[styles.passwordResetInApp, styles.fieldLayout]}>
@@ -29,100 +35,121 @@ const PasswordResetInApp = () => {
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr7.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={styles.iconPersonOutlineParent}>
-        <Image
-          style={styles.iconLayout1}
-          contentFit="cover"
-          source={require("../assets/-icon-person-outline.png")}
-        />
-        <Image
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-book-saved3.png")}
-        />
-        <Image
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          contentFit="cover"
-          source={require("../assets/-icon-discussion.png")}
-        />
-        <Image
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-game-controller-outline14.png")}
-        />
+
+
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
       </View>
-      <View style={styles.iconCalculatorWrapper}>
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
-        />
+
+      <View style={[styles.resetPasswordContainer]}>
+        <Text style={styles.resetPassword}>Reset Password</Text>
       </View>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
+
+      {/* create New Password Text and a password field 
+      and create a Re-enter text and password field */}
+
+      <View style={[styles.passwordContainer]}>
+        <Text style={[styles.newPassword]}>New Password</Text>
+        <View style={[styles.passwordField]}>
+          <TextInput
+            style={[styles.supersecure123]}
+            placeholder="New Password"
+            placeholderTextColor="#333"
+            secureTextEntry={true}
+          />
+        </View>
+
+        <Text style={[styles.confirmPassword]}>Re-enter Password</Text>
+        <View style={[styles.passwordField1]}>
+          <TextInput
+            style={[styles.supersecure123]}
+            placeholder="Re-enter Password"
+            placeholderTextColor="#333"
+            secureTextEntry={true}
+          />
+        </View>
+      </View>
+
+      <View style={[styles.buttonContainer]}>
+        <Pressable
+            style={styles.nextButton}
+            onPress={() => handleNavigation("PasswordResetSuccess")}
+          >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#428DF8", "#5A09C1"]}
+            >
+              <Text style={styles.nextButtonText}>Reset Password</Text>
+            </LinearGradient>
+        </Pressable>
+
+        <Pressable
+            style={styles.nextButton1}
+            onPress={() => handleNavigation("UserProfile")}
+          >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#428DF8", "#5A09C1"]}
+            >
+              <Text style={styles.nextButtonText}>Cancel</Text>
+            </LinearGradient>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
       />
-      <Text style={styles.resetPassword}>Reset Password</Text>
-      <View style={[styles.passwordField, styles.passwordPosition]}>
-        <TextInput style={[styles.field, styles.fieldLayout]} />
-        <Text style={styles.supersecure123}>Confirm password</Text>
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
-          style={styles.iconseyeSlash}
-          contentFit="cover"
-          source={require("../assets/iconseyeslash.png")}
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
-      </View>
-      <TextInput style={[styles.passwordField1, styles.passwordPosition]} />
-      <Button
-        title="Reset Password"
-        radius={10}
-        iconPosition="left"
-        type="solid"
-        color="linear-gradient(87.88deg, #5a09c1, rgba(90, 9, 193, 0))"
-        onPress={() => navigation.navigate("PasswordResetSuccess")}
-        containerStyle={styles.signUpBottonBtn}
-        buttonStyle={styles.signUpBottonBtn1}
-      />
-      <Button
-        radius={10}
-        iconPosition="left"
-        type="solid"
-        color="linear-gradient(87.88deg, #01427a, #fff)"
-        onPress={() => navigation.navigate("SettingsPage")}
-        containerStyle={styles.signUpBotton1Btn}
-        buttonStyle={styles.signUpBotton1Btn1}
-      />
-      <Text style={[styles.newPassword, styles.passwordTypo]}>
-        New Password
-      </Text>
-      <Text style={[styles.reEnterPassword, styles.passwordTypo]}>
-        Re-Enter Password
-      </Text>
-      <Pressable
-        style={[styles.resetPassword1, styles.cancelPosition]}
-        onPress={() => navigation.navigate("PasswordResetSuccess")}
-      >
-        <Text style={styles.cancelTypo}>Reset Password</Text>
       </Pressable>
-      <Text style={[styles.cancel, styles.cancelTypo]}>Cancel</Text>
+      
     </View>
   );
 };
@@ -233,39 +260,18 @@ const styles = StyleSheet.create({
     padding: Padding.p_3xs,
     position: "absolute",
   },
+  resetPasswordContainer: {
+    top: 130,
+    alignItems: "center",
+    alignSelf: "center",
+    position: "absolute",
+  },
   resetPassword: {
-    marginLeft: -133.5,
-    top: 90,
-    left: "50%",
     fontSize: 36,
-    lineHeight: 32,
     fontWeight: "700",
     fontFamily: FontFamily.nunitoBold,
-    textAlign: "left",
+    textAlign: "center",
     color: Color.colorDarkslateblue_100,
-    position: "absolute",
-  },
-  field: {
-    height: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    borderRadius: Border.br_7xs,
-    borderStyle: "solid",
-    borderColor: "#d4d4d4",
-    borderWidth: 1,
-    position: "absolute",
-  },
-  supersecure123: {
-    left: 12,
-    fontSize: FontSize.size_sm,
-    color: "#333",
-    fontFamily: FontFamily.bodyBody1,
-    top: "50%",
-    marginTop: -8,
-    textAlign: "left",
-    position: "absolute",
   },
   iconseyeSlash: {
     right: 11,
@@ -274,12 +280,6 @@ const styles = StyleSheet.create({
     top: "50%",
     marginTop: -8,
     position: "absolute",
-  },
-  passwordField: {
-    bottom: 498,
-  },
-  passwordField1: {
-    bottom: 590,
   },
   newPassword: {
     top: 202,
@@ -300,6 +300,146 @@ const styles = StyleSheet.create({
     height: 852,
     overflow: "hidden",
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 60,
+    left: 20,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  passwordContainer: {
+    top: 250,
+    left: 50,
+    width: "100%",
+    position: "absolute",
+  },
+  newPassword: {
+    fontSize: 18,
+    fontFamily: FontFamily.nunitoBold,
+    fontWeight: "700",
+    color: "#01427a",
+    marginBottom: 16,
+  },
+  confirmPassword: {
+    top: 52,
+    fontSize: 18,
+    fontFamily: FontFamily.nunitoBold,
+    fontWeight: "700",
+    color: "#01427a",
+    marginBottom: 16,
+  },
+  passwordField: {
+    borderColor: "#d4d4d4",
+    borderWidth: 1,
+    borderRadius: 8,
+    height: 40,
+    width: "80%",
+    backgroundColor: "#fff",
+    position: "absolute",
+    top: 35,
+ },
+  passwordField1: {
+    borderColor: "#d4d4d4",
+    borderWidth: 1,
+    borderRadius: 8,
+    height: 40,
+    width: "80%",
+    backgroundColor: "#fff",
+    position: "absolute",
+    top: 125,
+  },
+  supersecure123: {
+    left: 12,
+    fontSize: FontSize.size_sm,
+    color: "#333",
+    fontFamily: FontFamily.bodyBody1,
+    top: "50%",
+    marginTop: -8,
+    textAlign: "left",
+    position: "absolute",
+  },
+  buttonContainer: {
+    top: 450,
+    width: "100%",
+    position: "absolute",
+  },
+  nextButton: {
+    borderRadius: 10,
+    marginTop: 16,
+    marginBottom: 10,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+    // top: 420,
+  },
+  nextButton1: {
+    borderRadius: 10,
+    marginTop: 16,
+    marginBottom: 100,
+    position: "relative",
+    width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+    // top: 20,
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+    top: 730,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+
 });
 
 export default PasswordResetInApp;

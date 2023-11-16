@@ -12,9 +12,14 @@ import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import {getDatabase, ref, onValue} from 'firebase/database';
+import { LinearGradient } from "expo-linear-gradient";
 
 const UserProfile = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
@@ -93,24 +98,46 @@ const UserProfile = () => {
         </View>
 
         <View style={styles.cardFooter}>
-          <Button
-            style={[styles.articleBtn, styles.cardLayout]}
-            title="Read Article"
-            radius="5"
-            iconPosition="left"
-            type="outline"
-            titleStyle={styles.articleBtnText}
-          />
+        {/* <Button
+          style={[styles.articleBtn, styles.cardLayout]}
+          title="READ ARTICLE"
+          radius="5"
+          iconPosition="left"
+          type="outline"
+          titleStyle={styles.articleBtnText}>
+            READ ARTICLE
+          </Button> */}
+          
+          <Pressable
+            style={styles.nextButton}
+            onPress={() => handleNavigation("Educational")}
+            >
+            <LinearGradient
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              colors={["#428DF8", "#5A09C1"]}
+            >
+              <Text style={styles.nextButtonText}>READ ARTICLE</Text>
+            </LinearGradient>
+          </Pressable>
         </View>
+
+       
+
       </View>
       <CardView/>
 
-      <View style={[styles.headingBox]}>
+      {/* <View style={[styles.headingBox]}>
         <Text style={styles.headingBox} numberOfLines={1}>
           Tips for you
         </Text>
-      </View>
+      </View> */}
 
+      <View style={[styles.tipTitleContainer]}>
+        <Text style={styles.tipsForYou1} numberOfLines={1}>Tips for you</Text>
+      </View>
+      
       <View style={styles.name}>
         <Text style={styles.userNameBox} numberOfLines={1}>
           Hello {name}!
@@ -120,18 +147,75 @@ const UserProfile = () => {
           <FontAwesome.Button backgroundColor='#00000000' name="gear" color= "#ffffff" size={26} onPress={() => navigation.navigate("SettingsPage")} />
         </View>
       </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
+        />
+      </Pressable>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create(
   {
-  articleBtnText: 
-  {
-    color: "#000",
-    fontSize: 13,
-    fontWeight: "700",
-    fontFamily: "Roboto-Bold",
+  // articleBtnText: 
+  // {
+  //   color: "#000",
+  //   fontSize: 13,
+  //   fontWeight: "700",
+  //   fontFamily: "Roboto-Bold",
+  // },
+  articleBtn: {
+    borderStyle: "solid",
+    width: 132,
+    height: 39,
+    paddingHorizontal: Padding.p_base,
+    paddingVertical: Padding.p_xs,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    backgroundColor: "#000",  // Add this line to set a background color
+    borderRadius: Border.br_xl,    // Add this line for rounded corners
   },
 
   iconLayout: 
@@ -173,13 +257,13 @@ const styles = StyleSheet.create(
     position: "absolute",
   },
 
-  iconCalc: 
-  {
-    top: 749,
-    left: 166,
-    padding: Padding.p_3xs,
-    position: "absolute",
-  },
+  // iconCalc: 
+  // {
+  //   top: 749,
+  //   left: 166,
+  //   padding: Padding.p_3xs,
+  //   position: "absolute",
+  // },
 
   articleTitle: 
   {
@@ -230,7 +314,7 @@ const styles = StyleSheet.create(
 
   card: 
   {
-    top: 511,
+    top: 490,
     left: 15,
     backgroundColor: "rgba(66, 141, 248, 0.2)",
     width: 360,
@@ -248,7 +332,7 @@ const styles = StyleSheet.create(
     fontWeight: "300",
     fontFamily: FontFamily.nunitoLight,
     textAlign: "center",
-    color: Color.black,
+    color: "#000",
     top: 450,
     left: 12,
     alignItems: "center",
@@ -315,6 +399,87 @@ const styles = StyleSheet.create(
     position: "absolute",
     overflow: "hidden",
   },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+    marginRight: 20,
+    marginLeft: 20,
+  },
+  bottomNavIcon: {
+    right: -10,
+    flex: 1,
+    position: "absolute",
+    top: 740,
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  nextButton: {
+    borderRadius: 30,
+    marginVertical: 0,
+    marginHorizontal: 16,
+    // marginBottom: 100,
+    position: "relative",
+    // width: "70%",
+    justifyContent: "center",
+    alignSelf: "center",
+    overflow: "hidden",
+  },
+  nextButtonText: {
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  tipTitleContainer: {
+    top: 430,
+    left: 20,
+    width: 375,
+    height: 45,
+    alignItems: "center",
+    flexDirection: "row",
+    position: "absolute",
+  },
+  tipsForYou1: {
+    fontSize: 30,
+    letterSpacing: 0,
+    fontWeight: "300",
+    fontFamily: "Nunito-Light",
+    color: "#000",
+    textAlign: "center"
+    },
 }
 );
 
