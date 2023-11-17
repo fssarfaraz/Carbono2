@@ -19,12 +19,12 @@ const PasswordResetSuccess = () => {
   return (
     <View style={styles.passwordResetSuccess}>
       <Image
-        style={[styles.passwordResetSuccessChild, styles.passwordPosition]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.passwordResetSuccessItem, styles.passwordPosition]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -121,11 +121,6 @@ const styles = StyleSheet.create({
     width: 41,
     height: 45,
   },
-  passwordPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
   iconLayout: {
     width: 33,
     marginLeft: 72,
@@ -145,13 +140,19 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     position: "absolute",
   },
-  passwordResetSuccessChild: {
-    top: 0,
-    height: 455,
+  ellipse1: {
+    top: -190,
+    height: 600,
+    width: 500,
+    position: "absolute",
+    left: 10,
   },
-  passwordResetSuccessItem: {
-    top: 422,
-    height: 430,
+  ellipse2: {
+    top: 470,
+    height: 600,
+    width: 500,
+    left: -90,
+    position: "absolute",
   },
   icon: {
     height: "100%",
