@@ -10,7 +10,7 @@ import { FontSize, FontFamily, Padding, Color } from "../GlobalStyles";
 
 const ForumCreate = () => {
   const navigation = useNavigation();
-
+// Test comment 1
   return (
     <View style={styles.forumCreate}>
       <Image
