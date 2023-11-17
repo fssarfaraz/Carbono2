@@ -7,6 +7,11 @@ import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Border, FontFamily, Color, Padding, FontSize } from "../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
+import {useState} from "react";
+import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import {getDatabase, ref, onValue} from 'firebase/database';
 
 const Games = () => {
   const navigation = useNavigation();
@@ -14,6 +19,50 @@ const Games = () => {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+
+  const [challenges, setChallenges] = useState([]);
+
+
+
+
+  // Get a reference to the database
+  const database = getDatabase();
+
+  // Set the user data in the database
+  // set(ref(database, 'challenge/' + id), challenge).then(() => 
+  // console.log('Data added successfully'))
+  // .catch((error) => console.error('Error adding data:', error));
+
+
+  const fetchChallenge = async() => {
+    
+    get(ref(database, 'Challenge'))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        // Data exists, use snapshot.val() to access the data
+        const data = snapshot.val();
+        const challengesArray = Object.entries(data).map(([challengeId, challenge]) => ({
+          id: challenge.id,
+          gameName: challenge.gameName,
+        }));
+        
+        console.log('Data retrieved successfully:', data);
+      } else {
+        console.log('No data available');
+      }
+    })
+    .catch((error) => {
+      console.error('Error getting data:', error);
+    });
+  }
+
+  useEffect(() => {
+    // Fetch challenge when the component mounts
+    fetchChallenge();
+  }, []);
+
+
+
 
   const gamesData = [
     { id: 1, name: "Space Voyagers 1", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
@@ -67,16 +116,16 @@ const Games = () => {
 
       {/* Horizontal Pressables */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {gamesData.map((game) => (
+        {challenges.map((game) => (
           <View key={game.id} style={styles.gameContainer}>
             <Pressable
               style={styles.gamePressable}
               onPress={() => handleNavigation("GameSelectedScreen", { gameId: game.id })}
             >
-              <Image style={styles.gameImage} contentFit="cover" source={game.image} />
+              <Image style={styles.gameImage} contentFit="cover" source={require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") } />
             </Pressable>
             <View style={styles.gameNameContainer}>
-              <Text style={styles.gameName}>{game.name}</Text>
+              <Text style={styles.gameName}>{game.gameName}</Text>
             </View>
           </View>
         ))}
