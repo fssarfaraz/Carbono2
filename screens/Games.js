@@ -20,50 +20,6 @@ const Games = () => {
     navigation.navigate(screen);
   };
 
-  const [challenges, setChallenges] = useState([]);
-
-
-
-
-  // Get a reference to the database
-  const database = getDatabase();
-
-  // Set the user data in the database
-  // set(ref(database, 'challenge/' + id), challenge).then(() => 
-  // console.log('Data added successfully'))
-  // .catch((error) => console.error('Error adding data:', error));
-
-
-  const fetchChallenge = async() => {
-    
-    get(ref(database, 'Challenge'))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        // Data exists, use snapshot.val() to access the data
-        const data = snapshot.val();
-        const challengesArray = Object.entries(data).map(([challengeId, challenge]) => ({
-          id: challenge.id,
-          gameName: challenge.gameName,
-        }));
-        
-        console.log('Data retrieved successfully:', data);
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error('Error getting data:', error);
-    });
-  }
-
-  useEffect(() => {
-    // Fetch challenge when the component mounts
-    fetchChallenge();
-  }, []);
-
-
-
-
   const gamesData = [
     { id: 1, name: "Space Voyagers 1", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
     { id: 2, name: "Space Voyagers 2", image: require("../assets/23brc4s1egslauncherpdp2560x14402560x144070cf344c9005-2.png") },
