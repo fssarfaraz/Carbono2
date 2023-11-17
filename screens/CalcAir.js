@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -8,7 +8,6 @@ import { Color, FontSize, FontFamily } from "../GlobalStyles";
 const CalcAir = () => {
   const [departure, SetDepature] = useState("");
   const [arrival, setArrival] = useState("");
-  // const [vehicleModel, setVehicleModel] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
@@ -16,6 +15,7 @@ const CalcAir = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       {/* Background Image */}
       <Image
@@ -35,7 +35,7 @@ const CalcAir = () => {
           </Pressable>
         </View>
 
-        <Text style={styles.headerTitle}>ENTER TRAVEL ROUTE AS THREE DIGIT AIRPORT CODES</Text>
+        <Text style={styles.headerTitle}>ENTER TRAVEL ROUTE AS THREE LETTER AIRPORT CODES</Text>
 
         {/* Saly6 Image */}
         <View style={styles.saly6Container}>
@@ -85,7 +85,7 @@ const CalcAir = () => {
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcAir2")}
+          onPress={() => {navigation.navigate('CalcAir2', {departure, arrival});}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -142,6 +142,7 @@ const CalcAir = () => {
         />
       </Pressable>
     </View>
+    </ScrollView>
   );
 };
 
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 110,
+    top: 80,
     left: 0,
     right: 0,
     paddingHorizontal: 30,

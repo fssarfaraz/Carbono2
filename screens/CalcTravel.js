@@ -3,8 +3,6 @@ import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, StatusBar, Text } from "react-native";
 import { Button } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -19,12 +17,12 @@ const CalcTravel = () => {
   return (
     <View style={styles.calcTravel}>
       <Image
-        style={[styles.calcTravelChild, styles.calcLayout]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.calcTravelItem, styles.calcLayout]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -168,13 +166,7 @@ const styles = StyleSheet.create({
     height: 30,
     overflow: "hidden",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
-  iconLayout2: {
+  Layout2: {
     width: 33,
     marginLeft: 72,
   },
@@ -216,11 +208,19 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
   },
-  calcTravelChild: {
-    top: 0,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 550,
+    left: -210,
+    position: "absolute",
   },
-  calcTravelItem: {
+  ellipse2: {
     top: 545,
+    height: 400,
+    width: 550,
+    left: 0,
+    position: "absolute",
   },
   iconBookSaved: {
     height: 31,
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
       fontFamily: FontFamily.nunitoBold,
       fontWeight: "700",
       position: "absolute",
-      top: 130,
+      top: 120,
       left: 0,
       right: 0,
   },
