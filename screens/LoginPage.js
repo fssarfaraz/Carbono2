@@ -1,4 +1,4 @@
-// React, React Native and expo imports
+// React and expo imports
 import * as React from "react";
 import {Image} from "expo-image";
 import 
@@ -11,6 +11,7 @@ import
   View,
 } from "react-native";
 
+// External library imports
 import {Button} from "@rneui/themed"; // Themed button component
 import {useNavigation} from "@react-navigation/native"; // Navigation hook
 import {FontSize, Color, FontFamily, Padding, Border} from "../GlobalStyles"; // Custom global styles
