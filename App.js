@@ -112,16 +112,16 @@ const database = getDatabase(app);
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
   const [bottomTabItemsNormal] = React.useState([
-    <IconPersonOutline />,
-    <IconBookSaved />,
-    <IconDiscussion />,
-    <IconGameControllerOutline />,
+    // <IconPersonOutline />,
+    // <IconBookSaved />,
+    // <IconDiscussion />,
+    // <IconGameControllerOutline />,
   ]);
   const [bottomTabItemsActive] = React.useState([
-    <IconPersonOutline />,
-    <IconBookSaved />,
-    <IconDiscussion />,
-    <IconGameControllerOutline />,
+    // <IconPersonOutline />,
+    // <IconBookSaved />,
+    // <IconDiscussion />,
+    // <IconGameControllerOutline />,
   ]);
   return (
     <Tab.Navigator
@@ -194,7 +194,7 @@ const App = () => {
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
     "Inter-Medium": require("./assets/fonts/Inter-Medium.ttf"),
     "Inter-Bold": require("./assets/fonts/Inter-Bold.ttf"),
-    "Numans-Regular": require("./assets/fonts/Numans-Regular.ttf"),
+    // "Numans-Regular": require("./assets/fonts/Numans-Regular.ttf"),
     "DMSans-Bold": require("./assets/fonts/DMSans-Bold.ttf"),
     "FiraSans-Regular": require("./assets/fonts/FiraSans-Regular.ttf"),
     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
