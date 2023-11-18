@@ -1,33 +1,43 @@
+// React and expo imports
 import * as React from "react";
 import {View, StyleSheet, ImageBackground} from "react-native";
 import {Image} from "expo-image";
-import {Button} from "@rneui/themed";
-import {useNavigation} from "@react-navigation/native";
-import {Color} from "../GlobalStyles";
 
+// External library imports
+import {Button} from "@rneui/themed"; // Themed button component
+import {useNavigation} from "@react-navigation/native"; // Navigation hook
+import {Color} from "../GlobalStyles"; //  Consistent coloring accross the app
+
+// Declaration of MainPage as a functional component
 const MainPage = () => {
+  // useNavigation hook to enable navigation actions within the component
   const navigation = useNavigation();
 
   return (
+    // View container for the entire main page
     <View style={styles.mainPage}>
+      {/* Ellipse image 1 for decorative background */}
       <Image
         style={[styles.mainPageChild]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
 
+ {/* Ellipse image 2 for decorative background */}
       <Image
         style={[styles.mainPageItem]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
 
+{/* Logo displayed using ImageBackground for additional styling options */}
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo1.png")}
       />
 
+{/* Button to navigate to the Login page */}
       <Button
         title="LOGIN"
         radius={18}
@@ -39,6 +49,7 @@ const MainPage = () => {
         buttonStyle={styles.logBtn}
       />
 
+{/* Button to navigate to the Registration page */}
       <Button
         title="SIGN UP"
         radius={18}
@@ -53,6 +64,7 @@ const MainPage = () => {
   );
 };
 
+// styles for the MainPage component
 const styles = StyleSheet.create(
   {
   logBtnText: 
@@ -153,5 +165,6 @@ const styles = StyleSheet.create(
 }
 );
 
+// Exporting the MainPage component 
 export default MainPage;
 

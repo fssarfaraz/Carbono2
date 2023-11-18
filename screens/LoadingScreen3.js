@@ -1,3 +1,4 @@
+// React and Expo imports
 import * as React from "react";
 import {Image} from "expo-image";
 import 
@@ -8,8 +9,10 @@ import
   View,
 } from "react-native";
 
+// External library imports
 import {FontFamily, Color} from "../GlobalStyles";
 
+// LoadingScreen3 functional component definition
 const LoadingScreen3 = () => {
   return (
     <View style={styles.loadingScreen3}>
@@ -42,7 +45,7 @@ const LoadingScreen3 = () => {
   );
 };
 
-//container styles for every element
+//Styles for login screen3 component
 const styles = StyleSheet.create({
   loadingScreen3Child: 
   {
@@ -95,4 +98,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Export the LoadingScreen3 component 
 export default LoadingScreen3;
