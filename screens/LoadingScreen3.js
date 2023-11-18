@@ -9,7 +9,7 @@ import
   View,
 } from "react-native";
 
-// Component imports
+// External library imports
 import {FontFamily, Color} from "../GlobalStyles";
 
 // LoadingScreen3 functional component definition
@@ -45,7 +45,7 @@ const LoadingScreen3 = () => {
   );
 };
 
-//container styles for every element
+//Styles for login screen3 component
 const styles = StyleSheet.create({
   loadingScreen3Child: 
   {
