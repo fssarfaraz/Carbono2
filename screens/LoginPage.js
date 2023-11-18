@@ -1,3 +1,4 @@
+// React, React Native and expo imports
 import * as React from "react";
 import {Image} from "expo-image";
 import 
@@ -10,34 +11,39 @@ import
   View,
 } from "react-native";
 
-import {Button} from "@rneui/themed";
-import {useNavigation} from "@react-navigation/native";
-import {FontSize, Color, FontFamily, Padding, Border} from "../GlobalStyles";
-import {getAuth, signInWithEmailAndPassword, initializeAuth} from 'firebase/auth';
+import {Button} from "@rneui/themed"; // Themed button component
+import {useNavigation} from "@react-navigation/native"; // Navigation hook
+import {FontSize, Color, FontFamily, Padding, Border} from "../GlobalStyles"; // Custom global styles
+import {getAuth, signInWithEmailAndPassword, initializeAuth} from 'firebase/auth'; //Firebase authentication
 import {ScrollView} from 'react-native';
 import {useState} from "react";
-import { app } from "../App";
+import { app } from "../App"; // Firebase app
 
+// LoginPage functional component definition
 const LoginPage = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Initializing navigation hook
 
+  // State variables to store user input
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Function to handle login process
   const handleLogin = async () => 
   {
-    const auth = getAuth(app);
+    const auth = getAuth(app); //Initializing Firebase auth with the app instance
 
     try 
     {
+      // Attempting to sign in with email and password
       await signInWithEmailAndPassword(auth, email, password)
         .then(() => 
         {
-          // User logged in
+          // Navigation to user profile page upon successful login
           navigation.navigate("BottomTabsRoot", {screen: "UserProfile"});  
         })
         .catch((error) => 
         {
+          // Alerting the user in case of an error
           alert(error.message);
         });
   
@@ -48,9 +54,11 @@ const LoginPage = () => {
   };
 
   return (
+    // ScrollView to allow scrolling through the page
     <ScrollView>
-
+{/* Main View container for the login page */}
     <View style={styles.loginPage}>
+      {/* Background Ellipse images */}
       <Image
         style={[styles.loginPageChild]}
         contentFit="cover"
@@ -63,13 +71,14 @@ const LoginPage = () => {
         source={require("../assets/ellipse-14.png")}
       />
 
+  {/* Logo at the top of the page */}
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
     
-    
+     {/* TouchableOpacity for the login button */}
       <TouchableOpacity
         style={styles.loginWrapper}
         activeOpacity={0.2}
@@ -78,6 +87,7 @@ const LoginPage = () => {
         <Text style={styles.login}>Login</Text>
       </TouchableOpacity>
 
+  {/* Text input for email */}
       <TextInput
         style={[styles.loginPageInner, styles.loginPageInnerShadowBox]}
         placeholder="Email"
@@ -86,6 +96,7 @@ const LoginPage = () => {
         value={email}
       />
 
+  {/* Text input for password */}
       <TextInput
         secureTextEntry 
         style={[styles.frameTextinput, styles.loginPageInnerShadowBox]}
@@ -94,7 +105,7 @@ const LoginPage = () => {
         onChangeText={setPassword}
         value={password}
       />
-
+  {/* Buttons for registering a new account and resetting password */}
       <Button
         title="Don’t have an account? Register Now"
         radius="5"
@@ -121,6 +132,7 @@ const LoginPage = () => {
   );
 };
 
+// Styles for the Login page component
 const styles = StyleSheet.create(
   {
   regsBtnText: 
@@ -301,4 +313,5 @@ const styles = StyleSheet.create(
   },
 });
 
+// Exporting the login page component
 export default LoginPage;
