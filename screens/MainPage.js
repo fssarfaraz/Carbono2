@@ -3,6 +3,7 @@ import * as React from "react";
 import {View, StyleSheet, ImageBackground} from "react-native";
 import {Image} from "expo-image";
 
+// External library imports
 import {Button} from "@rneui/themed"; // Themed button component
 import {useNavigation} from "@react-navigation/native"; // Navigation hook
 import {Color} from "../GlobalStyles"; //  Consistent coloring accross the app
