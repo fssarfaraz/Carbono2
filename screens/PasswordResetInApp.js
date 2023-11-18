@@ -23,7 +23,7 @@ import { LinearGradient } from "expo-linear-gradient"; //Gradient component for 
 const PasswordResetInApp = () => {
   const navigation = useNavigation(); // Hook to enable navigation
 
-  // Function to handle navigation to different screens
+// Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
