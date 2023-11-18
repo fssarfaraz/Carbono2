@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { LinearGradient } from "expo-linear-gradient";  // Importing LinearGradient for gradient styles
+import { useNavigation } from "@react-navigation/native";  // To navigate between screens
+import { FontAwesome5 } from "@expo/vector-icons";   // Importing FontAwesome icons
+import { Color, FontSize, FontFamily } from "../GlobalStyles";  // Importing global style constants
 
 const CalcCar = () => {
+  // State variables for vehicle make and model
   const [vehicleMake, setVehicleMake] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
-  const navigation = useNavigation();
+  const navigation = useNavigation();     // Navigation hook
 
+  // Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
     <View style={styles.container}>
+      // Full-screen background image
       {/* Background Image */}
       <Image
         style={styles.backgroundImage}
@@ -23,6 +26,7 @@ const CalcCar = () => {
       />
 
       {/* Content Container */}
+      // Main content area
       <View style={styles.contentContainer}>
         {/* Header */}
         <View style={styles.header}>
@@ -30,13 +34,16 @@ const CalcCar = () => {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
+            // FontAwesome back icon
             <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
           </Pressable>
         </View>
 
+        // Screen title
         <Text style={styles.headerTitle}>ENTER VEHICLE DETAILS</Text>
 
         {/* Saly6 Image */}
+        // Container for a decorative image (Saly6)
         <View style={styles.saly6Container}>
           <Image
             style={styles.saly6Icon}
@@ -46,6 +53,7 @@ const CalcCar = () => {
         </View>
 
         {/* Vehicle Make Input */}
+        // Input field for vehicle make with gradient styling
         <LinearGradient
           style={styles.inputContainer}
           locations={[0, 1]}
@@ -62,6 +70,7 @@ const CalcCar = () => {
             fontSize={FontSize.size_3xl}
           />
         </LinearGradient>
+        // Input field for vehicle model with similar styling to the make field
 
         {/* Vehicle Model Input */}
         <LinearGradient
@@ -81,6 +90,7 @@ const CalcCar = () => {
           />
         </LinearGradient>
 
+        // Next button to proceed, with gradient styling
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
@@ -98,7 +108,9 @@ const CalcCar = () => {
       </View>
 
       {/* Bottom Navigation Bar */}
+      // Bottom navigation bar with icons for quick navigation
       <View style={styles.bottomNavBar}>
+      // Pressable icons for navigating to UserProfile, Educational, Forum, and Games
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
             style={styles.bottomNavIcon}
@@ -126,6 +138,7 @@ const CalcCar = () => {
       </View>
 
       {/* Surface Icon */}
+      // Surface icon at the bottom of the screen
       <Image
         style={styles.surfaceIcon}
         resizeMode="cover"
@@ -133,6 +146,7 @@ const CalcCar = () => {
       />
 
       {/* Calculator Icon */}
+      // Calculator icon with pressable functionality for navigation
       <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
@@ -144,7 +158,9 @@ const CalcCar = () => {
   );
 };
 
+// StyleSheet to style the component
 const styles = StyleSheet.create({
+  // Styling definitions for container, backgroundImage, content area, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
