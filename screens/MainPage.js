@@ -1,4 +1,4 @@
-// React, React Native and expo imports
+// React and expo imports
 import * as React from "react";
 import {View, StyleSheet, ImageBackground} from "react-native";
 import {Image} from "expo-image";
