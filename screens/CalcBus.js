@@ -50,7 +50,7 @@ const CalcBus = () => {
           />
         </View>
 
-        {/* Vehicle Type Input */}
+        Vehicle Type Input
         <LinearGradient
           style={styles.inputContainer}
           locations={[0, 1]}
