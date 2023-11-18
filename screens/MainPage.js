@@ -164,6 +164,6 @@ const styles = StyleSheet.create(
 }
 );
 
-// Exporting the MainPage component for use in other parts of the application
+// Exporting the MainPage component 
 export default MainPage;
 
