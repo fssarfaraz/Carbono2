@@ -14,9 +14,18 @@ import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import SupportCard from "../components/SupportCard";
 import { Border, FontFamily, FontSize, Color, Padding } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+// import * as React from "react";
+// import {Button} from "@rneui/themed";
+// import {StyleSheet, ImageBackground, Image, View} from "react-native";
 
 const SettingsPage = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
     <View style={styles.settingsPage}>
@@ -30,182 +39,170 @@ const SettingsPage = () => {
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr7.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={styles.iconPersonOutlineParent}>
+
+      {/* Header */}
+      <View style={styles.header}>
         <Pressable
-          style={styles.iconLayout1}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
         >
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
+      </View>
+
+      {/* Settings */}
+      <View style={styles.settingContainer}>
+        <Text style={styles.settings}>SETTINGS</Text>
+      </View>
+
+      <View style={styles.generalContainer}>
+        <View style={styles.textBackground}>
+          <Text style={styles.supportTypo}>GENERAL</Text>
+        </View>
+      </View>
+
+      <View style={styles.generalSectionContainer}>
+        {/* Next Button */}
+        <View style={styles.generalContainer1}>
+          <View style={styles.editProfileContainer}>
+            <Pressable
+              style={styles.nextButton}
+              onPress={() => handleNavigation("EditProfile")}
+            >
+              <Text style={styles.nextButtonText}>Edit Profile</Text>
+
+            <Image style={[styles.iconamoonprofilelight]} 
+                resizeMode="cover" 
+                source={require("../assets/iconamoonprofilelight.png")} 
+            />
+            </Pressable>
+          </View>
+
+          <View style={styles.notificationContainer}>
+            <Pressable
+              style={styles.nextButton}
+              onPress={() => handleNavigation("UserProfile")}
+            >
+              <Text style={styles.nextButtonText}>Notification</Text>
+
+              <Image style={[styles.iconamoonnotification1]} 
+                resizeMode="cover" 
+                source={require("../assets/iconamoonnotification.png")} />
+            </Pressable>
+          </View>
+
+          <View style={styles.passwordResetContainer}>
+            <Pressable
+              style={styles.nextButton}
+              onPress={() => handleNavigation("PasswordResetInApp")}
+            >
+              <Text style={styles.nextButtonText}>Password Reset</Text>
+
+              <ImageBackground style={styles.padlockOutlineIcon1} 
+                resizeMode="cover" 
+                source={require("../assets/padlockoutline.png")} />
+            </Pressable>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.supportContainer}>
+        <View style={styles.supportTextBackground}>
+          <Text style={styles.supportTypo1}>SUPPORT</Text>
+        </View>
+      </View>
+
+      <View style={styles.supportSectionContainer}>
+        {/* Next Button */}
+        <View style={styles.supportContainer1}>
+          <View style={styles.helpContainer}>
+            <Pressable
+              style={styles.nextButton}
+              onPress={() => handleNavigation("EditProfile")}
+            >
+              <Text style={styles.nextButtonText}>Help & Support</Text>
+
+            <Image style={[styles.helpicon]} 
+                resizeMode="cover" 
+                source={require("../assets/iconamoonprofilelight.png")} 
+            />
+            </Pressable>
+          </View>
+
+          <View style={styles.termsContainer}>
+            <Pressable
+              style={styles.nextButton}
+              onPress={() => handleNavigation("UserProfile")}
+            >
+              <Text style={styles.nextButtonText}>Terms and Policies</Text>
+
+              <Image style={[styles.termsIcon]} 
+                resizeMode="cover" 
+                source={require("../assets/iconamoonnotification.png")} />
+            </Pressable>
+          </View>
+
+        </View>
+      </View>
+
+      <View style={styles.accountContainer}>
+        <View style={styles.accountBackground}>
+          <Text style={styles.accountTypo}>ACCOUNT</Text>
+        </View>
+      </View>
+
+      <View style={styles.rectangleView}>
+        <Pressable 
+          onPress={() => handleNavigation("LoginPage")}>
+        <Image style={styles.vectorIcon1} resizeMode="cover" source={require("../assets/Vector.png")} />
+        <Text style={styles.logOut}>LOG OUT</Text>
+        </Pressable>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-person-outline.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Educational")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-book-saved3.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Forum")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-discussion.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Games")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline4.png")}
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
           />
         </Pressable>
       </View>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Image
-        style={styles.settingsPageInner}
-        contentFit="cover"
-        source={require("../assets/rectangle-1118.png")}
-      />
-      <Image
-        style={[styles.rectangleIcon, styles.rectangleIconLayout]}
-        contentFit="cover"
-        source={require("../assets/rectangle-1119.png")}
-      />
-      <Button
-        title="LOG OUT"
-        radius="10"
-        iconPosition="left"
-        type="clear"
-        titleStyle={styles.groupButtonBtn}
-        onPress={() => navigation.navigate("MainPage")}
-        containerStyle={styles.groupButtonBtn1}
-        buttonStyle={styles.groupButtonBtn2}
-      />
-      <Image
-        style={[styles.settingsPageChild1, styles.rectangleIconLayout]}
-        contentFit="cover"
-        source={require("../assets/rectangle-1120.png")}
-      />
-      <Text style={[styles.support, styles.supportTypo]}>SUPPORT</Text>
-      <Text style={[styles.general, styles.supportTypo]}>GENERAL</Text>
-      <Text style={[styles.account, styles.supportTypo]}>ACCOUNT</Text>
-      <Text style={styles.settings}>SETTINGS</Text>
-      <Button
-        radius="5"
-        iconPosition="left"
-        type="clear"
-        color="#fff"
-        icon={{ name: "chevron-left", type: "material-community" }}
-        onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-        }
-        containerStyle={styles.materialSymbolsarrowBackIoIconBtn}
-        buttonStyle={styles.materialSymbolsarrowBackIoIconBtn1}
-      />
-      <View style={[styles.rectangleParent, styles.groupChildLayout]}>
-        <View style={[styles.groupChild, styles.groupChildLayout]} />
-        <Button
-          title="Password Reset"
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          color="#000"
-          titleStyle={styles.passwordResetBtn}
-          onPress={() => navigation.navigate("PasswordResetInApp")}
-          containerStyle={styles.passwordResetBtn1}
-          buttonStyle={styles.passwordResetBtn2}
-        />
-        <View style={styles.editProfileParent}>
-          <Button
-            title="Edit profile"
-            radius="5"
-            iconPosition="left"
-            type="clear"
-            color="#000"
-            titleStyle={styles.editProfileBtn}
-            onPress={() => navigation.navigate("EditProfile")}
-            containerStyle={styles.editProfileBtn1}
-            buttonStyle={styles.editProfileBtn2}
-          />
-          <Button
-            title="Notifications"
-            radius="5"
-            iconPosition="left"
-            type="clear"
-            color="#000"
-            titleStyle={styles.notificationsBtn}
-            containerStyle={styles.notificationsBtn1}
-            buttonStyle={styles.notificationsBtn2}
-          />
-          <Image
-            style={styles.iconamoonnotification}
-            contentFit="cover"
-            source={require("../assets/iconamoonnotification.png")}
-          />
-        </View>
-      </View>
-      <Image
-        style={styles.iconamoonprofileLight}
-        contentFit="cover"
-        source={require("../assets/iconamoonprofilelight.png")}
-      />
-      <ImageBackground
-        style={styles.padlockOutlineIcon}
-        resizeMode="cover"
-        source={require("../assets/padlockoutline.png")}
-      />
-      <SupportCard />
+      
     </View>
   );
 };
@@ -218,22 +215,22 @@ const styles = StyleSheet.create({
     width: 41,
     height: 45,
   },
-  groupButtonBtn: {
-    color: "#5a09c1",
-    fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  groupButtonBtn1: {
-    left: "50%",
-    marginLeft: -179.5,
-    top: 624,
-    position: "absolute",
-  },
-  groupButtonBtn2: {
-    width: 347,
-    height: 45,
-  },
+  // groupButtonBtn: {
+  //   color: "#5a09c1",
+  //   fontSize: 16,
+  //   fontWeight: "700",
+  //   fontFamily: "Nunito-Bold",
+  // },
+  // groupButtonBtn1: {
+  //   left: "50%",
+  //   marginLeft: -179.5,
+  //   top: 624,
+  //   position: "absolute",
+  // },
+  // groupButtonBtn2: {
+  //   width: 347,
+  //   height: 45,
+  // },
   materialSymbolsarrowBackIoIconBtn: {
     left: 41,
     top: 91,
@@ -244,64 +241,9 @@ const styles = StyleSheet.create({
     height: 30,
     overflow: "hidden",
   },
-  passwordResetBtn: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "600",
-    fontFamily: "Nunito-SemiBold",
-  },
-  passwordResetBtn1: {
-    left: 76,
-    top: 119,
-    position: "absolute",
-  },
-  passwordResetBtn2: {},
-  editProfileBtn: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "600",
-    fontFamily: "Nunito-SemiBold",
-  },
-  editProfileBtn1: {
-    left: 63,
-    top: 0,
-    position: "absolute",
-  },
-  editProfileBtn2: {},
-  notificationsBtn: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "600",
-    fontFamily: "Nunito-SemiBold",
-  },
-  notificationsBtn1: {
-    left: 65,
-    top: 51,
-    position: "absolute",
-  },
-  notificationsBtn2: {},
-  iconLayout: {
-    width: 33,
-    marginLeft: 72,
-  },
-  iconLayout1: {
-    height: 30,
-    width: 30,
-  },
   rectangleIconLayout: {
     width: 358,
     borderRadius: Border.br_3xs,
-    position: "absolute",
-  },
-  supportTypo: {
-    height: 28,
-    width: 101,
-    fontFamily: FontFamily.robotoBold,
-    fontWeight: "700",
-    letterSpacing: 0,
-    fontSize: FontSize.body15Regular_size,
-    textAlign: "center",
-    color: Color.colorDarkslateblue_100,
     position: "absolute",
   },
   groupChildLayout: {
@@ -353,14 +295,6 @@ const styles = StyleSheet.create({
     padding: Padding.p_3xs,
     position: "absolute",
   },
-  settingsPageInner: {
-    top: 169,
-    width: 351,
-    height: 36,
-    borderRadius: Border.br_3xs,
-    left: 17,
-    position: "absolute",
-  },
   rectangleIcon: {
     top: 574,
     left: 15,
@@ -375,17 +309,44 @@ const styles = StyleSheet.create({
     top: 416,
     left: 9,
   },
-  general: {
-    top: 177,
-    left: 8,
-  },
   account: {
     top: 583,
     left: 7,
   },
-  settings: {
+  rectangleParent: {
+    marginLeft: -179.5,
+    top: 221,
+  },
+  settingsPage: {
+    backgroundColor: Color.labelDarkPrimary,
+    flex: 1,
+    height: 852,
+    overflow: "hidden",
+    width: "100%",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 60,
+    left: 20,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  settingContainer: {
     top: 91,
-    left: 97,
+    // left: 97,
+    width: 206,
+    height: 41,
+    position: "absolute",
+    alignSelf: "center",
+  },
+  settings: {
+    textAlign: "center",
     fontSize: FontSize.size_7xl,
     letterSpacing: 1,
     fontWeight: "600",
@@ -396,56 +357,312 @@ const styles = StyleSheet.create({
     color: Color.colorDarkslateblue_100,
     position: "absolute",
   },
-  groupChild: {
-    marginLeft: -167.5,
-    backgroundColor: Color.colorDarkslateblue_200,
-    borderRadius: Border.br_3xs,
-    top: 0,
-    width: 335,
-    left: "50%",
-  },
-  iconamoonnotification: {
-    top: 44,
-    height: 26,
-    borderRadius: Border.br_3xs,
-    width: 30,
-    left: 0,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  editProfileParent: {
-    top: 23,
-    left: 21,
-    width: 164,
-    height: 70,
-    position: "absolute",
-  },
-  rectangleParent: {
-    marginLeft: -179.5,
-    top: 221,
-  },
-  iconamoonprofileLight: {
-    top: 234,
-    left: 41,
-    width: 31,
-    height: 32,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  padlockOutlineIcon: {
-    top: 334,
-    left: 42,
-    width: 29,
-    height: 29,
-    position: "absolute",
-  },
-  settingsPage: {
-    backgroundColor: Color.labelDarkPrimary,
-    flex: 1,
-    height: 852,
-    overflow: "hidden",
+  generalContainer: {
+    top: 169,
     width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    paddingLeft: 20, // Add horizontal padding
+    paddingRight: 20, // Add horizontal padding
   },
+  textBackground: {
+    width: "100%", // Set the width to 70%
+    borderRadius: 7, // Set border radius
+    backgroundColor: "#428DF829", // Set background color
+    padding: 5, // Add horizontal padding
+  },
+  supportTypo: {
+    height: 28,
+    fontFamily: FontFamily.robotoBold,
+    fontWeight: "700",
+    letterSpacing: 0,
+    fontSize: FontSize.body15Regular_size,
+    textAlign: "left",
+    color: Color.colorDarkslateblue_100,
+    padding: 5,
+    left: 10,
+    letterSpacing: 1,
+  },
+  generalSectionContainer: {
+    flex: 1,
+    top: 230,
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    paddingTop: 20, // Add horizontal padding
+  },
+  generalContainer1: {
+    top: 0,
+    width: "90%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    // paddingLeft: 20, // Add horizontal padding
+    // paddingRight: 20, // Add horizontal padding
+    borderRadius: 10,
+    backgroundColor: "rgba(36, 39, 96, 0.05)",
+    height: 155,
+    marginLeft: 20, // Add horizontal padding
+    marginRight: 20, // Add horizontal padding
+  },
+  editProfileContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 0,
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    // paddingLeft: 20, // Add horizontal padding  
+    paddingRight: 20, // Add horizontal padding 
+    paddingTop: 20, // Add horizontal padding
+  },
+  iconamoonprofilelight: {
+    width: 24,
+    height: 24,
+    position: "absolute",
+    right: 10,
+    left: 25
+  },
+  nextButton: {
+    left: 10,
+  },
+  nextButtonText: {
+    left: 100,
+    color: "#000",
+    fontSize: 16,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    textAlign: "right",
+  },
+  notificationContainer: {
+    top: 50,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    // paddingLeft: 20, // Add horizontal padding  
+    paddingRight: 20, // Add horizontal padding 
+    paddingTop: 15, // Add horizontal padding
+  },
+  iconamoonnotification1: {
+    width: 24,
+    height: 24,
+    position: "absolute",
+    right: 10,
+    left: 25
+  },
+  passwordResetContainer: {
+    top: 100,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    // paddingLeft: 20, // Add horizontal padding  
+    paddingRight: 20, // Add horizontal padding 
+    paddingTop: 10, // Add horizontal padding
+  },
+  padlockOutlineIcon1: {
+    width: 24,
+    height: 24,
+    position: "absolute",
+    right: 10,
+    left: 25
+  },
+  supportContainer: {
+    top: 410,
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    paddingLeft: 20, // Add horizontal padding
+    paddingRight: 20, // Add horizontal padding
+  },
+  supportTextBackground: {
+    width: "100%", // Set the width to 70%
+    borderRadius: 7, // Set border radius
+    backgroundColor: "#428DF829", // Set background color
+    padding: 5, // Add horizontal padding
+  },
+  supportTypo1: {
+    height: 28,
+    fontFamily: FontFamily.robotoBold,
+    fontWeight: "700",
+    letterSpacing: 0,
+    fontSize: FontSize.body15Regular_size,
+    textAlign: "left",
+    color: Color.colorDarkslateblue_100,
+    padding: 5,
+    left: 10,
+    letterSpacing: 1,
+  },
+  supportSectionContainer: {
+    flex: 1,
+    top: 470,
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    paddingTop: 20, // Add horizontal padding
+  },
+  supportContainer1: {
+    top: 0,
+    width: "90%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    borderRadius: 10,
+    backgroundColor: "rgba(36, 39, 96, 0.05)",
+    height: 105,
+    marginLeft: 20, // Add horizontal padding
+    marginRight: 20, // Add horizontal padding
+  },
+  helpContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 0,
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    // paddingLeft: 20, // Add horizontal padding  
+    paddingRight: 20, // Add horizontal padding 
+    paddingTop: 20, // Add horizontal padding
+  },
+  helpicon: {
+    width: 24,
+    height: 24,
+    position: "absolute",
+    right: 10,
+    left: 25
+  },
+  nextButton: {
+    left: 10,
+  },
+  nextButtonText: {
+    left: 100,
+    color: "#000",
+    fontSize: 16,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    textAlign: "right",
+  },
+  termsContainer: {
+    top: 50,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    // paddingLeft: 20, // Add horizontal padding  
+    paddingRight: 20, // Add horizontal padding 
+    paddingTop: 15, // Add horizontal padding
+  },
+  termsIcon: {
+    width: 24,
+    height: 24,
+    position: "absolute",
+    right: 10,
+    left: 25
+  },
+  accountContainer: {
+    top: 600,
+    width: "100%",
+    position: "absolute",
+    alignSelf: "left", // Align to the left of the screen
+    paddingLeft: 20, // Add horizontal padding
+    paddingRight: 20, // Add horizontal padding
+  },
+  accountBackground: {
+    width: "100%", // Set the width to 70%
+    borderRadius: 7, // Set border radius
+    backgroundColor: "#428DF829", // Set background color
+    padding: 5, // Add horizontal padding
+  },
+  accountTypo: {
+    height: 28,
+    fontFamily: FontFamily.robotoBold,
+    fontWeight: "700",
+    letterSpacing: 0,
+    fontSize: FontSize.body15Regular_size,
+    textAlign: "left",
+    color: Color.colorDarkslateblue_100,
+    padding: 5,
+    left: 10,
+    letterSpacing: 1,
+  },
+  rectangleView: {
+    borderRadius: 10,
+    backgroundColor: "rgba(1, 66, 122, 0.05)",
+    flex: 1,
+    width: "85%",
+    height: 45,
+    position: "absolute",
+    bottom: 150,
+    marginLeft: 20, // Add horizontal padding
+    marginRight: 20, // Add horizontal padding
+    alignSelf: "center",
+    paddingTop: 12,
+  },
+  vectorIcon1: {
+    width: 22,
+    height: 22,
+    position: "absolute",
+    marginLeft: 30, // Add horizontal padding
+    },
+  logOut: {
+    fontSize: 16,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#5a09c1",
+    textAlign: "left",
+    width: "100%",
+    paddingLeft: 77,
+    },
+    bottomNavBar: {
+      flexDirection: "row",
+      height: 70,
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 16,
+      paddingBottom: 10,
+      position: "relative",
+      zIndex: 2,
+    },
+    surfaceIcon: {
+      flex: 1,
+      width: "100%",
+      height: 135,
+      position: "absolute",
+      bottom: 0,
+      zIndex: 1,
+    },
+    bottomNavIcon: {
+      width: 30,
+      height: 30,
+      marginBottom: 50,
+      top: 735,
+    },
+    iconCalculator: {
+      top: 728,
+      width: 40,
+      height: 45,
+      alignSelf: "center",
+      position: "absolute",
+      zIndex: 2,
+    },
+    iconCalculatorParent: {
+      flex: 1,
+      position: "absolute",
+      width: "100%",
+      padding: 10,
+      zIndex: 2,
+    },
+  
 });
 
 export default SettingsPage;
