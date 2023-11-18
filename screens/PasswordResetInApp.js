@@ -1,4 +1,3 @@
-// React and Expo imports
 import * as React from "react";
 import { Image } from "expo-image";
 import {
@@ -9,29 +8,23 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
-
-// External library imports
-import { Button } from "@rneui/themed"; // Themed button component
+import { Button } from "@rneui/themed";
 import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
-import { FontAwesome5 } from "@expo/vector-icons"; //Icons for UI elements
-import { LinearGradient } from "expo-linear-gradient"; //Gradient component for buttons and backgrounds
+import { FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
-// PasswordResetInApp functional component definition
 const PasswordResetInApp = () => {
   const navigation = useNavigation();
 
-  // Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
-     // Main View container for the Password Reset screen
     <View style={[styles.passwordResetInApp, styles.fieldLayout]}>
-      {/* Background Ellipse Images */}
       <Image
         style={[styles.passwordResetInAppChild, styles.passwordPosition1]}
         contentFit="cover"
@@ -44,7 +37,7 @@ const PasswordResetInApp = () => {
       />
 
 
-      {/* Header with back button */}
+      {/* Header */}
       <View style={styles.header}>
         <Pressable
           style={styles.backButton}
@@ -54,7 +47,6 @@ const PasswordResetInApp = () => {
         </Pressable>
       </View>
 
-     {/* Reset Password text at the top */}
       <View style={[styles.resetPasswordContainer]}>
         <Text style={styles.resetPassword}>Reset Password</Text>
       </View>
@@ -72,7 +64,7 @@ const PasswordResetInApp = () => {
             secureTextEntry={true}
           />
         </View>
-      {/* Confirm New Password Input Field */}
+
         <Text style={[styles.confirmPassword]}>Re-enter Password</Text>
         <View style={[styles.passwordField1]}>
           <TextInput
@@ -84,7 +76,6 @@ const PasswordResetInApp = () => {
         </View>
       </View>
 
-    {/* Buttons for Resetting Password and Canceling */}
       <View style={[styles.buttonContainer]}>
         <Pressable
             style={styles.nextButton}
@@ -163,7 +154,6 @@ const PasswordResetInApp = () => {
   );
 };
 
-// Styles for the PasswordResetInApp component
 const styles = StyleSheet.create({
   iconCalculatorBtn: {
     position: "relative",
@@ -452,5 +442,4 @@ const styles = StyleSheet.create({
 
 });
 
-// Export the PasswordResetInApp component
 export default PasswordResetInApp;
