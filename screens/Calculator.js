@@ -51,7 +51,7 @@ const Calculator = () => {
           </>
         </TouchableHighlight>
 
-        <Pressable style={[styles.alternativesSwitch, styles.trackingLayout]}>
+        <Pressable onPress={() => handleNavigation("CalcTrack")} style={[styles.alternativesSwitch, styles.trackingLayout]}>
           <LinearGradient
             style={[styles.trackingSwitchChild, styles.trackingLayout]}
             locations={[0, 1]}
