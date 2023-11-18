@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { calcAirTravel } from "../components/API";
+import { useRoute } from '@react-navigation/native';
+import {getDatabase, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
 
 const CalcAir2 = () => {
   const [passengerNumber, setPassengerNumber] = useState("");
@@ -13,16 +18,108 @@ const CalcAir2 = () => {
     navigation.navigate(screen);
   };
 
+  const route = useRoute();
+
+  const {departure, arrival} = route.params;
+  console.log("Departure, Arrival: ", departure, arrival);
+
+  // Create a reference to the database
+  const database = getDatabase();
+  console.log('connected to database');
+  const auth = getAuth(app);
+  console.log('got auth');
+  const user = auth.currentUser; 
+  console.log('got current user');
+  const email = user.email; 
+  console.log('User email: ', email);
+  // Split email on "@" 
+  const emailParts = email.split('@');
+  // Get first part (before "@")
+  const emailName = emailParts[0];
+  console.log(emailName);
+
+  const addToDatabase = async (result) => 
+  {
+    // Get the current date
+    const date = new Date();
+    const formattedDate = date.toISOString().split('T')[0];
+    console.log(formattedDate);
+    const type = 'air';
+    const key = `${formattedDate}-${emailName}-${type}`;
+    console.log('Defined key', key);
+    const entry = 
+    {
+      email: email,
+      type: type,
+      date: formattedDate,
+      result: result
+    };
+    console.log('Defined entry')
+    // Set the user data in the database
+    set(ref(database, 'footprint-travel/' + key), entry).then(() => 
+    {
+    }).catch((error) => 
+    {
+      // An error occurred
+      alert("Error adding to database: " + error.message);
+    });
+  }
+
+  const handleSubmit = async () => 
+  {
+    if(!passengerNumber) 
+    {
+      alert('Please enter the number of flights taken');
+      return;
+    }
+
+    // Check if distance is a valid number
+    if (isNaN(passengerNumber)) 
+    {
+      alert('Please enter a valid number');
+      return;
+    }
+
+    // convert to number
+    const numberP = parseInt(passengerNumber);
+    try 
+    {
+      console.log('Calling calcAirTravel with:', departure, arrival, numberP);
+      console.log(typeof departure, typeof arrival, typeof numberP);
+      console.log('calcAirTravel called');
+      const result = await calcAirTravel(departure, arrival, numberP);
+      try
+      {
+        console.log('calling database');
+        await addToDatabase(result);
+        console.log('Added to database');
+      }
+      catch (error)
+      {
+        console.error(error);
+        alert('Error adding to the database');
+      }
+      navigation.navigate('CalcCar3', {result});
+    } 
+    catch (error) 
+    {
+      console.error(error);
+      alert('Error calculating');
+      return;
+    }
+  }
+
   return (
+    <ScrollView>
     <View style={styles.container}>
       {/* Background Image */}
       <Image
-        style={[styles.calcElectricity2Child, styles.calcLayout]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.calcElectricity2Item, styles.calcLayout]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -39,7 +136,7 @@ const CalcAir2 = () => {
           </Pressable>
         </View>
 
-        <Text style={styles.headerTitle}>ENTER THE NUMBER OF PASSENGERS</Text>
+        <Text style={styles.headerTitle}>ENTER THE NUMBER OF FLIGHTS TAKEN</Text>
 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
@@ -60,7 +157,7 @@ const CalcAir2 = () => {
             style={styles.textInput}
             value={passengerNumber}
             onChangeText={setPassengerNumber}
-            placeholder="Number of Passengers"
+            placeholder="Number of Flights"
             placeholderTextColor="#fff"
             fontWeight="700"
             textAlign="center"
@@ -71,7 +168,7 @@ const CalcAir2 = () => {
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcCar3")}
+          onPress={handleSubmit}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -128,6 +225,7 @@ const CalcAir2 = () => {
         />
       </Pressable>
     </View>
+    </ScrollView>
   );
 };
 
@@ -141,18 +239,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 550,
+    left: -210,
     position: "absolute",
   },
-  calcElectricity2Child: {
-    left: 100,
-    top: 0,
-  },
-  calcElectricity2Item: {
+  ellipse2: {
     top: 545,
+    height: 400,
+    width: 550,
+    left: 20,
+    position: "absolute",
   },
   contentContainer: {
     flex: 1,
@@ -164,7 +263,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
-    top: 66,
+    top: 40,
   },
   backButton: {
     flex: 1,
@@ -179,7 +278,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 120,
+    top: 110,
     left: 0,
     right: 0,
     paddingHorizontal: 16,
