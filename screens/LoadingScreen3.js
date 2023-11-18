@@ -98,5 +98,5 @@ const styles = StyleSheet.create({
   },
 });
 
-// Export the LoadingScreen3 component for use in other parts of the app
+// Export the LoadingScreen3 component 
 export default LoadingScreen3;
