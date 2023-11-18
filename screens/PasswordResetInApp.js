@@ -13,7 +13,7 @@ import {
 // External library imports
 import { Button } from "@rneui/themed"; // Themed button component
 import Property1HomeImage from "../components/Property1HomeImage";
-import { useNavigation } from "@react-navigation/native"; 
+import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons"; //Icons for UI elements
@@ -21,17 +21,17 @@ import { LinearGradient } from "expo-linear-gradient"; //Gradient component for 
 
 // PasswordResetInApp functional component definition
 const PasswordResetInApp = () => {
-  const navigation = useNavigation(); // Hook to enable navigation
+  const navigation = useNavigation();
 
-// Function to handle navigation to different screens
+  // Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
-    // Main View container for the Password Reset screen
+     // Main View container for the Password Reset screen
     <View style={[styles.passwordResetInApp, styles.fieldLayout]}>
-       {/* Background Ellipse Images */}
+      {/* Background Ellipse Images */}
       <Image
         style={[styles.passwordResetInAppChild, styles.passwordPosition1]}
         contentFit="cover"
@@ -54,13 +54,14 @@ const PasswordResetInApp = () => {
         </Pressable>
       </View>
 
-      {/* Reset Password text at the top */}
+     {/* Reset Password text at the top */}
       <View style={[styles.resetPasswordContainer]}>
         <Text style={styles.resetPassword}>Reset Password</Text>
       </View>
 
       {/* create New Password Text and a password field 
       and create a Re-enter text and password field */}
+
       <View style={[styles.passwordContainer]}>
         <Text style={[styles.newPassword]}>New Password</Text>
         <View style={[styles.passwordField]}>
@@ -71,7 +72,7 @@ const PasswordResetInApp = () => {
             secureTextEntry={true}
           />
         </View>
-        {/* Confirm New Password Input Field */}
+      {/* Confirm New Password Input Field */}
         <Text style={[styles.confirmPassword]}>Re-enter Password</Text>
         <View style={[styles.passwordField1]}>
           <TextInput
@@ -83,7 +84,7 @@ const PasswordResetInApp = () => {
         </View>
       </View>
 
-        {/* Buttons for Resetting Password and Canceling */}
+    {/* Buttons for Resetting Password and Canceling */}
       <View style={[styles.buttonContainer]}>
         <Pressable
             style={styles.nextButton}
@@ -98,7 +99,7 @@ const PasswordResetInApp = () => {
               <Text style={styles.nextButtonText}>Reset Password</Text>
             </LinearGradient>
         </Pressable>
-        {/* Cancel Button */}
+
         <Pressable
             style={styles.nextButton1}
             onPress={() => handleNavigation("UserProfile")}
