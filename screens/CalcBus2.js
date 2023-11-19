@@ -1,42 +1,108 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
-import { SelectList } from 'react-native-dropdown-select-list'
+import { calcPublicTransport } from "./Api";
+import { useRoute } from '@react-navigation/native';
+import {getDatabase, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
 
-const CalcBus = () => {
-  const [selectedType, setSelectedType] = useState("");
+
+const CalcBus2 = () => {
+  const [distance, setDistanceKM] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
-  const data = [
-    {key:'1', value:'Taxi', lable: 'Taxi'},
-    {key:'2', value: "ClassicBus", label: "Classic Bus" },
-    {key:'3', value: "EcoBus", label: "Eco Bus"},
-    {key:'4', value: "Coach", label: "Coach"},
-    {key:'5', value: "NationalTrain", label: "National Train"},
-    {key:'6', value: "LightRail", label: "Light Rail"},
-    {key:'7', value: "Subway", label: "Subway"},
-    {key:'8', value: "FerryOnFoot", label: "Ferry On Foot"},
-    {key:'9', value: "FerryInCar", label: "Ferry In Car"}
-  ]
+  const route = useRoute();
+
+  const {type} = route.params;
+  console.log("Type: ", type);
+
+  // Create a reference to the database
+  const database = getDatabase();
+  const auth = getAuth(app);
+  const user = auth.currentUser; 
+  const email = user.email; 
+  // Split email on "@" 
+  const emailParts = email.split('@');
+  // Get first part (before "@")
+  const emailName = emailParts[0];
+  console.log(emailName);
+
+  const addToDatabase = async (result) => {
+      // Get the current date
+      const date = new Date();
+      const formattedDate = date.toISOString().split('T')[0];
+      const type = 'publicT';
+      const key = `${formattedDate}-${emailName}-${type}`;
+      const entry = 
+      {
+        email: email,
+        type: type,
+        date: formattedDate,
+        result: result
+      };
+      // Set the user data in the database
+      set(ref(database, 'footprint-travel/' + key), entry).then(() => 
+      {
+      }).catch((error) => 
+      {
+        // An error occurred
+        alert("Error adding to database: " + error.message);
+      });
+  }
+
+  const handleSubmit = async () => {
+    if(!distance) 
+    {
+      alert('Please enter distance');
+      return;
+    }
+
+    // Check if distance is a valid number
+    if (isNaN(distance)) 
+    {
+      alert('Please enter a valid number for distance');
+      return;
+    }
+
+    // convert to number
+    const distanceNum = parseInt(distance);
+    try 
+    {
+      console.log('Calling calcPublicTransport with:', type, distanceNum);
+      const result = await calcPublicTransport(type, distanceNum);
+      try
+      {
+        await addToDatabase(result);
+        console.log('Added to database');
+      }
+      catch (error)
+      {
+        console.error(error);
+        alert('Error adding to the database');
+      }
+      navigation.navigate('CalcCar3', {result});
+    } 
+    catch (error) 
+    {
+      console.error(error);
+      alert('Error calculating');
+      return;
+    }
+  }
 
   return (
     <View style={styles.container}>
       {/* Background Image */}
       <Image
-        style={[styles.ellipse1]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
-      />
-      <Image
-        style={[styles.ellipse2]}
-        contentFit="cover"
+        style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
 
@@ -52,31 +118,38 @@ const CalcBus = () => {
           </Pressable>
         </View>
 
-        <Text style={styles.headerTitle}>ENTER THE TYPE OF PUBLIC TRANSPORT YOU TAKE</Text>
+        <Text style={styles.headerTitle}>ENTER TRAVEL DISTANCE</Text>
 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
           <Image
             style={styles.saly3Icon}
-            resizeMode="contain"
-            source={require("../assets/saly5.png")}
+            source={require("../assets/saly3.png")}
           />
         </View>
 
         {/* Vehicle Type Input */}
-        <View style={styles.selectListContainer}>
-            <SelectList 
-              setSelected={(val) => setSelectedType(val)} 
-              data={data} 
-              save="value"
-              placeholder={"Select Type of Transport"}
-            />
-        </View>
+        <LinearGradient
+          style={styles.inputContainer}
+          locations={[0, 1]}
+          colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
+        >
+          <TextInput
+            style={styles.textInput}
+            value={distance}
+            onChangeText={setDistanceKM}
+            placeholder="Distance in KM"
+            placeholderTextColor="#fff"
+            fontWeight="700"
+            textAlign="center"
+            fontSize={FontSize.size_3xl}
+          />
+        </LinearGradient>
 
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => {navigation.navigate('CalcBus2', {type: selectedType });}}
+          onPress={handleSubmit}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -146,20 +219,6 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  ellipse1: {
-    top: -115,
-    height: 400,
-    width: 550,
-    left: -210,
-    position: "absolute",
-  },
-  ellipse2: {
-    top: 545,
-    height: 400,
-    width: 550,
-    left: 0,
-    position: "absolute",
-  },
   contentContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -170,13 +229,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
-    top: 125
   },
   backButton: {
     flex: 1,
     width: "100%",
     overflow: "hidden",
-    padding: 14,
+    padding: 10,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,
@@ -188,24 +246,18 @@ const styles = StyleSheet.create({
     top: 120,
     left: 0,
     right: 0,
-    paddingHorizontal: 16,
   },
   saly3Container: {
     justifyContent: "center",
     alignItems: "center",
-    margin: 20,
+    margin: 50,
   },
   saly3Icon: {
-    height: 482,
-    width: "100%",
+    // margin: 50,
+    height: 280,
+    width: 280,
   },
   inputContainer: {
-    fontSize: 20,
-    lineHeight: 30,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-    color: "#fff",
-    textAlign: "center",
     borderRadius: 10,
     marginBottom: 16,
     width: "94%",
@@ -274,28 +326,6 @@ const styles = StyleSheet.create({
     padding: 10,
     zIndex: 2,
   },
-  selectListContainer: {
-    width: "80%",
-    alignSelf: "center"
-  },
-  gradientButton: {
-    padding: 16,
-    alignItems: "center",
-  },
-  inputContainer: {
-    borderRadius: 10,
-    marginBottom: 16,
-    width: "94%",
-    alignSelf: "center",
-  },
-  selectListText: {
-    fontSize: 20,
-    lineHeight: 30,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-    color: "#fff",
-    textAlign: "center"
-  },
 });
 
-export default CalcBus;
+export default CalcBus2;

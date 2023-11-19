@@ -6,10 +6,6 @@ import LoadingScreen3 from "./screens/LoadingScreen3";
 import LibraryofResourcesTranspor from "./screens/LibraryofResourcesTranspor";
 import SearchQuery from "./screens/SearchQuery";
 import CalcFood from "./screens/CalcFood";
-import Category from "./components/Category";
-import Search from "./components/Search";
-import Property1HomeImage from "./components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "./components/StyleDefaultDarkModeTrue";
 import Forum from "./screens/Forum";
 import ForumCreate from "./screens/ForumCreate";
 import ForumView from "./screens/ForumView";
@@ -64,6 +60,7 @@ import CalcTravel from "./screens/CalcTravel";
 import CalcCar from "./screens/CalcCar";
 import CalcCar2 from "./screens/CalcCar2";
 import CalcBus from "./screens/CalcBus";
+import CalcBus2 from "./screens/CalcBus2";
 import CalcAir from "./screens/CalcAir";
 import CalcEnergy from "./screens/CalcEnergy";
 import CalcElectricity from "./screens/CalcElectricity";
@@ -83,14 +80,13 @@ import {
   View,
   Text,
   Pressable,
-  TouchableOpacity,
   StyleSheet,
 } from "react-native";
  
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
  
 //firebase code starts here
-import {initializeApp, getAuth} from "firebase/app";
+import {initializeApp} from "firebase/app";
 import {getDatabase} from "firebase/database";
  
 const firebaseConfig = {
@@ -523,6 +519,11 @@ const App = () => {
               <Stack.Screen
                 name="CalcBus"
                 component={CalcBus}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="CalcBus2"
+                component={CalcBus2}
                 options={{ headerShown: false }}
               />
               <Stack.Screen
