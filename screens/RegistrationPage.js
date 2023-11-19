@@ -1,3 +1,10 @@
+/*  
+Date: 19-11-2023
+Screen: RegistrationPage
+Purpose: RegistrationPage allows new users to create an account in the Carbono app, 
+facilitating access to its features and personalized user experience.
+*/
+
 // React and Expo imports
 import * as React from "react";
 import {Image} from "expo-image";

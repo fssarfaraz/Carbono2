@@ -1,3 +1,11 @@
+/*  
+Date: 19-11-2023
+Screen: SettingsPage
+Purpose: The SettingsPage in the Carbono app allows users to manage their profile, 
+customize settings, access support, and securely log out, enhancing user experience and security.
+*/
+
+// React and Expo imports
 import * as React from "react";
 import { Image } from "expo-image";
 import {
@@ -8,27 +16,30 @@ import {
   Text,
   ImageBackground,
 } from "react-native";
-import { Button } from "@rneui/themed";
+
+// External library imports
+import { Button } from "@rneui/themed"; // Themed button component
 import Property1HomeImage from "../components/Property1HomeImage";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native"; // Navigation hook
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import SupportCard from "../components/SupportCard";
 import { Border, FontFamily, FontSize, Color, Padding } from "../GlobalStyles";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-// import * as React from "react";
-// import {Button} from "@rneui/themed";
-// import {StyleSheet, ImageBackground, Image, View} from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons"; // Icons for UI elements
+import { LinearGradient } from "expo-linear-gradient"; // Component for creating gradient effects
 
+// SettingsPage functional component definition
 const SettingsPage = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Initializing navigation hook
 
+  // Function to navigate to a specified screen
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
+    // Main View container for the Settings screen
     <View style={styles.settingsPage}>
+       {/* Background Ellipse Images */}
       <Image
         style={styles.settingsPageChild}
         contentFit="cover"
@@ -40,7 +51,7 @@ const SettingsPage = () => {
         source={require("../assets/ellipse-3.png")}
       />
 
-      {/* Header */}
+      {{/* Header with back button */}}
       <View style={styles.header}>
         <Pressable
           style={styles.backButton}
@@ -50,20 +61,22 @@ const SettingsPage = () => {
         </Pressable>
       </View>
 
-      {/* Settings */}
+      { {/* Settings Title */}}
       <View style={styles.settingContainer}>
         <Text style={styles.settings}>SETTINGS</Text>
       </View>
 
+    {/* General Section Container */}
       <View style={styles.generalContainer}>
         <View style={styles.textBackground}>
           <Text style={styles.supportTypo}>GENERAL</Text>
         </View>
       </View>
-
+    {/* General Section with Options */}
       <View style={styles.generalSectionContainer}>
         {/* Next Button */}
         <View style={styles.generalContainer1}>
+          {/* Edit Profile Option */}
           <View style={styles.editProfileContainer}>
             <Pressable
               style={styles.nextButton}
@@ -77,7 +90,7 @@ const SettingsPage = () => {
             />
             </Pressable>
           </View>
-
+      {/* Notification Option */}
           <View style={styles.notificationContainer}>
             <Pressable
               style={styles.nextButton}
@@ -91,6 +104,7 @@ const SettingsPage = () => {
             </Pressable>
           </View>
 
+    {/* Password Reset Option */}
           <View style={styles.passwordResetContainer}>
             <Pressable
               style={styles.nextButton}
@@ -106,12 +120,14 @@ const SettingsPage = () => {
         </View>
       </View>
 
+    {/* Support Section Container */}
       <View style={styles.supportContainer}>
         <View style={styles.supportTextBackground}>
           <Text style={styles.supportTypo1}>SUPPORT</Text>
         </View>
       </View>
 
+    {/* Support Section with Options */}
       <View style={styles.supportSectionContainer}>
         {/* Next Button */}
         <View style={styles.supportContainer1}>
@@ -129,6 +145,7 @@ const SettingsPage = () => {
             </Pressable>
           </View>
 
+    {/* Terms and Policies Option */}
           <View style={styles.termsContainer}>
             <Pressable
               style={styles.nextButton}
@@ -145,12 +162,14 @@ const SettingsPage = () => {
         </View>
       </View>
 
+    {/* Account Section Container */}
       <View style={styles.accountContainer}>
         <View style={styles.accountBackground}>
           <Text style={styles.accountTypo}>ACCOUNT</Text>
         </View>
       </View>
 
+    {/* Log Out Option */}
       <View style={styles.rectangleView}>
         <Pressable 
           onPress={() => handleNavigation("LoginPage")}>
@@ -207,6 +226,7 @@ const SettingsPage = () => {
   );
 };
 
+// Styles for the SettingsPage component
 const styles = StyleSheet.create({
   iconCalculatorBtn: {
     position: "relative",
@@ -215,22 +235,7 @@ const styles = StyleSheet.create({
     width: 41,
     height: 45,
   },
-  // groupButtonBtn: {
-  //   color: "#5a09c1",
-  //   fontSize: 16,
-  //   fontWeight: "700",
-  //   fontFamily: "Nunito-Bold",
-  // },
-  // groupButtonBtn1: {
-  //   left: "50%",
-  //   marginLeft: -179.5,
-  //   top: 624,
-  //   position: "absolute",
-  // },
-  // groupButtonBtn2: {
-  //   width: 347,
-  //   height: 45,
-  // },
+  
   materialSymbolsarrowBackIoIconBtn: {
     left: 41,
     top: 91,
@@ -339,7 +344,6 @@ const styles = StyleSheet.create({
   },
   settingContainer: {
     top: 91,
-    // left: 97,
     width: 206,
     height: 41,
     position: "absolute",
@@ -361,15 +365,15 @@ const styles = StyleSheet.create({
     top: 169,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    paddingLeft: 20, // Add horizontal padding
-    paddingRight: 20, // Add horizontal padding
+    alignSelf: "left", 
+    paddingLeft: 20, 
+    paddingRight: 20, 
   },
   textBackground: {
-    width: "100%", // Set the width to 70%
-    borderRadius: 7, // Set border radius
-    backgroundColor: "#428DF829", // Set background color
-    padding: 5, // Add horizontal padding
+    width: "100%", 
+    borderRadius: 7, 
+    backgroundColor: "#428DF829", 
+    padding: 5, 
   },
   supportTypo: {
     height: 28,
@@ -388,21 +392,20 @@ const styles = StyleSheet.create({
     top: 230,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    paddingTop: 20, // Add horizontal padding
+    alignSelf: "left", 
+    paddingTop: 20, 
   },
   generalContainer1: {
     top: 0,
     width: "90%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    // paddingLeft: 20, // Add horizontal padding
-    // paddingRight: 20, // Add horizontal padding
+    alignSelf: "left", 
+    
     borderRadius: 10,
     backgroundColor: "rgba(36, 39, 96, 0.05)",
     height: 155,
-    marginLeft: 20, // Add horizontal padding
-    marginRight: 20, // Add horizontal padding
+    marginLeft: 20, 
+    marginRight: 20, 
   },
   editProfileContainer: {
     flexDirection: "row",
@@ -411,10 +414,9 @@ const styles = StyleSheet.create({
     top: 0,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    // paddingLeft: 20, // Add horizontal padding  
-    paddingRight: 20, // Add horizontal padding 
-    paddingTop: 20, // Add horizontal padding
+    alignSelf: "left",   
+    paddingRight: 20, 
+    paddingTop: 20, 
   },
   iconamoonprofilelight: {
     width: 24,
@@ -442,10 +444,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    // paddingLeft: 20, // Add horizontal padding  
-    paddingRight: 20, // Add horizontal padding 
-    paddingTop: 15, // Add horizontal padding
+    alignSelf: "left",  
+    paddingRight: 20,  
+    paddingTop: 15, 
   },
   iconamoonnotification1: {
     width: 24,
@@ -462,10 +463,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    // paddingLeft: 20, // Add horizontal padding  
-    paddingRight: 20, // Add horizontal padding 
-    paddingTop: 10, // Add horizontal padding
+    alignSelf: "left", 
+    paddingRight: 20, 
+    paddingTop: 10, 
   },
   padlockOutlineIcon1: {
     width: 24,
@@ -478,15 +478,15 @@ const styles = StyleSheet.create({
     top: 410,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    paddingLeft: 20, // Add horizontal padding
-    paddingRight: 20, // Add horizontal padding
+    alignSelf: "left", 
+    paddingLeft: 20, 
+    paddingRight: 20, 
   },
   supportTextBackground: {
-    width: "100%", // Set the width to 70%
-    borderRadius: 7, // Set border radius
-    backgroundColor: "#428DF829", // Set background color
-    padding: 5, // Add horizontal padding
+    width: "100%", 
+    borderRadius: 7, 
+    backgroundColor: "#428DF829", 
+    padding: 5, 
   },
   supportTypo1: {
     height: 28,
@@ -505,19 +505,19 @@ const styles = StyleSheet.create({
     top: 470,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    paddingTop: 20, // Add horizontal padding
+    alignSelf: "left", 
+    paddingTop: 20, 
   },
   supportContainer1: {
     top: 0,
     width: "90%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
+    alignSelf: "left", 
     borderRadius: 10,
     backgroundColor: "rgba(36, 39, 96, 0.05)",
     height: 105,
-    marginLeft: 20, // Add horizontal padding
-    marginRight: 20, // Add horizontal padding
+    marginLeft: 20, 
+    marginRight: 20, 
   },
   helpContainer: {
     flexDirection: "row",
@@ -526,10 +526,9 @@ const styles = StyleSheet.create({
     top: 0,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    // paddingLeft: 20, // Add horizontal padding  
-    paddingRight: 20, // Add horizontal padding 
-    paddingTop: 20, // Add horizontal padding
+    alignSelf: "left", 
+    paddingRight: 20, 
+    paddingTop: 20, 
   },
   helpicon: {
     width: 24,
@@ -557,10 +556,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    // paddingLeft: 20, // Add horizontal padding  
-    paddingRight: 20, // Add horizontal padding 
-    paddingTop: 15, // Add horizontal padding
+    alignSelf: "left", 
+    paddingRight: 20, 
+    paddingTop: 15, 
   },
   termsIcon: {
     width: 24,
@@ -573,15 +571,15 @@ const styles = StyleSheet.create({
     top: 600,
     width: "100%",
     position: "absolute",
-    alignSelf: "left", // Align to the left of the screen
-    paddingLeft: 20, // Add horizontal padding
-    paddingRight: 20, // Add horizontal padding
+    alignSelf: "left", 
+    paddingLeft: 20, 
+    paddingRight: 20, 
   },
   accountBackground: {
-    width: "100%", // Set the width to 70%
-    borderRadius: 7, // Set border radius
-    backgroundColor: "#428DF829", // Set background color
-    padding: 5, // Add horizontal padding
+    width: "100%", 
+    borderRadius: 7, 
+    backgroundColor: "#428DF829", 
+    padding: 5, 
   },
   accountTypo: {
     height: 28,
@@ -603,8 +601,8 @@ const styles = StyleSheet.create({
     height: 45,
     position: "absolute",
     bottom: 150,
-    marginLeft: 20, // Add horizontal padding
-    marginRight: 20, // Add horizontal padding
+    marginLeft: 20, 
+    marginRight: 20, 
     alignSelf: "center",
     paddingTop: 12,
   },
@@ -612,7 +610,7 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     position: "absolute",
-    marginLeft: 30, // Add horizontal padding
+    marginLeft: 30, 
     },
   logOut: {
     fontSize: 16,
@@ -664,5 +662,5 @@ const styles = StyleSheet.create({
     },
   
 });
-
+// Exporting the SettingsPage component
 export default SettingsPage;

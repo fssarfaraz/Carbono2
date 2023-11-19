@@ -1,3 +1,10 @@
+/*  
+Date: 19-11-2023
+Screen: LoginPage
+Purpose: The LoginPage is key for user authentication in the Carbono app. 
+It ensures secure and personalized access, enabling a customized user experience while maintaining privacy and security.
+*/
+
 // React and expo imports
 import * as React from "react";
 import {Image} from "expo-image";

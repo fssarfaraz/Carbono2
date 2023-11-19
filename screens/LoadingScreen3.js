@@ -1,3 +1,11 @@
+/*  
+Date: 19-11-2023
+Screen: LoadingScreen3
+Purpose: LoadingScreen3 is the initial visual display users encounter when they launch the Carbono app. 
+It provides a visually appealing introduction while the app's data and resources are loading. 
+This screen enhances the user experience by offering a smooth transition into the app's main content.
+*/
+
 // React and Expo imports
 import * as React from "react";
 import {Image} from "expo-image";
