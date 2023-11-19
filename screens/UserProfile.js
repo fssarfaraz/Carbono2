@@ -1,3 +1,10 @@
+/*  
+Date: 19-11-2023
+Screen: UserProfile
+Purpose: UserProfile displays the user's personal profile information in the Carbono app,
+ allowing them to view and manage their account details and preferences.
+*/
+
 // React and Expo imports
 import * as React from "react";
 import { Image } from "expo-image";
