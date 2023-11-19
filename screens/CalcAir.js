@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     padding: 10,
-    top: -4,
+    top: 30,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,
