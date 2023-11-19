@@ -1,3 +1,10 @@
+/*  
+Date: 19-11-2023
+Screen: PasswordResetSucess
+Purpose: PasswordResetSuccess confirms the successful reset of a user's password, 
+ensuring a secure and seamless account recovery process in the Carbono app.
+*/
+
 // React and Expo imports
 import * as React from "react";
 import { Image } from "expo-image";
