@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { ScrollView } from "react-native";
 
 const CalcElectricity = () => {
   const [ConsumptionKwh, setConsumptionKwh] = useState("");
@@ -14,6 +15,7 @@ const CalcElectricity = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       {/* Background Image */}
       <Image
@@ -43,7 +45,7 @@ const CalcElectricity = () => {
           />
         </View>
 
-        {/* Vehicle Type Input */}
+        {/* Consumption Input */}
         <LinearGradient
           style={styles.inputContainer}
           locations={[0, 1]}
@@ -64,7 +66,7 @@ const CalcElectricity = () => {
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcElectricity2")}
+          onPress={() => {navigation.navigate('CalcElectricity2', {ConsumptionKwh });}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -121,6 +123,7 @@ const CalcElectricity = () => {
         />
       </Pressable>
     </View>
+    </ScrollView>
   );
 };
 
@@ -144,6 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
+    top: 40,
   },
   backButton: {
     flex: 1,
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 120,
+    top: 110,
     left: 0,
     right: 0,
     paddingHorizontal: 16,

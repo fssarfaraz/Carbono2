@@ -6,7 +6,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcEnergy = () => {
-  // const [foodName, setFoodName] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
@@ -18,12 +17,12 @@ const CalcEnergy = () => {
       {/* Background Image */}
       <View style={styles.backgroundImage}>
         <Image
-          style={[styles.calcEnergyItem, styles.calcLayout]}
+          style={[styles.ellipse1]}
           contentFit="cover"
           source={require("../assets/ellipse-3.png")}
         />
         <Image
-          style={[styles.iconLayout2, styles.calcLayout]}
+          style={[styles.ellipse2]}
           contentFit="cover"
           source={require("../assets/ellipse-3.png")}
         />
@@ -124,25 +123,26 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
   iconLayout1: {
     width: 33,
     marginLeft: 72,
   },
-  iconLayout2: {
-    height: 30,
-    width: 30,
+  ellipse2: {
+    top: 545,
+    height: 400,
+    width: 500,
+    left: 40,
+    position: "absolute",
   },
   calcEnergyChild: {
     top: 0,
   },
-  calcEnergyItem: {
-    top: 545,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 500,
+    left: -210,
+    position: "absolute",
   },
   contentContainer: {
     flex: 1,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    top: -239,
+    top: -215,
     marginBottom: 40,
   },
   backButton: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 120,
+    top: 100,
     left: 0,
     right: 0,
   },

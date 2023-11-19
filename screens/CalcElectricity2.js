@@ -1,52 +1,115 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
-import { SelectList } from 'react-native-dropdown-select-list';
-import Select from "react-select";
-import PickerSelect from 'react-native-picker-select';
+import { useRoute } from '@react-navigation/native';
+import {getDatabase, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
+import { CalcElec } from "../components/API";
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const CalcElectricity2 = () => {
+  const [location, setLocation] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState({});
+  const data = [
+    {key:'1', value: "USA", label: "USA"},
+    {key:'2', value: "Canada", label: "Canada" },
+    {key:'3', value: "UK", label: "UK"},
+    {key:'4', value: "Europe", label: "Europe"},
+    {key:'5', value: "Africa", label: "Africa"},
+    {key:'6', value: "LatinAmerica", label: "Latin America"},
+    {key:'7', value: "MiddleEast", label: "Middle East"},
+    {key:'8', value: "OtherCountry", label: "Other"},
+  ]
 
-  useEffect(() => {
-    fetch(
-      "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setCountries(data.countries.map (({label, value}) => ({label, value})));
-        setSelectedCountry(data.userSelectValue);
-      });
-  }, []);
+  const route = useRoute();
 
-  const renderDropdownItem = (item) => {
-    return (
-      <View style={styles.dropdownItem}>
-        <Text>{item.label}</Text>
-      </View>
-    );
-  };
+  const {ConsumptionKwh} = route.params;
+  console.log("Consumption: ", ConsumptionKwh);
+
+  // Create a reference to the database
+  const database = getDatabase();
+  const auth = getAuth(app);
+  const user = auth.currentUser; 
+  const email = user.email; 
+  // Split email on "@" 
+  const emailParts = email.split('@');
+  // Get first part (before "@")
+  const emailName = emailParts[0];
+
+  const addToDatabase = async (result) => {
+    // Get the current date
+    const date = new Date();
+    const formattedDate = date.toISOString().split('T')[0];
+    const type = 'electricity';
+    const key = `${formattedDate}-${emailName}-${type}`;
+    const entry = 
+    {
+      email: email,
+      type: type,
+      date: formattedDate,
+      result: result
+    };
+    // Set the user data in the database
+    set(ref(database, 'footprint-energy/' + key), entry).then(() => 
+    {
+    }).catch((error) => 
+    {
+      // An error occurred
+      alert("Error adding to database: " + error.message);
+    });
+  }
+
+  const handleSubmit = async () => {
+    if(!location) 
+    {
+      alert('Please enter distance');
+      return;
+    }
+
+    try 
+    {
+      console.log('Calling calcElec with:', ConsumptionKwh, location);
+      const result = await CalcElec(ConsumptionKwh, location);
+      try
+      {
+        await addToDatabase(result);
+        console.log('Added to database');
+      }
+      catch (error)
+      {
+        console.error(error);
+        alert('Error adding to the database');
+      }
+      navigation.navigate('CalcCar3', {result});
+    } 
+    catch (error) 
+    {
+      console.error(error);
+      alert('Error calculating');
+      return;
+    }
+  }
+
 
   return (
     <View style={styles.container}>
       {/* Background Image */}
       <Image
-        style={[styles.calcElectricity2Child, styles.calcLayout]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.calcElectricity2Item, styles.calcLayout]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -63,7 +126,7 @@ const CalcElectricity2 = () => {
           </Pressable>
         </View>
 
-        <Text style={styles.headerTitle}>ENTRY THE COUNTRY OR CONTINENT PROVIDING THE ENERGY</Text>
+        <Text style={styles.headerTitle}>ENTER THE COUNTRY OR CONTINENT PROVIDING THE ENERGY</Text>
 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
@@ -73,22 +136,20 @@ const CalcElectricity2 = () => {
           />
         </View>
 
+        {/* Vehicle Type Input */}
         <View style={styles.selectListContainer}>
-          <PickerSelect
-            placeholder={{
-              label: "Select Country",
-              value: null,
-            }}
-            onValueChange={(value) => setSelectedCountry(value)}
-            items={countries.map(({ label, value }) => ({ label, value }))}
-            style={styles.pickerSelect}
-          />
+            <SelectList 
+              setSelected={(val) => setLocation(val)} 
+              data={data} 
+              save="value"
+              placeholder={"Select Location"}
+            />
         </View>
 
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("EnergyTrackReport")}
+          onPress={handleSubmit}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -158,18 +219,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 530,
+    left: -210,
     position: "absolute",
   },
-  calcElectricity2Child: {
-    left: 100,
-    top: 0,
-  },
-  calcElectricity2Item: {
+  ellipse2: {
     top: 545,
+    height: 400,
+    width: 550,
+    left: 10,
+    position: "absolute",
   },
   contentContainer: {
     flex: 1,
@@ -181,13 +243,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
+    top: 20,
   },
   backButton: {
     flex: 1,
     width: "100%",
     overflow: "hidden",
     padding: 10,
-    bottom: 25,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,
@@ -196,7 +258,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 120,
+    top: 105,
     left: 0,
     right: 0,
     paddingHorizontal: 16,
@@ -284,33 +346,23 @@ const styles = StyleSheet.create({
     width: "80%",
     alignSelf: "center"
   },
-  dropdownItem: {
-    padding: 10,
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
   },
-  pickerSelect: {
-    inputIOS: {
-      textAlign: "center",
-      fontSize: 18,
-      paddingVertical: 12,
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: '#000', // Customize the border color for iOS
-      borderRadius: 4,
-      color: '#333', // Customize the font color for iOS
-      paddingRight: 30, // to ensure the text is never behind the icon
-    },
-    inputAndroid: {
-      fontSize: 18,
-      textAlign: "center",
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderWidth: 1,
-      borderColor: '#ccc', // Customize the border color for Android
-      borderRadius: 8,
-      color: '#333', // Customize the font color for Android
-      paddingRight: 30, // to ensure the text is never behind the icon
-      placeholderColor: '#ccc',
-    },
+  inputContainer: {
+    borderRadius: 10,
+    marginBottom: 16,
+    width: "94%",
+    alignSelf: "center",
+  },
+  selectListText: {
+    fontSize: 20,
+    lineHeight: 30,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#fff",
+    textAlign: "center"
   },
 });
 
