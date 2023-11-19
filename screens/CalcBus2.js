@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
-import { calcPublicTransport } from "./Api";
+import { calcPublicTransport } from "../components/API";
 import { useRoute } from '@react-navigation/native';
 import {getDatabase, ref, set} from "firebase/database";
 import { getAuth} from 'firebase/auth';
