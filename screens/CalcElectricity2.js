@@ -1,16 +1,40 @@
-import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { SelectList } from 'react-native-dropdown-select-list';
+import Select from "react-select";
+import PickerSelect from 'react-native-picker-select';
 
 const CalcElectricity2 = () => {
-  const [location, setLocation] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
+  };
+
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({});
+
+  useEffect(() => {
+    fetch(
+      "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setCountries(data.countries.map (({label, value}) => ({label, value})));
+        setSelectedCountry(data.userSelectValue);
+      });
+  }, []);
+
+  const renderDropdownItem = (item) => {
+    return (
+      <View style={styles.dropdownItem}>
+        <Text>{item.label}</Text>
+      </View>
+    );
   };
 
   return (
@@ -49,23 +73,17 @@ const CalcElectricity2 = () => {
           />
         </View>
 
-        {/* Vehicle Type Input */}
-        <LinearGradient
-          style={styles.inputContainer}
-          locations={[0, 1]}
-          colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-        >
-          <TextInput
-            style={styles.textInput}
-            value={location}
-            onChangeText={setLocation}
-            placeholder="Location"
-            placeholderTextColor="#fff"
-            fontWeight="700"
-            textAlign="center"
-            fontSize={FontSize.size_3xl}
+        <View style={styles.selectListContainer}>
+          <PickerSelect
+            placeholder={{
+              label: "Select Country",
+              value: null,
+            }}
+            onValueChange={(value) => setSelectedCountry(value)}
+            items={countries.map(({ label, value }) => ({ label, value }))}
+            style={styles.pickerSelect}
           />
-        </LinearGradient>
+        </View>
 
         {/* Next Button */}
         <Pressable
@@ -169,6 +187,7 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     padding: 10,
+    bottom: 25,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,
@@ -260,6 +279,38 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     zIndex: 2,
+  },
+  selectListContainer: {
+    width: "80%",
+    alignSelf: "center"
+  },
+  dropdownItem: {
+    padding: 10,
+  },
+  pickerSelect: {
+    inputIOS: {
+      textAlign: "center",
+      fontSize: 18,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: '#000', // Customize the border color for iOS
+      borderRadius: 4,
+      color: '#333', // Customize the font color for iOS
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+      fontSize: 18,
+      textAlign: "center",
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 1,
+      borderColor: '#ccc', // Customize the border color for Android
+      borderRadius: 8,
+      color: '#333', // Customize the font color for Android
+      paddingRight: 30, // to ensure the text is never behind the icon
+      placeholderColor: '#ccc',
+    },
   },
 });
 
