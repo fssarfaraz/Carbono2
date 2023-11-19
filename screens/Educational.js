@@ -1,435 +1,554 @@
-import * as React from "react";
-import {
-  Text,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  View,
-  StatusBar,
-  TextInput,
-} from "react-native";
-import { Button } from "@rneui/themed";
+import React, { useState } from "react";
 import { Image } from "expo-image";
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View, Pressable, StatusBar, Text, TextInput, ScrollView, Button } from "react-native";
+import { Datepicker as RNKDatepicker } from "@ui-kitten/components";
 import Property1HomeImage from "../components/Property1HomeImage";
-import Category from "../components/Category";
+import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import Search from "../components/Search";
-import { FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
+import DateRangeContainer from "../components/DateRangeContainer";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Educational = () => {
+  const [selectDatePicker, setSelectDatePicker] = useState(undefined);
   const navigation = useNavigation();
+  const [search, setSearch] = useState("");
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
-    <View style={styles.educational}>
-      <Text style={styles.subitle}>Top picks</Text>
-      <ScrollView
-        style={styles.cardParent}
-        showsVerticalScrollIndicator={true}
-        showsHorizontalScrollIndicator={true}
-      >
-        <Button
-          title="Social Conciousness"
-          radius={8}
-          iconPosition="left"
-          type="solid"
-          color="#ffab01"
-          titleStyle={styles.cardBtn}
-          onPress={() => navigation.navigate("Articles")}
-          containerStyle={styles.cardBtn1}
-          buttonStyle={styles.cardBtn2}
-        />
-        <Button
-          title="Listen and learn"
-          radius={8}
-          iconPosition="left"
-          type="solid"
-          color="#ee719e"
-          titleStyle={styles.card1Btn}
-          containerStyle={styles.card1Btn1}
-          buttonStyle={styles.card1Btn2}
-        />
-        <Button
-          title="Watch Our Progress"
-          radius={8}
-          iconPosition="left"
-          type="solid"
-          color="#fe6250"
-          titleStyle={styles.card2Btn}
-          onPress={() => navigation.navigate("VideoResource")}
-          containerStyle={styles.card2Btn1}
-          buttonStyle={styles.card2Btn2}
-        />
-        <Button
-          title="Making a plan"
-          radius={8}
-          iconPosition="left"
-          type="solid"
-          color="#b18cfe"
-          titleStyle={styles.card3Btn}
-          onPress={() => navigation.navigate("Quiz")}
-          containerStyle={styles.card3Btn1}
-          buttonStyle={styles.card3Btn2}
-        />
-      </ScrollView>
+    <View style={[styles.calcTrack2, styles.iconLayout2]}>
       <Image
-        style={[styles.educationalChild, styles.educationalPosition]}
+        style={[styles.calcTrack2Child, styles.calcLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.educationalItem, styles.educationalPosition]}
+        style={[styles.calcTrack2Item, styles.calcLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr23.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={402}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={[styles.iconPersonOutlineParent, styles.nameFlexBox]}>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-discussion.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline3.png")}
-          />
+      
+      {/* Back Button */}
+      <View style={styles.backButtonContainer}>
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
         </Pressable>
       </View>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
-        />
-      </Pressable>
+      
+      <Text style={[styles.selectDateRange]}>
+      REDUCING YOUR FOOTPRINT
+      </Text>
+
+      <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.search}
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Search"
+            placeholderTextColor="#fff"
+            fontSize={18}
+            zIndex={20}
+            />
+        
+        <Image style={styles.searchIcon1} 
+          resizeMode="cover" 
+          source={require("../assets/search.png")} />
+      </View>
+      
       <ScrollView
-        style={styles.categories}
-        horizontal={true}
-        showsVerticalScrollIndicator={false}
+        horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.categoriesScrollViewContent}
+        style={[styles.scrollContainer, { zIndex: 3 }]}
       >
-        <Category
-          categoryPosition="unset"
-          categoryBackgroundColor="unset"
-          categoryOverflow="unset"
-          categoryMarginLeft="unset"
-          onCategoryPress={() =>
-            navigation.navigate("LibraryofResourcesTranspor")
-          }
-        />
-        <Category
-          categoryPosition="unset"
-          categoryBackgroundColor="unset"
-          categoryOverflow="unset"
-          categoryMarginLeft={15}
-          onCategoryPress={() =>
-            navigation.navigate("LibraryofResourcesEnergy")
-          }
-        />
-        <Category
-          categoryPosition="unset"
-          categoryBackgroundColor="unset"
-          categoryOverflow="unset"
-          categoryMarginLeft={15}
-          onCategoryPress={() => navigation.navigate("LibraryofResourcesFood")}
-        />
-        <Category
-          categoryPosition="unset"
-          categoryBackgroundColor="unset"
-          categoryOverflow="unset"
-          categoryMarginLeft={15}
-          onCategoryPress={() =>
-            navigation.navigate("LibraryofResourcesSocial")
-          }
-        />
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
+          <LinearGradient
+            colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+            style={styles.communityCard1}
+          >
+          {/* Replace this with your EnergyCard component */}
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/blob1.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Transport</Text>
+          </View>
+          </LinearGradient>
+        </Pressable>
+
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+          {/* Replace this with your TravelCard component */}
+          <LinearGradient
+            colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+            style={styles.communityCard1}
+          >
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/blob2.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Energy</Text>
+          </View>
+          </LinearGradient>
+        </Pressable>
+
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
+          {/* Replace this with your FoodCard component */}
+          <LinearGradient
+            colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+            style={styles.communityCard1}
+          >
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/blob3.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Food</Text>
+          </View>
+          </LinearGradient>
+        </Pressable>
+
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesSocial")}>
+          {/* Replace this with your FoodCard component */}
+          <LinearGradient
+            colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+            style={styles.communityCard1}
+          >
+          <View style={styles.communityCard1Child} />
+          <Image
+            style={styles.communityCard1Item}
+            resizeMode="cover"
+            source={require("../assets/blob4.png")}
+          />
+          <View style={styles.foodWrapper}>
+            <Text style={styles.food}>Social</Text>
+          </View>
+          </LinearGradient>
+        </Pressable>
       </ScrollView>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <View style={[styles.name, styles.nameFlexBox]}>
-        <Text style={styles.reducingYourFootprint}>
-          Reducing Your Footprint
-        </Text>
+
+      <View style={styles.subTitleContainer}>
+        <Text style={styles.subitle1}>Top picks</Text>
       </View>
-      <Search
-        searchPosition="absolute"
-        searchWidth={296}
-        searchTop={112}
-        searchLeft={30}
-        searchBorderRadius={20}
-        searchMarginLeft="unset"
-      />
+
+      <ScrollView 
+        style={styles.scrollView2} 
+        contentContainerStyle={styles.scrollViewContent}
+        >
+      <View style={styles.card1Container}>
+        <Pressable style={styles.card} onPress={() => handleNavigation('Articles')}>
+          <Image style={styles.cardImage} source={require("../assets/card1.png")} />
+          </Pressable>
+
+        <Pressable style={styles.card} onPress={() => handleNavigation('VideoResource')}>
+          <Image style={styles.cardImage} source={require("../assets/card2.png")} />
+          </Pressable>
+        </View>
+        
+        <View style={styles.card2Container}>
+     
+        <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
+          <Image style={styles.cardImage} source={require("../assets/card3.png")} />
+        </Pressable>
+
+        <Pressable style={styles.card} onPress={() => handleNavigation('VideoResource')}>
+          <Image style={styles.cardImage} source={require("../assets/card4.png")} />
+        </Pressable>
+        </View>
+    </ScrollView>
+
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-person-outline.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-book-saved3.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-discussion.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-game-controller-outline6.png")} />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image style={styles.surfaceIcon} resizeMode="cover" source={require("../assets/navigation-barr2.png")} />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image style={styles.iconCalculator} resizeMode="cover" source={require("../assets/-icon-calculator.png")} />
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  cardBtn: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
+  selectDatePickerPlaceHolder: {
+    fontFamily: "FiraSans-Regular",
+    color: "#131414",
+    fontSize: 14,
   },
-  cardBtn1: {
-    left: 0,
-    top: 0,
+  selectDatePickerValue: {
     position: "absolute",
+    left: 29,
+    top: 173,
   },
-  cardBtn2: {
-    borderRadius: 8,
-    width: 165,
-    height: 236,
+  iconLayout2: {
     overflow: "hidden",
+    width: "100%",
   },
-  card1Btn: {
-    color: "#fff",
-    fontSize: 22,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card1Btn1: {
-    left: 180,
-    top: 286,
-    position: "absolute",
-  },
-  card1Btn2: {
-    borderRadius: 8,
-    width: 165,
-    height: 236,
-    overflow: "hidden",
-  },
-  card2Btn: {
-    color: "#fff",
-    fontSize: 22,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card2Btn1: {
-    left: 180,
-    top: 0,
-    position: "absolute",
-  },
-  card2Btn2: {
-    borderRadius: 8,
-    width: 165,
-    height: 271,
-    overflow: "hidden",
-  },
-  card3Btn: {
-    color: "#fff",
-    fontSize: 22,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card3Btn1: {
-    left: 0,
-    top: 251,
-    position: "absolute",
-  },
-  card3Btn2: {
-    borderRadius: 8,
-    width: 165,
-    height: 271,
-    overflow: "hidden",
-  },
-  iconCalculatorBtn: {
-    position: "relative",
-  },
-  iconCalculatorBtn1: {
-    width: 41,
-    height: 45,
-  },
-  categoryBtn: {
-    color: "#fff",
-    fontSize: 15,
-    fontFamily: "Nunito-Regular",
-  },
-  categoryBtn1: {
-    position: "relative",
-  },
-  categoryBtn2: {
-    borderRadius: 8,
-    width: 90,
-    height: 98,
-    overflow: "hidden",
-  },
-  category1Btn: {
-    color: "#fff",
-    fontSize: 15,
-    fontFamily: "Nunito-Regular",
-  },
-  category1Btn1: {
-    position: "relative",
-  },
-  category1Btn2: {
-    borderRadius: 8,
-    width: 90,
-    height: 98,
-    overflow: "hidden",
-  },
-  category2Btn: {
-    color: "#fff",
-    fontSize: 15,
-    fontFamily: "Nunito-Regular",
-  },
-  category2Btn1: {
-    position: "relative",
-  },
-  category2Btn2: {
-    borderRadius: 8,
-    width: 90,
-    height: 98,
-    overflow: "hidden",
-  },
-  category3Btn: {
-    color: "#fff",
-    fontSize: 15,
-    fontFamily: "Nunito-Regular",
-  },
-  category3Btn1: {
-    position: "relative",
-  },
-  category3Btn2: {
-    borderRadius: 8,
-    width: 90,
-    height: 98,
-    overflow: "hidden",
-  },
-  categoriesScrollViewContent: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  educationalPosition: {
+  calcLayout: {
+    height: 330,
     width: 400,
     left: 0,
-    position: "absolute",
-  },
-  nameFlexBox: {
-    flexDirection: "row",
     position: "absolute",
   },
   iconLayout: {
     width: 33,
     marginLeft: 72,
   },
-  iconLayout1: {
-    height: 30,
-    width: 30,
-  },
-  subitle: {
-    top: 284,
-    fontSize: FontSize.size_smi,
-    lineHeight: 18,
-    textTransform: "uppercase",
-    fontWeight: "700",
-    fontFamily: FontFamily.robotoBold,
-    color: Color.colorDarkslateblue_100,
+  selectDateRange: {
+    top: 120,
+    fontSize: 22,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
     textAlign: "left",
-    left: 30,
     position: "absolute",
+    marginLeft: 30,
+    marginRight: 30,
+    // width: 310
   },
-  cardParent: {
-    top: 317,
-    width: 345,
-    maxWidth: 345,
-    left: 30,
-    position: "absolute",
+  line1Border: {
+    // borderColor: "#131414",
+    borderStyle: "solid"
+  },
+  option: {
+    fontSize: 14,
+    letterSpacing: -0.2,
+    lineHeight: 18,
+    fontFamily: "FiraSans-Regular",
+    // color: "#131414",
+    textAlign: "left"
+  },
+  line1: {
+    borderRightWidth: 1,
+    width: 1,
+    height: 13,
+    marginLeft: 8
+  },
+  iconChevrondown: {
+    width: 16,
+    height: 16,
+    overflow: "hidden",
+    marginLeft: 8
+  },
+  stateactive: {
+    borderRadius: 5,
+    borderWidth: 1,
     flex: 1,
-  },
-  educationalChild: {
-    top: 0,
-    height: 394,
-  },
-  educationalItem: {
-    top: 435,
-    height: 417,
-  },
-  icon: {
-    height: "100%",
     width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 12,
+    paddingTop: 6,
+    paddingRight: 8,
+    paddingBottom: 6
   },
-  iconDiscussion: {
-    marginLeft: 72,
+  backButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 54,
+    left: 16,
   },
-  iconGameControllerOutline: {
-    height: 24,
-    marginLeft: 72,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
   },
-  iconPersonOutlineParent: {
-    top: 807,
-    left: 24,
-    width: 385,
-    alignItems: "flex-end",
+  rectangleView: {
+    alignSelf: "center",
+    left: 5,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowRadius: 10,
+    elevation: 10,
+    shadowOpacity: 1,
+    flex: 1,
+    width: "90%",
+    height: 436,
+    top: 260,
+  },
+  primaryText1: {
+    fontSize: 20,
+    fontWeight: "500",
+    fontFamily: "Inter-Medium",
+    color: "#000",
+    textAlign: "center",
+    marginTop: 30,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  vectorIcon: {
+    height: 2,
+    top: 30,
+  },
+  donutIcon: {
+    width: 250,
+    height: 250,
+    top: 50,
+    alignSelf: "center",
+  },
+  foodParent: {
+    top: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-around', // or 'space-between' for equal space
+    alignItems: 'center',
+  },
+  groupContainer: {
+    alignItems: 'center',
+    marginHorizontal: 10, // Adjust the spacing between elements
+  },
+  groupLayout: {
+    width: 13, // Adjust the width as needed
+    height: 13, // Adjust the height as needed
+  },
+  food: {
+    // Your food text styles
+  },
+  energy: {
+    // Your energy text styles
+  },
+  travel: {
+    // Your travel text styles
+  },
+  foodTypo: {
+    fontSize: 15,
+    fontFamily: "Inter-Regular",
+    color: "#000",
+  },  
+  calcTrack2Child: {
+    top: 0,
+  },
+  calcTrack2Item: {
+    top: 545,
+  },
+  iconCalculator: {
+    width: 41,
+    height: 45,
   },
   iconCalculatorWrapper: {
-    top: 746,
-    left: 170,
+    top: 745,
+    left: 165,
     padding: Padding.p_3xs,
     position: "absolute",
   },
-  categories: {
-    top: 169,
-    left: 28,
+  select: {
+    top: 15,
+  },
+  calcTrack2: {
+    backgroundColor: Color.labelDarkPrimary,
+    flex: 1,
+    height: 852,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  // Add elevation to the bottomNavBar style
+bottomNavBar: {
+  flex: 1,
+  flexDirection: "row",
+  height: 70,
+  justifyContent: "space-between",
+  alignItems: "center",
+  paddingHorizontal: 16,
+  paddingBottom: 10,
+  position: "relative",
+  zIndex: 3,
+},
+
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    top: 25,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
     position: "absolute",
     width: "100%",
+    padding: 10,
+    zIndex: 3,
   },
-  reducingYourFootprint: {
-    fontSize: FontSize.size_8xl,
-    fontWeight: "600",
-    fontFamily: FontFamily.nunitoSemiBold,
-    width: 310,
-    textAlign: "left",
-  },
-  name: {
-    top: 62,
-    width: 372,
-    height: 42,
-    alignItems: "center",
+  searchContainer: {
+    top: 160,
     left: 30,
+    position: "absolute",
+    width: "80%",
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(1, 66, 122, 0.7)",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
   },
-  educational: {
-    backgroundColor: Color.labelDarkPrimary,
-    height: 852,
-    overflow: "hidden",
-    width: "100%",
+  search: {
+    borderRadius: 20,
     flex: 1,
+    width: "100%",
+    height: 40,
+    fontFamily: "Nunito-Regular",
+    fontSize: 16,
+  },
+  searchIcon1: {
+    flex: 1,
+    width: 20,
+    height: 20,
+    // overflow: "hidden"
+    position: "absolute",
+    right: 20
+  },
+  scrollContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 16,
+    top: 210,
+    height: 98,
+    position: "absolute",
+  },
+
+  communityCard1: {
+    width: 98,
+    height: 98,
+    marginRight: 10,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  communityCard1Child: {
+    borderRadius: 16,
+    width: 98,
+    position: "absolute",
+    height: 98,
+  },
+  communityCard1Item: {
+    top: 10,
+    borderRadius: 12,
+    width: 54,
+    position: "absolute",
+    height: 54,
+  },
+  food: {
+    fontSize: 15,
+    lineHeight: 20,
+    fontFamily: "Nunito-Regular",
+    color: "#fff",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 90,
+  },
+  foodWrapper: {
+    top: 65,
+    overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 21,
+    paddingVertical: 0,
+    position: "absolute",
+  },
+  subTitleContainer: {  
+    top: 360,
+    // left: 30,
+    position: "absolute",
+    width: "100%",
+    height: 40,
+    flexDirection: "row",
+    alignItems: "left",
+    justifyContent: "left",
+    paddingHorizontal: 20,
+  },
+  subitle1: {
+    fontSize: 13,
+    lineHeight: 18,
+    textTransform: "uppercase",
+    fontWeight: "700",
+    fontFamily: "Roboto-Bold",
+    color: "#01427a",
+    textAlign: "left"
+  },
+  scrollView2: {
+    top: 390,
+    // overflow: "scroll",
+    // position: "relative",
+  },
+  scrollViewContent: {
+    marginRight: 10,
+    marginLeft: 10,
+    // overflow: "scroll",
+  },
+  card1Container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: "100%",
+    // position: "relative",
+  },
+  card2Container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: "100%",
+    // position: "relative",
+  },
+  card: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 10,
+    // marginBottom: 16,
+    padding: 10,
+  },
+  cardImage: {
+    width: "100%",
+    height: 236,
+    borderRadius: 10,
   },
 });
 
