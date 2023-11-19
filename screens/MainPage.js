@@ -1,3 +1,10 @@
+/*  
+Date: 19-11-2023
+Screen: MainPage
+Purpose: MainPage is the entry point of the Carbono app, 
+offering key navigation options like Login and Sign Up, and guiding users to the app's main features.
+*/
+
 // React and expo imports
 import * as React from "react";
 import {View, StyleSheet, ImageBackground} from "react-native";
