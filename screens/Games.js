@@ -7,11 +7,7 @@ import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Border, FontFamily, Color, Padding, FontSize } from "../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
-import {useState} from "react";
-import { useEffect } from "react";
-import { getAuth } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import {getDatabase, ref, onValue} from 'firebase/database';
+
 
 const Games = () => {
   const navigation = useNavigation();
@@ -19,12 +15,13 @@ const Games = () => {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
-
+  
+  //  This is a demo comment to test the git commit
   const gamesData = [
-    { id: 1, name: "Space Voyagers 1", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
+    { id: 1, name: "Flappy Cup", image: require("../assets/FlappyCupSplash.png") },
     { id: 2, name: "Space Voyagers 2", image: require("../assets/23brc4s1egslauncherpdp2560x14402560x144070cf344c9005-2.png") },
-    { id: 2, name: "Space Voyagers 3", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
-    { id: 2, name: "Space Voyagers 4", image: require("../assets/marvelsspiderman2playstation52021games3840x21601585-1.png") },
+    //{ id: 2, name: "Space Voyagers 3", image: require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") },
+    //{ id: 2, name: "Space Voyagers 4", image: require("../assets/marvelsspiderman2playstation52021games3840x21601585-1.png") },
     // Add more games as needed
     // 
   ];
@@ -72,16 +69,16 @@ const Games = () => {
 
       {/* Horizontal Pressables */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {challenges.map((game) => (
+        {gamesData.map((game) => (
           <View key={game.id} style={styles.gameContainer}>
             <Pressable
               style={styles.gamePressable}
               onPress={() => handleNavigation("GameSelectedScreen", { gameId: game.id })}
             >
-              <Image style={styles.gameImage} contentFit="cover" source={require("../assets/egs-destiny2lightfall-bungie-addon-g1a-00-1920x1080484927180fa94217cdce9e1bd5aa5e9f-1.png") } />
+              <Image style={styles.gameImage} contentFit="cover" source={game.image} />
             </Pressable>
             <View style={styles.gameNameContainer}>
-              <Text style={styles.gameName}>{game.gameName}</Text>
+              <Text style={styles.gameName}>{game.name}</Text>
             </View>
           </View>
         ))}
