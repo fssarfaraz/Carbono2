@@ -1,14 +1,35 @@
+/*
+Date: 19/11/2023
+Screen: Main Calculator Screen for Carbon Footprint App
+Purpose: This screen serves as the main interface for the carbon footprint calculator app, allowing users to navigate to different calculators for energy, travel, and food.
+*/
+
+// React for component structure and state management
 import * as React from "react";
+
+// React Native components for building UI
 import { Image, ScrollView, StyleSheet, View, Pressable, Text, TouchableHighlight } from "react-native";
+
+// LinearGradient for visually appealing gradient effects
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hooks for screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// Icon library for enhanced UI elements
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Custom component for displaying energy cards
 import EnergyCard from "../components/EnergyCard";
+
+// Global styles for consistent theming and layout
 import { FontFamily, Color, FontSize, Padding, Border } from "../GlobalStyles";
 
 const Calculator = () => {
+  // Navigation hook for handling screen transitions
   const navigation = useNavigation();
 
+  // Function to navigate to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
@@ -42,6 +63,7 @@ const Calculator = () => {
           onPress={() => navigation.navigate("Calculator")}
         >
           <>
+            {/* Title and sub-title for the screen */}
             <LinearGradient
               style={[styles.trackingSwitchChild, styles.trackingLayout]}
               locations={[0, 1]}
@@ -66,6 +88,7 @@ const Calculator = () => {
         <Text style={styles.selectCategory}>SELECT CATEGORY</Text>
       </View>
 
+      {/* Horizontal scroll view for different calculation categories */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -139,7 +162,9 @@ const Calculator = () => {
   );
 };
 
+// StyleSheet for defining the styles of UI components
 const styles = StyleSheet.create({
+  // Styling rules for different UI elements like background, buttons, images, etc
   calculatorLayout: {
     height: 330,
     width: 400,
