@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
-    top: -30,
+    top: 20,
   },
   backButton: {
     flex: 1,
@@ -368,3 +368,5 @@ const styles = StyleSheet.create({
 });
  
 export default CalcElectricity2;
+ 
+ 

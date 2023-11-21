@@ -225,17 +225,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 135,
     position: "absolute",
-    bottom: -40,
+    bottom: 0,
     zIndex: 1,
   },
   bottomNavIcon: {
     width: 30,
     height: 30,
     marginBottom: 50,
-    top: 40,
   },
   iconCalculator: {
-    top: 730,
+    top: 728,
     width: 40,
     height: 45,
     alignSelf: "center",
@@ -252,3 +251,5 @@ const styles = StyleSheet.create({
 });
  
 export default CalcElectricity;
+ 
+ 
