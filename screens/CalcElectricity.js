@@ -4,23 +4,27 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
-
+import { ScrollView } from "react-native";
+ 
 const CalcElectricity = () => {
   const [ConsumptionKwh, setConsumptionKwh] = useState("");
   const navigation = useNavigation();
-
+ 
+  //test comment
+ 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
-
+ 
   return (
+    <ScrollView>
     <View style={styles.container}>
       {/* Background Image */}
       <Image
         style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
-
+ 
       {/* Content Container */}
       <View style={styles.contentContainer}>
         {/* Header */}
@@ -32,9 +36,9 @@ const CalcElectricity = () => {
             <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
           </Pressable>
         </View>
-
+ 
         <Text style={styles.headerTitle}>ENTER YOUR ELECTRICITY USAGE BELOW</Text>
-
+ 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
           <Image
@@ -42,8 +46,8 @@ const CalcElectricity = () => {
             source={require("../assets/1-1.png")}
           />
         </View>
-
-        {/* Vehicle Type Input */}
+ 
+        {/* Consumption Input */}
         <LinearGradient
           style={styles.inputContainer}
           locations={[0, 1]}
@@ -60,11 +64,11 @@ const CalcElectricity = () => {
             fontSize={FontSize.size_3xl}
           />
         </LinearGradient>
-
+ 
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcElectricity2")}
+          onPress={() => {navigation.navigate('CalcElectricity2', {ConsumptionKwh });}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -76,7 +80,7 @@ const CalcElectricity = () => {
           </LinearGradient>
         </Pressable>
       </View>
-
+ 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
         <Pressable onPress={() => handleNavigation("UserProfile")}>
@@ -104,14 +108,14 @@ const CalcElectricity = () => {
           />
         </Pressable>
       </View>
-
+ 
       {/* Surface Icon */}
       <Image
         style={styles.surfaceIcon}
         resizeMode="cover"
         source={require("../assets/navigation-barr2.png")}
       />
-
+ 
       {/* Calculator Icon */}
       <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
@@ -121,9 +125,10 @@ const CalcElectricity = () => {
         />
       </Pressable>
     </View>
+    </ScrollView>
   );
 };
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
+    top: 40,
   },
   backButton: {
     flex: 1,
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 120,
+    top: 110,
     left: 0,
     right: 0,
     paddingHorizontal: 16,
@@ -243,5 +249,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 });
-
+ 
 export default CalcElectricity;
+ 
+ 
