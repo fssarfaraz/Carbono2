@@ -1,6 +1,8 @@
-// Date: 18/11/2023
-// Title: Travel Distance Entry and Calculation Screen in a React Native Application
-// Pupose: This code forms a React Native component for a screen where users can enter the distance of their travel. It calculates the environmental impact of their vehicle travel, stores the data in a Firebase database, and navigates to a results screen.
+/*
+Date: 18/11/2023
+Screen: Travel Distance Entry and Calculation Screen in a React Native Application
+Pupose: This code forms a React Native component for a screen where users can enter the distance of their travel. It calculates the environmental impact of their vehicle travel, stores the data in a Firebase database, and navigates to a results screen.
+*/
 
 import React, { useState, useEffect } from "react";
 // Importing React, useState and useEffect hooks from the React library
@@ -53,7 +55,7 @@ const CalcCar2 = () => {
 
   const { vehicleMake, vehicleModel } = route.params;
 
-   // Firebase database and authentication setup
+  // Firebase database and authentication setup
   // Create a reference to the database
   const database = getDatabase();
   console.log('connected to database');

@@ -1,3 +1,9 @@
+/* 
+Date: 18/11/2023
+Screen: Vehicle Details Input Screen for a React Native Application
+Purpose: The code represents a React Native component for a screen where users can input vehicle details (make and model) in a mobile application.
+*/
+
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";  // Importing LinearGradient for gradient styles

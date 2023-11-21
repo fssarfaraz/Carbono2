@@ -1,6 +1,8 @@
-// Date: 18/11/2023
-// Title: Energy Source Location Input Screen
-// Purpose: This screen is designed for users to input the geographical location of their energy source, facilitating a more precise calculation of their electricity-related carbon footprint.
+/* 
+Date: 18/11/2023
+Screen: Energy Source Location Input Screen
+Purpose: This screen is designed for users to input the geographical location of their energy source, facilitating a more precise calculation of their electricity-related carbon footprint.
+*/
 
 // Importing React and essential UI components from React Native
 import React, { useState } from "react";
@@ -52,13 +54,16 @@ const CalcElectricity2 = () => {
           <Pressable
             style={styles.backButton}
             onPress={() => navigation.goBack()}
+          // Handle back button press
           >
             <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+            // Display back arrow icon
           </Pressable>
         </View>
 
         {/* Title of the screen */}
         <Text style={styles.headerTitle}>ENTRY THE COUNTRY OR CONTINENT PROVIDING THE ENERGY</Text>
+        // Display instruction text
 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
@@ -67,6 +72,7 @@ const CalcElectricity2 = () => {
             style={styles.saly3Icon}
             source={require("../assets/saly44.png")}
           />
+          // Display Saly6 image
         </View>
 
         {/* Vehicle Type Input */}
@@ -78,12 +84,19 @@ const CalcElectricity2 = () => {
           <TextInput
             style={styles.textInput}
             value={location}
+            // Display entered location
             onChangeText={setLocation}
+            // Update location on text change
             placeholder="Location"
+            // Display placeholder text
             placeholderTextColor="#fff"
+             // Set placeholder text color
             fontWeight="700"
+            // Set font weight
             textAlign="center"
+            // Align text to center
             fontSize={FontSize.size_3xl}
+            // Set font size
           />
         </LinearGradient>
 

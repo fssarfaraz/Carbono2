@@ -1,6 +1,8 @@
-// Date:18/11/2023
-// Title: Carbon Footprint Result Display Screen
-// Purpose: This screen displays the calculated carbon footprint result of the user's car travel and provides navigation options for further interaction.
+/*
+Date:18/11/2023
+Screen: Carbon Footprint Result Display Screen
+Purpose: This screen displays the calculated carbon footprint result of the user's car travel and provides navigation options for further interaction.
+*/
 
 // React and React Native basic imports for state management and UI components
 import React, { useState, useEffect } from "react";
@@ -75,7 +77,6 @@ const CalcCar3 = () => {
         <Pressable
           style={styles.nextButton}
           onPress={() => handleNavigation("TravelTrackReport")}
-          {/* Button to display the calculated carbon footprint result */}
         >
           <LinearGradient
             style={styles.gradientButton}

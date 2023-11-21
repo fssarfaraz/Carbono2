@@ -1,6 +1,8 @@
-// Date
-// Title: Electricity Usage Input Screen
-// Purpose: This screen allows users to input their electricity consumption in kWh to calculate their carbon footprint related to electricity usage.
+/*
+Date
+Screen: Electricity Usage Input Screen 
+Purpose: This screen allows users to input their electricity consumption in kWh to calculate their carbon footprint related to electricity usage.
+*/
 
 // React hook for state management and native components for UI
 import React, { useState } from "react";
