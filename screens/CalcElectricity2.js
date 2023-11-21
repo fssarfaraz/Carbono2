@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
-    top: 20,
+    top: -28,
   },
   backButton: {
     flex: 1,
