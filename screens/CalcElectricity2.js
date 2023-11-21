@@ -1,21 +1,38 @@
+// Date: 18/11/2023
+// Title: Energy Source Location Input Screen
+// Purpose: This screen is designed for users to input the geographical location of their energy source, facilitating a more precise calculation of their electricity-related carbon footprint.
+
+// Importing React and essential UI components from React Native
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+
+// Gradient styling for enhanced UI elements
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hook for screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// Icon set for UI elements
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Global styling constants
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcElectricity2 = () => {
+  // State for managing location input
   const [location, setLocation] = useState("");
+  // Navigation hook for managing screen navigatio
   const navigation = useNavigation();
 
+  // Function for navigating to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // JSX for rendering the component UI
   return (
     <View style={styles.container}>
-      {/* Background Image */}
+      {/* Background Image for the screen */}
       <Image
         style={[styles.calcElectricity2Child, styles.calcLayout]}
         contentFit="cover"
@@ -28,8 +45,9 @@ const CalcElectricity2 = () => {
       />
 
       {/* Content Container */}
+      {/* Main content area */}
       <View style={styles.contentContainer}>
-        {/* Header */}
+        {/* Header with a back button for navigation */}
         <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -39,10 +57,12 @@ const CalcElectricity2 = () => {
           </Pressable>
         </View>
 
+        {/* Title of the screen */}
         <Text style={styles.headerTitle}>ENTRY THE COUNTRY OR CONTINENT PROVIDING THE ENERGY</Text>
 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
+          {/* Decorative image to enhance user interface */}
           <Image
             style={styles.saly3Icon}
             source={require("../assets/saly44.png")}
@@ -68,6 +88,7 @@ const CalcElectricity2 = () => {
         </LinearGradient>
 
         {/* Next Button */}
+        {/* Button to proceed to the next screen after input */}
         <Pressable
           style={styles.nextButton}
           onPress={() => handleNavigation("EnergyTrackReport")}
@@ -130,7 +151,9 @@ const CalcElectricity2 = () => {
   );
 };
 
+// StyleSheet for styling the UI components
 const styles = StyleSheet.create({
+    // Styling for container, background images, header, inputs, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

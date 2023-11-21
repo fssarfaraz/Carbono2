@@ -1,28 +1,47 @@
+// Date
+// Title: Electricity Usage Input Screen
+// Purpose: This screen allows users to input their electricity consumption in kWh to calculate their carbon footprint related to electricity usage.
+
+// React hook for state management and native components for UI
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+
+// LinearGradient for gradient style elements
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hook for screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// Navigation hook for screen transitions
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Global styles for consistent theming across the app
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcElectricity = () => {
+  // State for storing electricity consumption input
   const [ConsumptionKwh, setConsumptionKwh] = useState("");
+  // Navigation hook for moving between screens
   const navigation = useNavigation();
 
+  // Function for navigating to specified screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // JSX for rendering the component UI
   return (
     <View style={styles.container}>
-      {/* Background Image */}
+      {/* Background Image for aesthetic purposes */}
       <Image
         style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
 
       {/* Content Container */}
+      {/* Main content area of the screen */}
       <View style={styles.contentContainer}>
+        {/* Header with navigation back button */}
         {/* Header */}
         <View style={styles.header}>
           <Pressable
@@ -33,9 +52,11 @@ const CalcElectricity = () => {
           </Pressable>
         </View>
 
+        {/* Screen title indicating action required from the user*/}
         <Text style={styles.headerTitle}>ENTER YOUR ELECTRICITY USAGE BELOW</Text>
 
         {/* Saly6 Image */}
+        {/* Decorative image for enhancing UI */}
         <View style={styles.saly3Container}>
           <Image
             style={styles.saly3Icon}
@@ -49,6 +70,7 @@ const CalcElectricity = () => {
           locations={[0, 1]}
           colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
         >
+          {/* Text input for entering electricity consumption */}
           <TextInput
             style={styles.textInput}
             value={ConsumptionKwh}
@@ -72,6 +94,7 @@ const CalcElectricity = () => {
             end={{ x: 1, y: 0 }}
             colors={["#428DF8", "#5A09C1"]}
           >
+            {/* Button to navigate to the next screen after input */}
             <Text style={styles.nextButtonText}>Next</Text>
           </LinearGradient>
         </Pressable>
@@ -124,7 +147,9 @@ const CalcElectricity = () => {
   );
 };
 
+// Stylesheet for styling UI components
 const styles = StyleSheet.create({
+    // Style rules for container, background, input area, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
