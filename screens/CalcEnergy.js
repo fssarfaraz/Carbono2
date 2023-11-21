@@ -4,31 +4,31 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
-
+ 
 const CalcEnergy = () => {
-  // const [foodName, setFoodName] = useState("");
   const navigation = useNavigation();
-
+ 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
-
+ 
   return (
     <View style={styles.container}>
+    {/*Test comment*/}
       {/* Background Image */}
       <View style={styles.backgroundImage}>
         <Image
-          style={[styles.calcEnergyItem, styles.calcLayout]}
+          style={[styles.ellipse1]}
           contentFit="cover"
           source={require("../assets/ellipse-3.png")}
         />
         <Image
-          style={[styles.iconLayout2, styles.calcLayout]}
+          style={[styles.ellipse2]}
           contentFit="cover"
           source={require("../assets/ellipse-3.png")}
         />
       </View>
-
+ 
       {/* Content Container */}
       <View style={styles.contentContainer}>
         {/* Header */}
@@ -40,9 +40,9 @@ const CalcEnergy = () => {
             <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
           </Pressable>
         </View>
-
+ 
         <Text style={styles.headerTitle}>SELECT TYPE OF ENERGY CONSUMPTION</Text>
-
+ 
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
           <Image
@@ -50,7 +50,7 @@ const CalcEnergy = () => {
             source={require("../assets/saly25.png")}
           />
         </View>
-
+ 
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
@@ -66,7 +66,7 @@ const CalcEnergy = () => {
           </LinearGradient>
         </Pressable>
       </View>
-
+ 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
         <Pressable onPress={() => handleNavigation("UserProfile")}>
@@ -94,14 +94,14 @@ const CalcEnergy = () => {
           />
         </Pressable>
       </View>
-
+ 
       {/* Surface Icon */}
       <Image
         style={styles.surfaceIcon}
         resizeMode="cover"
         source={require("../assets/navigation-barr2.png")}
       />
-
+ 
       {/* Calculator Icon */}
       <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
@@ -113,7 +113,7 @@ const CalcEnergy = () => {
     </View>
   );
 };
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -124,25 +124,26 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
   iconLayout1: {
     width: 33,
     marginLeft: 72,
   },
-  iconLayout2: {
-    height: 30,
-    width: 30,
+  ellipse2: {
+    top: 545,
+    height: 400,
+    width: 500,
+    left: 40,
+    position: "absolute",
   },
   calcEnergyChild: {
     top: 0,
   },
-  calcEnergyItem: {
-    top: 545,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 500,
+    left: -210,
+    position: "absolute",
   },
   contentContainer: {
     flex: 1,
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    top: -239,
+    top: -240,
     marginBottom: 40,
   },
   backButton: {
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 120,
+    top: 130,
     left: 0,
     right: 0,
   },
@@ -243,5 +244,5 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 });
-
+ 
 export default CalcEnergy;
