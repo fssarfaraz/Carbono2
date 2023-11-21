@@ -1,32 +1,54 @@
+// Date:18/11/2023
+// Title: Carbon Footprint Result Display Screen
+// Purpose: This screen displays the calculated carbon footprint result of the user's car travel and provides navigation options for further interaction.
+
+// React and React Native basic imports for state management and UI components
 import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+
+// LinearGradient for advanced gradient design in UI components
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hook for navigating between screens
 import { useNavigation } from "@react-navigation/native";
+
+// Icon library for enhanced UI design
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Global style constants for consistent theming and design
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+
+// Hook to access route parameters from the previous screen
 import { useRoute } from '@react-navigation/native';
 
 const CalcCar3 = () => {
+  // State hook not used in this component
+  // Hook for handling navigation
   const navigation = useNavigation();
 
+  // Function to navigate to specified screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // Accessing result from route parameters
   const route = useRoute();
   const { result } = route.params;
 
+  // JSX for rendering the UI elements
   return (
     <View style={styles.container}>
-      {/* Background Image */}
+      {/* Static Background Image */}
       <Image
         style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
 
+      {/* Main content area of the screen */}
       {/* Content Container */}
       <View style={styles.contentContainer}>
-        {/* Header */}
+        {/* Container for all content elements */}
+        {/* Header with back navigation*/}
         <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -36,8 +58,10 @@ const CalcCar3 = () => {
           </Pressable>
         </View>
 
+        {/* Displaying the title of the screen */}
         <Text style={styles.headerTitle}>YOUR CARBON FOOTPRINT</Text>
 
+        {/* Decorative image */}
         {/* Saly6 Image */}
         <View style={styles.saly26Container}>
           <Image
@@ -51,6 +75,7 @@ const CalcCar3 = () => {
         <Pressable
           style={styles.nextButton}
           onPress={() => handleNavigation("TravelTrackReport")}
+          {/* Button to display the calculated carbon footprint result */}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -64,6 +89,7 @@ const CalcCar3 = () => {
       </View>
 
       {/* Bottom Navigation Bar */}
+      {/* Bottom navigation bar for quick access to different screens */}
       <View style={styles.bottomNavBar}>
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
@@ -99,6 +125,7 @@ const CalcCar3 = () => {
       />
 
       {/* Calculator Icon */}
+      {/* Button for navigating to the calculator screen */}
       <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
         <Image
           style={styles.iconCalculator}
@@ -110,7 +137,9 @@ const CalcCar3 = () => {
   );
 };
 
+// Stylesheet for styling UI elements
 const styles = StyleSheet.create({
+  // Style rules for container, background, header, buttons, and other elements.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

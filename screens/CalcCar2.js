@@ -1,28 +1,59 @@
+// Date: 18/11/2023
+// Title: Travel Distance Entry and Calculation Screen in a React Native Application
+// Pupose: This code forms a React Native component for a screen where users can enter the distance of their travel. It calculates the environmental impact of their vehicle travel, stores the data in a Firebase database, and navigates to a results screen.
+
 import React, { useState, useEffect } from "react";
+// Importing React, useState and useEffect hooks from the React library
+
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// Importing various components from react-native for UI design
+
 import { LinearGradient } from "expo-linear-gradient";
+// Importing LinearGradient from expo-linear-gradient for gradient styling
+
 import { useNavigation } from "@react-navigation/native";
+// Importing useNavigation hook from @react-navigation/native for navigation between screens
+
 import { FontAwesome5 } from "@expo/vector-icons";
+// Importing FontAwesome5 icons from @expo/vector-icons for iconography
+
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Importing Color, FontSize, and FontFamily from a local file for consistent styling across the app
+
 import { calcCar } from "../components/API";
+// Importing a custom function calcCar from a local API file for specific calculations
+
 import { useRoute } from '@react-navigation/native';
+// Importing useRoute from @react-navigation/native to access route parameters from previous screens
+
 import {getDatabase, ref, set} from "firebase/database";
+// Importing functions from firebase/database for interacting with Firebase Realtime Database
+
 import { getAuth} from 'firebase/auth';
+// Importing getAuth from firebase/auth for authentication purposes
+
 import { app } from "../App";
+// Importing the main Firebase app instance from the local App.js file for Firebase setup
 
 
 const CalcCar2 = () => {
+  
+  // State for storing distance input
   const [distance, setDistanceKM] = useState("");
   const navigation = useNavigation();
+  // Hook for navigation
 
+  // Function to handle screen navigation
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // Using the route to access parameters passed from the previous screen
   const route = useRoute();
 
   const { vehicleMake, vehicleModel } = route.params;
 
+   // Firebase database and authentication setup
   // Create a reference to the database
   const database = getDatabase();
   console.log('connected to database');
@@ -32,13 +63,16 @@ const CalcCar2 = () => {
   console.log('got current user');
   const email = user.email; 
   console.log('User email: ', email);
+  // Processing the user's email for database entry
   // Split email on "@" 
   const emailParts = email.split('@');
   // Get first part (before "@")
   const emailName = emailParts[0];
   console.log(emailName);
 
+  // Function to add calculation results to the Firebase database
   const addToDatabase = async (result) => {
+    // Formatting the current date for the database entry
       // Get the current date
       const date = new Date();
       const formattedDate = date.toISOString().split('T')[0];
@@ -53,6 +87,7 @@ const CalcCar2 = () => {
         date: formattedDate,
         result: result
       };
+       // Adding the entry to the database
       console.log('Defined entry')
       // Set the user data in the database
       set(ref(database, 'footprint-travel/' + key), entry).then(() => 
@@ -60,11 +95,14 @@ const CalcCar2 = () => {
       }).catch((error) => 
       {
         // An error occurred
+        // Handling database errors
         alert("Error adding to database: " + error.message);
       });
   }
 
+  // Function to handle the submission and calculation process
   const handleSubmit = async () => {
+    // Validating the distance input
     if(!distance) 
     {
       alert('Please enter distance');
@@ -78,6 +116,7 @@ const CalcCar2 = () => {
       return;
     }
 
+    // Converting the distance to a number and performing the calculation
     // convert to number
     const distanceNum = parseInt(distance);
     try 
@@ -89,6 +128,7 @@ const CalcCar2 = () => {
       try
       {
         console.log('calling database');
+        // Adding the result to the database and navigating to the results screen
         await addToDatabase(result);
         console.log('Added to database');
       }
@@ -107,14 +147,17 @@ const CalcCar2 = () => {
     }
   }
 
+  // JSX for rendering the UI
   return (
     <View style={styles.container}>
+      {/* Setting the background image */}
       {/* Background Image */}
       <Image
         style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
 
+      {/* Main content area */}
       {/* Content Container */}
       <View style={styles.contentContainer}>
         {/* Header */}
@@ -123,13 +166,16 @@ const CalcCar2 = () => {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
+            {/* Back navigation icon */}
             <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
           </Pressable>
         </View>
 
+        {/* Screen title */}
         <Text style={styles.headerTitle}>ENTER TRAVEL DISTANCE</Text>
 
         {/* Saly6 Image */}
+        {/* Decorative image */}
         <View style={styles.saly3Container}>
           <Image
             style={styles.saly3Icon}
@@ -218,7 +264,9 @@ const CalcCar2 = () => {
   );
 };
 
+// StyleSheet object for styling UI components
 const styles = StyleSheet.create({
+    // Styles for container, background image, content area, and other UI elements.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
