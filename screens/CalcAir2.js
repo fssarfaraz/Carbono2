@@ -1,29 +1,57 @@
+/*
+Date: 19/11/2023
+Screen:
+Purpose
+*/
+
+// React and React Native basics for UI and state management
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
+
+// LinearGradient for gradient style in UI components
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hooks from React Navigation for screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// FontAwesome icons for enhanced UI elements
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Global styles for consistent theming
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+
+// Custom API function for air travel calculation
 import { calcAirTravel } from "../components/API";
+
 import { useRoute } from '@react-navigation/native';
+
+// Firebase database and authentication services
 import {getDatabase, ref, set} from "firebase/database";
 import { getAuth} from 'firebase/auth';
+
+// Firebase app configuration
 import { app } from "../App";
 
 const CalcAir2 = () => {
+    // State for storing the number of passengers
   const [passengerNumber, setPassengerNumber] = useState("");
+  // Navigation hook for screen transitions
   const navigation = useNavigation();
 
+  // Function to handle screen navigation
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // Route hook to access parameters from the previous screen
   const route = useRoute();
 
   const {departure, arrival} = route.params;
   console.log("Departure, Arrival: ", departure, arrival);
+  // Destructuring departure and arrival data
 
   // Create a reference to the database
+  // Firebase database and authentication setup
   const database = getDatabase();
   console.log('connected to database');
   const auth = getAuth(app);
@@ -36,10 +64,13 @@ const CalcAir2 = () => {
   const emailParts = email.split('@');
   // Get first part (before "@")
   const emailName = emailParts[0];
+  // Extracting username from email
   console.log(emailName);
 
+  // Function to add calculation results to Firebase
   const addToDatabase = async (result) => 
   {
+    // Formatting date for database entry
     // Get the current date
     const date = new Date();
     const formattedDate = date.toISOString().split('T')[0];
@@ -65,6 +96,7 @@ const CalcAir2 = () => {
     });
   }
 
+  // Function to handle form submission and calculation
   const handleSubmit = async () => 
   {
     if(!passengerNumber) 
@@ -229,7 +261,9 @@ const CalcAir2 = () => {
   );
 };
 
+// StyleSheet to define the appearance of UI components
 const styles = StyleSheet.create({
+  // Style rules for container, background, input fields, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

@@ -1,20 +1,39 @@
+/*
+Date: 19/11/2023
+Screen: Energy Consumption Type Selection Screen
+Purpose: To provide a user interface for selecting the type of energy consumption for carbon footprint calculation.
+*/
+
+
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// React state hook and native components for building the UI
+
 import { LinearGradient } from "expo-linear-gradient";
+// LinearGradient for enhanced visual effects on UI components
+
 import { useNavigation } from "@react-navigation/native";
+// Navigation hook for transitioning between screens
+
 import { FontAwesome5 } from "@expo/vector-icons";
+// Icon library for UI elements
+
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Global styles for consistent theming across the app
 
 const CalcEnergy = () => {
+  // Navigation hook for screen transitions
   // const [foodName, setFoodName] = useState("");
   const navigation = useNavigation();
 
+  // Function for navigating to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
     <View style={styles.container}>
+      {/* Multiple background images for a layered visual effect */}
       {/* Background Image */}
       <View style={styles.backgroundImage}>
         <Image
@@ -42,7 +61,9 @@ const CalcEnergy = () => {
         </View>
 
         <Text style={styles.headerTitle}>SELECT TYPE OF ENERGY CONSUMPTION</Text>
+        {/* Title indicating action required from the user */}
 
+        {/* Decorative image to enhance the user interface */}
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
           <Image
@@ -114,7 +135,9 @@ const CalcEnergy = () => {
   );
 };
 
+// Stylesheet for defining the appearance of UI components
 const styles = StyleSheet.create({
+  // Styling rules for container, background images, header, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
