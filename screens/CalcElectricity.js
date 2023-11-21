@@ -10,6 +10,8 @@ const CalcElectricity = () => {
   const [ConsumptionKwh, setConsumptionKwh] = useState("");
   const navigation = useNavigation();
 
+  //test comment
+
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };

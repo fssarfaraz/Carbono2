@@ -29,11 +29,11 @@ const CalcBus2 = () => {
   const auth = getAuth(app);
   const user = auth.currentUser; 
   const email = user.email; 
+
   // Split email on "@" 
   const emailParts = email.split('@');
   // Get first part (before "@")
   const emailName = emailParts[0];
-  console.log(emailName);
 
   const addToDatabase = async (result) => {
       // Get the current date
@@ -81,7 +81,6 @@ const CalcBus2 = () => {
       try
       {
         await addToDatabase(result);
-        console.log('Added to database');
       }
       catch (error)
       {

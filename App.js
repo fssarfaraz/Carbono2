@@ -521,6 +521,7 @@ const App = () => {
                 component={CalcBus}
                 options={{ headerShown: false }}
               />
+              {/*test comment*/}
               <Stack.Screen
                 name="CalcBus2"
                 component={CalcBus2}

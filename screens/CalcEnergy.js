@@ -14,6 +14,7 @@ const CalcEnergy = () => {
 
   return (
     <View style={styles.container}>
+    {/*Test comment*/}
       {/* Background Image */}
       <View style={styles.backgroundImage}>
         <Image

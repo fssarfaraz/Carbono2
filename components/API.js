@@ -25,18 +25,15 @@ export const calcCar = async(vehicleMake, vehicleModel, distanceNum) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
-        console.log('Got response...');
         if(response.status !== 200) 
         {
             throw new Error('Request failed with status ' + response.status);
         }
-        console.log('Response is ok...');
         const result = response.data;
         if(response.data.error) 
         {
             throw new Error(response.data.error);
         }
-        console.log('Got result from response.data...');
         if(!result) 
         {
             throw new Error('No result');
@@ -76,18 +73,15 @@ export const calcPublicTransport = async(type, distanceNum) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
-        console.log('Got response...');
         if(response.status !== 200) 
         {
             throw new Error('Request failed with status ' + response.status);
         }
-        console.log('Response is ok...');
         const result = response.data;
         if(response.data.error) 
         {
             throw new Error(response.data.error);
         }
-        console.log('Got result from response.data...');
         if(!result) 
         {
             throw new Error('No result');
@@ -130,18 +124,15 @@ export const calcAirTravel = async(departure, arrival, numberP) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
-        console.log('Got response...');
         if(response.status !== 200) 
         {
             throw new Error('Request failed with status ' + response.status);
         }
-        console.log('Response is ok...');
         const result = response.data;
         if(response.data.error) 
         {
             throw new Error(response.data.error);
         }
-        console.log('Got result from response.data...');
         if(!result) 
         {
             throw new Error('No result');
@@ -182,18 +173,15 @@ export const CalcElec = async(consu, loca) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
-        console.log('Got response...');
         if(response.status !== 200) 
         {
             throw new Error('Request failed with status ' + response.status);
         }
-        console.log('Response is ok...');
         const result = response.data;
         if(response.data.error) 
         {
             throw new Error(response.data.error);
         }
-        console.log('Got result from response.data...');
         if(!result) 
         {
             throw new Error('No result');

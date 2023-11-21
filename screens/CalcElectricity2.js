@@ -40,6 +40,7 @@ const CalcElectricity2 = () => {
   const auth = getAuth(app);
   const user = auth.currentUser; 
   const email = user.email; 
+  
   // Split email on "@" 
   const emailParts = email.split('@');
   // Get first part (before "@")

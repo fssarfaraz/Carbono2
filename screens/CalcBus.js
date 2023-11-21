@@ -13,6 +13,8 @@ const CalcBus = () => {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+  
+  console.log('testing');
 
   const data = [
     {key:'1', value:'Taxi', lable: 'Taxi'},
