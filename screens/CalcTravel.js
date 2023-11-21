@@ -1,21 +1,45 @@
+/*
+Date: 19/11/2023
+Screen: Transportation Type Selection Screen for Carbon Footprint Calculator
+Purpose: This screen allows users to select the type of transportation (Air Travel, Public Transport, Car/Motor Vehicle) for which they want to calculate their carbon footprint.
+*/
+
+// React for component structure and state management
 import * as React from "react";
+
+// Image component from expo-image for displaying images
 import { Image } from "expo-image";
+
+// React Native components for building UI
 import { StyleSheet, View, Pressable, StatusBar, Text } from "react-native";
+
+// Button component from @rneui/themed for interactive button UI
 import { Button } from "@rneui/themed";
+
+// LinearGradient for visually appealing gradient effects
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hooks for screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// Global styles for consistent theming and layout
 import { Border, Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
+
+// Icon library for enhanced UI elements
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const CalcTravel = () => {
+  // Navigation hook for handling screen transitions
   const navigation = useNavigation();
 
+  // Function to navigate to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
-
+// JSX code for the Travel Calculator
   return (
     <View style={styles.calcTravel}>
+      {/* Background images for visual enhancement */}
       <Image
         style={[styles.ellipse1]}
         contentFit="cover"
@@ -37,9 +61,11 @@ const CalcTravel = () => {
           </Pressable>
       </View>
 
+      {/* Text input for type of transport */}
       <Text style={styles.selectTypeOf}>SELECT TYPE OF TRANSPORT</Text>
       
       <View style={styles.contentContainer}>
+        {/* Transportation type selection options (Air Travel, Public Transport, Car/Motor Vehicle) */}
         <View style={styles.saly6Container}>
             <Image
               style={styles.saly6Icon}
@@ -48,6 +74,7 @@ const CalcTravel = () => {
             />
           </View>
 
+          {/* Airplane option button */}
           <Pressable
             style={styles.nextButton}
             onPress={() => handleNavigation("CalcAir")}
@@ -62,6 +89,7 @@ const CalcTravel = () => {
             </LinearGradient>
           </Pressable>
 
+          {/* Bus icon container */}
           <View style={styles.saly6Container}>
             <Image
               style={styles.saly6Icon}
@@ -70,6 +98,7 @@ const CalcTravel = () => {
             />
           </View>
 
+          {/* Bus option button */}
           <Pressable
             style={styles.nextButton}
             onPress={() => handleNavigation("CalcBus")}
@@ -155,7 +184,9 @@ const CalcTravel = () => {
   );
 };
 
+// StyleSheet for defining the styles of UI components
 const styles = StyleSheet.create({
+  // Styling rules for different UI elements like header, buttons, images, etc.
   materialSymbolsarrowBackIoIconBtn: {
     left: 23,
     top: 50,
