@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     position: "relative",
     zIndex: 2,
+    top: 40,
   },
   surfaceIcon: {
     flex: 1,
@@ -227,6 +228,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     zIndex: 1,
+    bottom: -40,
   },
   bottomNavIcon: {
     width: 30,

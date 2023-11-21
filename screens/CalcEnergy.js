@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    top: -239,
+    top: -229,
     marginBottom: 40,
   },
   backButton: {
