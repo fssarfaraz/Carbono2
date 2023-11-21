@@ -4,380 +4,247 @@ import { StyleSheet, View, Text, Pressable, StatusBar } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import { Button } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
+import Property1HomeImage from "../components/Property1HomeImage";
 import { FontFamily, Color, FontSize, Padding } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Li, Pr, Vi } from "react-flags-select";
 
 const QuizCorrect = () => {
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.quizCorrect}>
+    <View style={styles.quiz}>
       <Image
-        style={[styles.quizCorrectChild, styles.quizPosition]}
+        style={[styles.quizChild]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.quizCorrectItem, styles.quizPosition]}
+        style={[styles.quizItem]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <View style={[styles.rectangleParent, styles.groupChildLayout]}>
-        <View style={[styles.groupChild, styles.groupChildLayout]} />
-        <View style={[styles.sliderIndicator, styles.progressbarLayout]}>
-          <ProgressBar
-            style={styles.progressbarLayout}
-            progress={0.07}
-            color="rgba(66, 141, 248, 0.32)"
-          />
-        </View>
-        <Button
-          title="Next"
-          radius={6}
-          iconPosition="left"
-          type="solid"
-          titleStyle={styles.buttonContinueBtn}
-          containerStyle={styles.buttonContinueBtn1}
-          buttonStyle={styles.buttonContinueBtn2}
-        />
-        <View style={styles.answerOption}>
-          <Button
-            title="A. Lorem Ipsum"
-            radius={5}
-            iconPosition="left"
-            type="solid"
-            titleStyle={styles.groupButtonBtn}
-            containerStyle={styles.groupButtonBtn1}
-            buttonStyle={styles.groupButtonBtn2}
-          />
-          <Button
-            title="C. Lorem Ipsum"
-            radius={6}
-            iconPosition="left"
-            type="solid"
-            titleStyle={styles.groupButton1Btn}
-            containerStyle={styles.groupButton1Btn1}
-            buttonStyle={styles.groupButton1Btn2}
-          />
-          <Button
-            title="B. Lorem Ipsum"
-            radius={6}
-            iconPosition="left"
-            type="solid"
-            titleStyle={styles.groupButton2Btn}
-            containerStyle={styles.groupButton2Btn1}
-            buttonStyle={styles.groupButton2Btn2}
-          />
-          <Button
-            title="D. Lorem Ipsum"
-            radius={6}
-            iconPosition="left"
-            type="solid"
-            titleStyle={styles.groupButton3Btn}
-            containerStyle={styles.groupButton3Btn1}
-            buttonStyle={styles.groupButton3Btn2}
-          />
-        </View>
-        <Image
-          style={styles.imageQuestionIcon}
-          contentFit="cover"
-          source={require("../assets/image-question.png")}
-        />
-        <View style={styles.quizQuestion}>
-          <Text style={[styles.loremIpsumDolor, styles.of15Typo]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Habitasse
-            dolor etiam sed ante donec quis sapien.
-          </Text>
-          <Text style={[styles.of15, styles.of15Typo]}>1 Of 15</Text>
-        </View>
-      </View>
-      <LinearGradient
-        style={styles.gradientLayer}
-        locations={[0, 1]}
-        colors={["#01427a", "rgba(44, 44, 46, 0)"]}
-      />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr18.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <Pressable
-        style={styles.iconPersonOutlineParent}
-        onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-        }
-      >
+
+      {/* Header */}
+      <View style={styles.header}>
         <Pressable
-          style={styles.iconLayout1}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
         >
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
+      </View>
+
+      <View style={styles.rectangleParent}>
+        {/* progress bar */}
+        <View style={styles.progressBar}>
+          <ProgressBar
+            progress={0.5}
+            color={Color.primary}
+            style={styles.progressBar}
+          />
+          </View>
+
+        {/* Question */}
+        <View style={styles.question}>
+          <Text style={styles.questionText}>Lorem ipsum dolor sit amet, 
+            consectetur adipiscing elit. 
+            Habitasse dolor etiam sed ante donec quis sapien.
+          </Text>
+        </View>
+
+        {/* Question no */}
+        <View style={styles.question1}>
+          <Text style={styles.questionText1}>Question 1 of 10</Text>
+        </View>
+
+        {/* image  */}
+        <View style={styles.questionImageContainer}>
           <Image
-            style={styles.icon}
+            style={styles.questionImage}
             contentFit="cover"
+            source={require("../assets/image-question.png")}
+          />
+        </View>
+
+        {/* Answer */}
+        <View style={styles.answerContainer}>
+          <View style={styles.row1}>
+          <Pressable 
+            // onPress={() => handleNavigation("QuizCorrect")}
+            style={styles.pressableContainer}>
+            <Text style={styles.pressableText}>Answer 1</Text>
+          </Pressable>
+          <Pressable 
+            // onPress={() => handleNavigation("QuizWrong")}
+            style={styles.pressableContainer}>
+            <Text style={styles.pressableText}>Answer 2</Text>
+          </Pressable>
+          </View>
+
+          <View style={styles.row2}>
+          <Pressable 
+            // onPress={() => handleNavigation("QuizWrong")}
+            style={styles.pressableContainer}>
+            <Text style={styles.pressableText}>Answer 3</Text>
+          </Pressable>
+          <Pressable 
+            // onPress={() => handleNavigation("QuizWrong")}
+            style={styles.pressableContainer}>
+            <Text style={styles.pressableText}>Answer 4</Text>
+          </Pressable>
+          </View>
+        </View>
+
+        <View style={styles.continueContainer}>
+          <Pressable 
+            onPress={() => handleNavigation("QuizFinal")}
+            style={styles.continueButton}>
+            <Text style={styles.continueText}>Continue</Text>
+          </Pressable>
+        </View>
+        
+        {/* Correct icon display over the text */}
+        <View style={styles.correctAnswer}>
+          <LinearGradient
+            colors={['#FFFFFF', '#ECFBE1D8', '#E9FBDDD2', '#96ED5F29']}
+            style={styles.correctAnswer}
+          >
+          <Image
+            style={styles.vector7}
+            source={require("../assets/Ok.png")}
+          />
+          <Text style={styles.okText}>Correct</Text>
+          </LinearGradient>
+        </View>
+
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-person-outline.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Educational")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-book-saved.png")}
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Forum")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-discussion.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Games")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline14.png")}
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
           />
         </Pressable>
-      </Pressable>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
+      </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={1}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Image
-        style={styles.quizCorrectInner}
-        contentFit="cover"
-        source={require("../assets/group-2083.png")}
-      />
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  progressbar: {
-    height: 49,
-    width: 443,
-  },
-  buttonContinueBtn: {
-    color: "#fdfdfd",
-    fontSize: 22,
-    fontWeight: "600",
-    fontFamily: "Nunito-SemiBold",
-  },
-  buttonContinueBtn1: {
-    left: 27,
-    top: 614,
+  quizChild: {
+    flex: 1,
+    height: 852,
     position: "absolute",
+    width: "100%",
+    zIndex: -1,
   },
-  buttonContinueBtn2: {
-    width: 343,
-    height: 60,
-  },
-  groupButtonBtn: {
-    color: "#fdfdfd",
-    fontSize: 14,
-    fontFamily: "Nunito-Regular",
-  },
-  groupButtonBtn1: {
-    left: 0,
-    top: 0,
+  quizItem: {
+    flex: 1,
+    height: 852,
     position: "absolute",
+    width: "100%",
+    zIndex: -1,
   },
-  groupButtonBtn2: {
-    width: 160,
-    height: 64,
+  progressBar: {
+    top: 10,
+    height: 8,
+    width: 255,
+    alignSelf: "center",
   },
-  groupButton1Btn: {
-    color: "#181818",
-    fontSize: 14,
-    fontFamily: "Nunito-Regular",
+  question: {
+    flex: 1,
+    top: 30,
+    margin: 20,
+    alignSelf: "center",
+    alignItems: "center",
+    width: 350,
+    right: 10,
   },
-  groupButton1Btn1: {
-    left: 0,
-    top: 84,
-    position: "absolute",
-  },
-  groupButton1Btn2: {
-    width: 160,
-    height: 64,
-  },
-  groupButton2Btn: {
-    color: "#181818",
-    fontSize: 14,
-    fontFamily: "Nunito-Regular",
-  },
-  groupButton2Btn1: {
-    left: 183,
-    top: 0,
-    position: "absolute",
-  },
-  groupButton2Btn2: {
-    width: 160,
-    height: 64,
-  },
-  groupButton3Btn: {
-    color: "#181818",
-    fontSize: 14,
-    fontFamily: "Nunito-Regular",
-  },
-  groupButton3Btn1: {
-    left: 183,
-    top: 84,
-    position: "absolute",
-  },
-  groupButton3Btn2: {
-    width: 160,
-    height: 64,
-  },
-  iconCalculatorBtn: {
-    position: "relative",
-  },
-  iconCalculatorBtn1: {
-    width: 41,
-    height: 45,
-  },
-  quizPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
-  groupChildLayout: {
-    height: 723,
-    position: "absolute",
-  },
-  progressbarLayout: {
-    height: 49,
-    width: 443,
-  },
-  of15Typo: {
-    textAlign: "center",
-    fontFamily: FontFamily.nunitoRegular,
-    position: "absolute",
-  },
-  iconLayout: {
-    width: 33,
-    marginLeft: 72,
-  },
-  iconLayout1: {
-    height: 30,
-    width: 30,
-  },
-  quizCorrectChild: {
-    height: 394,
-    top: 0,
-  },
-  quizCorrectItem: {
-    top: 435,
-    height: 417,
-  },
-  groupChild: {
-    width: 397,
-    left: 0,
-    top: 0,
-    backgroundColor: Color.labelDarkPrimary,
-  },
-  sliderIndicator: {
-    marginLeft: -212,
-    left: "50%",
-    top: 0,
-    position: "absolute",
-  },
-  answerOption: {
-    top: 417,
-    left: 27,
-    width: 343,
-    height: 148,
-    position: "absolute",
-  },
-  imageQuestionIcon: {
-    top: 195,
-    left: 48,
-    width: 301,
-    height: 192,
-    position: "absolute",
-  },
-  loremIpsumDolor: {
-    fontSize: FontSize.bodyBody1_size,
+  questionText: {
+    fontSize: 16,
     lineHeight: 24,
-    color: Color.colorGray_200,
-    height: 59,
-    width: 359,
-    left: 0,
-    top: 0,
+    fontFamily: "Nunito-SemiBold",
+    color: "#000",
+    textAlign: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
   },
-  of15: {
-    top: 72,
-    left: 158,
-    fontSize: FontSize.secondaryText_size,
+  question1: { 
+    flex: 1,
+    bottom: 60,
+    alignSelf: "center",
+    alignItems: "center",
+    right: 10,
+  },
+  questionText1: {
+    fontSize: 14,
     lineHeight: 22,
-    color: Color.gray,
-    width: 43,
-    height: 18,
+    fontFamily: "Nunito-Regular",
+    color: "#000",
+    textAlign: "center"
   },
-  quizQuestion: {
-    top: 70,
-    left: 18,
-    height: 90,
-    width: 359,
-    position: "absolute",
+  questionImageContainer: {
+    flex: 1,
+    marginRight: 40,
+    marginLeft: 30,
+    bottom: 200,
+  },
+  questionImage: {
+    width: "100%",
+    height: 212,
+    alignSelf: "center",
+    margin: 20,
+    padding: 20,
+    borderRadius: 20,
   },
   rectangleParent: {
-    top: 65,
-    left: -3,
-    width: 462,
-  },
-  gradientLayer: {
-    top: 743,
-    left: 1,
-    width: 393,
-    height: 89,
-    backgroundColor: "transparent",
+    top: 100,
+    width: 410,
+    height: 725,
     position: "absolute",
-  },
-  icon: {
-    height: "100%",
-    width: "100%",
   },
   iconBookSaved: {
     height: 31,
@@ -404,19 +271,163 @@ const styles = StyleSheet.create({
     padding: Padding.p_3xs,
     position: "absolute",
   },
-  quizCorrectInner: {
-    top: 458,
-    left: 73,
-    width: 232,
-    height: 186,
-    position: "absolute",
-  },
-  quizCorrect: {
+  quiz: {
     flex: 1,
     height: 852,
     overflow: "hidden",
     width: "100%",
     backgroundColor: Color.labelDarkPrimary,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 40,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 25,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+    top: 700,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  answerContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    bottom: 125,
+    width: "90%",
+    marginLeft: 20,
+    marginRight: 35,
+    height: 50,
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  row1: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    height: 50,
+    alignSelf: "center",
+    alignItems: "center",
+    marginBottom: 25,
+  },
+  row2: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    height: 100,
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  pressableContainer: {
+    flex: 1,
+    height: 50,
+    borderRadius: 6,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+  },
+  pressableText: {
+    fontSize: 14,
+    lineHeight: 22,
+    fontFamily: "Nunito-Regular",
+    color: "#000",
+    textAlign: "center",
+    paddingRight: 20,
+    paddingLeft: 20,
+  },
+  continueContainer: {
+    flex: 1,
+    alignSelf: "center",
+    alignItems: "center",
+    bottom: 20,
+  },
+  continueButton: {
+    width: 250,
+    height: 50,
+    borderRadius: 6,
+    backgroundColor: Color.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    backgroundColor: "#428df8"
+  },
+  continueText: {
+    fontSize: 22,
+    lineHeight: 28,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#fdfdfd",
+    textAlign: "center"
+  },
+  correctAnswer: {
+    flex: 1, 
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    bottom: 70,
+    zIndex: 2,
+    width: 200,
+    height: 200,
+    padding: 20,
+    position: "absolute",
+    borderRadius: 20,
+  },
+  vector7: {
+    width: 90,
+    height: 90,
+    alignSelf: "center",
+    justifyContent: "center",
+    bottom: 20,
+  },
+  okText: {
+    fontSize: 28,
+    // lineHeight: 28,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#000",
+    textAlign: "center",
+    bottom: 30,
+    position: "absolute",
   },
 });
 
