@@ -7,9 +7,14 @@ import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { FontFamily, Padding, FontSize, Border, Color } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const QuizFinal = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
     <View style={styles.quizFinal}>
@@ -19,174 +24,102 @@ const QuizFinal = () => {
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.quizFinalItem, styles.quizPosition]}
+        style={[styles.quizFinalItem, styles.quizPosition1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr19.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <Pressable
-        style={styles.iconPersonOutlineParent}
-        onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-        }
-      >
+      
+      {/* Header */}
+      <View style={styles.header}>
         <Pressable
-          style={styles.iconLayout1}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
         >
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
+      </View>
+      
+      {/* Middle rectangle */}
+
+      <View style={styles.rectangleParent}>
+        <LinearGradient 
+          style={styles.rectangleLineargradient} 
+          locations={[0,0.11,1]} 
+          colors={['#eff7ff','rgba(221, 236, 254, 0.89)','rgba(66, 141, 248, 0)']} 
+          useAngle={true} angle={-45.31} />
+
+        <Text style={styles.title1}>{'Well Done!'}</Text>
+        <Image style={styles.checkIcon} resizeMode="cover" source={require("../assets/Check.png")} />
+
+        <View style={styles.startContainer}>
+          <Image style={styles.iconStar1} resizeMode="cover" source={require("../assets/Icon-Star.png")} />
+          <Image style={styles.iconStar2} resizeMode="cover" source={require("../assets/Icon-Star.png")} />
+          <Image style={styles.iconStar3} resizeMode="cover" source={require("../assets/Icon-Star2.png")} />
+        </View>
+
+        <Text style={styles.youEarned}>You Earned 80 pts</Text>
+
+        <View style={styles.ButtonContainer}>
+          <View style={styles.buttonContinue1}>
+        <Pressable onPress={() => handleNavigation("LibraryOfResourcesQuizzes")}>
+          <Text style={styles.buttonText}>Back To Resources</Text>
+        </Pressable>
+        </View>
+
+        <View style={styles.buttonContinue2}>
+        <Pressable onPress={() => handleNavigation("Quiz")}>
+          <Text style={styles.buttonText}>Play Again</Text>
+        </Pressable>
+        </View>
+        </View>
+
+
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-person-outline.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Educational")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-book-saved5.png")}
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Forum")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-discussion.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Games")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline15.png")}
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
           />
-        </Pressable>
-      </Pressable>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
-        />
-      </Pressable>
-      <View style={styles.buttonContinue}>
-        <Button
-          title="Back To Resources"
-          radius={10}
-          iconPosition="left"
-          type="solid"
-          color="#428df8"
-          onPress={() => navigation.navigate("LibraryOfResourcesQuizzes")}
-          containerStyle={styles.rectangleButtonBtn}
-          buttonStyle={styles.rectangleButtonBtn1}
-        />
-        <Button
-          title="Play Again"
-          radius={10}
-          iconPosition="left"
-          type="solid"
-          color="#428df8"
-          onPress={() => navigation.navigate("Quiz")}
-          containerStyle={styles.rectangleButton1Btn}
-          buttonStyle={styles.rectangleButton1Btn1}
-        />
-        <Pressable
-          style={styles.playAgain}
-          onPress={() => navigation.navigate("Quiz")}
-        >
-          <Text style={[styles.playAgain1, styles.ptsTypo]}>Play Again</Text>
-        </Pressable>
-        <Pressable
-          style={styles.backToResourcesContainer}
-          onPress={() => navigation.navigate("LibraryOfResourcesQuizzes")}
-        >
-          <Text style={[styles.backToResources, styles.ptsTypo]}>
-            Back To Resources
-          </Text>
         </Pressable>
       </View>
-      <View style={[styles.rectangleParent, styles.groupChildLayout]}>
-        <LinearGradient
-          style={[styles.groupChild, styles.groupChildLayout]}
-          locations={[0, 0.11, 1]}
-          colors={[
-            "#eff7ff",
-            "rgba(221, 236, 254, 0.89)",
-            "rgba(66, 141, 248, 0)",
-          ]}
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
-        <View style={styles.content}>
-          <Text style={styles.label}>
-            <Text style={styles.youEarned}>You Earned</Text>
-            <Text style={styles.ptsTypo}> 80 pts</Text>
-          </Text>
-          <Image
-            style={styles.starIcon}
-            contentFit="cover"
-            source={require("../assets/star.png")}
-          />
-          <Image
-            style={styles.checkIcon}
-            contentFit="cover"
-            source={require("../assets/check.png")}
-          />
-          <Text
-            style={[styles.title, styles.titlePosition]}
-          >{`Well Done! `}</Text>
-        </View>
-      </View>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={0}
-        styleDefaultDarkModeTrueLeft={1}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <Button
-        radius="5"
-        iconPosition="left"
-        type="clear"
-        icon={{ name: "close", type: "material-community" }}
-        onPress={() =>
-          navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-        }
-        containerStyle={styles.navigationIconBtn}
-        buttonStyle={styles.navigationIconBtn1}
-      />
+      </Pressable>
+  
     </View>
   );
 };
@@ -228,11 +161,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-  quizPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
   iconLayout: {
     width: 33,
     marginLeft: 72,
@@ -255,13 +183,23 @@ const styles = StyleSheet.create({
     top: 0,
   },
   quizFinalChild: {
-    height: 394,
-    top: 0,
+    height: 594,
     width: 400,
   },
+  quizPosition: {
+    top: -80,
+    width: 600,
+    left: -300,
+    position: "absolute",
+  },
   quizFinalItem: {
-    top: 435,
+    top: 455,
     height: 417,
+  },
+  quizPosition1: {
+    width: 600,
+    left: 50,
+    position: "absolute",
   },
   icon: {
     height: "100%",
@@ -386,6 +324,150 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 40,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 25,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+    top: 612,
+    absolute: "absolute",
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  rectangleParent: {
+    top: 32,
+    alignContent: "center",
+    alignItems: "center",
+  },
+  rectangleLineargradient: {
+    borderRadius: 10,
+    width: 296,
+    height: 422,
+    position: "absolute",
+  },
+  title1: {
+    marginTop: 36,
+    fontSize: 40,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#01427a",
+    textAlign: "center"
+  },
+  checkIcon: {
+    flex: 1,
+    width: 184,
+    height: 184,
+    top: 132,
+    position: "absolute",
+  },
+  startContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    top: 300,
+    position: "absolute",
+  },
+  iconStar1: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  iconStar2: {
+    width: 52,
+    height: 52,
+    marginRight: 10,
+  },
+  iconStar3: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  ButtonContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    top: 440,
+    position: "absolute",
+    width: "100%",
+  },
+  buttonContinue1: {
+    width: 270,
+    borderRadius: 10,
+    backgroundColor: "#428df8",
+    type: "solid",
+    padding: 18,
+    margin: 10,
+  },
+  buttonContinue2: {
+    width: 270,
+    borderRadius: 10,
+    backgroundColor: "#428df8",
+    type: "solid",
+    padding: 18,
+    margin: 10,
+  },
+  buttonText: {
+    fontSize: 22,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "rgba(255, 255, 255, 0.91)",
+    textAlign: "center",
+    height: 28
+  },
+  youEarned: {
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#01427a",
+    textAlign: "center",
+    top: 390,
+    position: "absolute",
+  },
+
 });
 
 export default QuizFinal;
