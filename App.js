@@ -64,6 +64,7 @@ import CalcTravel from "./screens/CalcTravel";
 import CalcCar from "./screens/CalcCar";
 import CalcCar2 from "./screens/CalcCar2";
 import CalcBus from "./screens/CalcBus";
+import CalcBus2 from "./screens/CalcBus2";
 import CalcAir from "./screens/CalcAir";
 import CalcEnergy from "./screens/CalcEnergy";
 import CalcElectricity from "./screens/CalcElectricity";
@@ -523,6 +524,11 @@ const App = () => {
               <Stack.Screen
                 name="CalcBus"
                 component={CalcBus}
+                options={{ headerShown: false }}
+              />
+               <Stack.Screen
+                name="CalcBus2"
+                component={CalcBus2}
                 options={{ headerShown: false }}
               />
               <Stack.Screen
