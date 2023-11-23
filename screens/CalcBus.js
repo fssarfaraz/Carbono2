@@ -4,66 +4,46 @@ Screen: Public Transport Type Selection Screen
 Purpose: This screen allows users to select the type of public transportation they use, which will be used to calculate the carbon footprint of their travel.
 */
 
-// React basics and state management
 import React, { useState } from "react";
-
-// React Native components for building UI
-import { Image, Pressable, StyleSheet, Text, TextInput, View, Picker } from "react-native";
-
-// LinearGradient for stylish gradient effects
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
-// Navigation hooks for transitioning between screens
 import { useNavigation } from "@react-navigation/native";
-
-// Icon library for UI enhancement
 import { FontAwesome5 } from "@expo/vector-icons";
-
-// Global style constants for consistent theming
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
-
-// Custom dropdown select list component
 import { SelectList } from 'react-native-dropdown-select-list'
 
 const CalcBus = () => {
-  // State for the transport type selection
-  const [transportType, setTransportType] = useState("");
-  // Navigation hook for screen transition functionality
+  const [selectedType, setSelectedType] = useState("");
   const navigation = useNavigation();
 
-  // Function to navigate to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+  
+  console.log('testing');
 
-  // State for handling selected item from dropdown
-  const [selected, setSelected] = React.useState("");
-  
-  // Data for the dropdown list
   const data = [
-    // List of transport types with key-value pairs
-      {key:'1', value:'Taxi', lable: 'Taxi'},
-      {key:'2', value: "Classic Bus", label: "Classic Bus" },
-      {key:'3', value: "Eco Bus", label: "Eco Bus"},
-      {key:'4', value: "Coach", label: "Coach"},
-      {key:'5', value: "National Train", label: "National Train"},
-      {key:'6', value: "Light Rail", label: "Light Rail"},
-      {key:'7', value: "Subway", label: "Subway"},
-      {key:'8', value: "Ferry On Foot", label: "Ferry On Foot"},
-      {key:'9', value: "Ferry In Car", label: "Ferry In Car"}
-    ]
-  
-  // JSX code for the Public Transport Input screen
+    {key:'1', value:'Taxi', lable: 'Taxi'},
+    {key:'2', value: "ClassicBus", label: "Classic Bus" },
+    {key:'3', value: "EcoBus", label: "Eco Bus"},
+    {key:'4', value: "Coach", label: "Coach"},
+    {key:'5', value: "NationalTrain", label: "National Train"},
+    {key:'6', value: "LightRail", label: "Light Rail"},
+    {key:'7', value: "Subway", label: "Subway"},
+    {key:'8', value: "FerryOnFoot", label: "Ferry On Foot"},
+    {key:'9', value: "FerryInCar", label: "Ferry In Car"}
+  ]
+
   return (
     <View style={styles.container}>
       {/* Background Image */}
       <Image
-        style={[styles.calcElectricity2Child, styles.calcLayout]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.calcElectricity2Item, styles.calcLayout]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -80,10 +60,8 @@ const CalcBus = () => {
           </Pressable>
         </View>
 
-        {/* Title instructing user on input format */}
         <Text style={styles.headerTitle}>ENTER THE TYPE OF PUBLIC TRANSPORT YOU TAKE</Text>
 
-        {/* Decorative image for aesthetic enhancement */}
         {/* Saly6 Image */}
         <View style={styles.saly3Container}>
           <Image
@@ -93,26 +71,20 @@ const CalcBus = () => {
           />
         </View>
 
-        {/* Dropdown list for selecting transport type */}
+        {/* Vehicle Type Input */}
         <View style={styles.selectListContainer}>
-          {/* <LinearGradient
-            style={styles.inputContainer}
-            locations={[0, 1]}
-            colors={["#0682ef", "#094ed3"]}
-          > */}
             <SelectList 
-              setSelected={(val) => setSelected(val)} 
+              setSelected={(val) => setSelectedType(val)} 
               data={data} 
               save="value"
               placeholder={"Select Type of Transport"}
             />
-          {/* </LinearGradient> */}
         </View>
 
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcCar2")}
+          onPress={() => {navigation.navigate('CalcBus2', {type: selectedType });}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -172,9 +144,7 @@ const CalcBus = () => {
   );
 };
 
-// StyleSheet for defining UI component styles
 const styles = StyleSheet.create({
-  // Styling rules for container, background, dropdown list, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
@@ -184,18 +154,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 550,
+    left: -210,
     position: "absolute",
   },
-  calcElectricity2Child: {
-    left: 100,
-    top: 0,
-  },
-  calcElectricity2Item: {
+  ellipse2: {
     top: 545,
+    height: 400,
+    width: 550,
+    left: 0,
+    position: "absolute",
   },
   contentContainer: {
     flex: 1,
@@ -333,7 +304,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center"
   },
-  
 });
 
 export default CalcBus;
