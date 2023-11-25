@@ -1,3 +1,11 @@
+/*  
+Date: 19-11-2023
+Screen: RegistrationPage
+Purpose: RegistrationPage allows new users to create an account in the Carbono app, 
+facilitating access to its features and personalized user experience.
+*/
+
+// React and Expo imports
 import * as React from "react";
 import {Image} from "expo-image";
 import 
@@ -8,18 +16,22 @@ import
   Text,
   View,
 } from "react-native";
-import {Button} from "@rneui/themed";
-import {useNavigation} from "@react-navigation/native";
+
+// External library imports
+import {Button} from "@rneui/themed"; // Themed button component
+import {useNavigation} from "@react-navigation/native"; // Navigation hook
 import {FontSize, Padding, Color, Border, FontFamily} from "../GlobalStyles";
-import {getDatabase, ref, set} from "firebase/database";
+import {getDatabase, ref, set} from "firebase/database"; // Firebase Realtime Database
 import {useState} from "react";
-import {KeyboardAvoidingView, ScrollView} from 'react-native';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { app } from "../App";
+import {KeyboardAvoidingView, ScrollView} from 'react-native'; // Components to handle keyboard interaction and scrolling
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase authentication methods
+import { app } from "../App"; // Firebase app
 
+// RegistrationPage functional component definition
 const RegistrationPage = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Initializing navigation hook
 
+  // State variables to store user inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -27,6 +39,7 @@ const RegistrationPage = () => {
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
 
+   // Function to handle user registration
   const handleRegister = () => 
   {
     // Log the values of the input fields
@@ -110,9 +123,11 @@ const RegistrationPage = () => {
   };
 
   return (
+    // ScrollView to allow scrolling through the content
     <ScrollView>
-    
+    {/* Main View container for the registration page */}
     <View style={styles.registrationPage}>
+      {/* Background Ellipse images */}
       <Image
         style={[styles.registrationPageChild]}
         contentFit="cover"
@@ -125,12 +140,14 @@ const RegistrationPage = () => {
         source={require("../assets/ellipse-14.png")}
       />
 
+ {/* Logo at the top of the page */}
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
 
+{/* Button to submit the registration form */}
       <Button
         title="Register Now"
         radius={30}
@@ -143,6 +160,7 @@ const RegistrationPage = () => {
         buttonStyle={styles.regsBtn}
       />
 
+ {/* TextInput for Email Address */}
       <TextInput
         style={[styles.emailBox, styles.textBox,]}
         placeholder="Email Address *"
@@ -150,7 +168,7 @@ const RegistrationPage = () => {
         onChangeText={setEmail}
         value={email}
       />
-
+{/* TextInput for Password */}
       <TextInput
         secureTextEntry 
         style={[styles.passBox, styles.textBox,]}
@@ -159,7 +177,7 @@ const RegistrationPage = () => {
         onChangeText={setPassword}
         value={password}
       />
-
+{/* TextInput for Gender */}
       <TextInput
         style={[styles.genderBox, styles.textBox,]}
         placeholder="Gender"
@@ -167,7 +185,7 @@ const RegistrationPage = () => {
         onChangeText={setGender}
         value={gender}
       />
-      
+      {/* TextInput for Address */}
       <TextInput
         style={[styles.addressBox, styles.textBox,]}
         placeholder="Address"
@@ -175,7 +193,7 @@ const RegistrationPage = () => {
         onChangeText={setAddress}
         value={address}
       />
-
+{/* TextInput for Name */}
       <TextInput
         style={[styles.nameBox, styles.textBox,]}
         placeholder="Name *"
@@ -183,7 +201,7 @@ const RegistrationPage = () => {
         onChangeText={setName}
         value={name}
       />
-
+{/* TextInput for Username */}
       <TextInput
         style={[styles.userBox, styles.textBox,]}
         placeholder="Username *"
@@ -192,11 +210,13 @@ const RegistrationPage = () => {
         value={username}
       />
 
+{/* Text indicating terms and conditions */}
       <Text
         style={[styles.tAndCs]}>
         {`By registering with Carbono, you agree to the T&Cs`}
       </Text>
 
+{/* Text indicating mandatory fields */}
       <Text 
         style={[styles.mandatory]}>
         Mandatory Fields are marked with *
@@ -206,6 +226,7 @@ const RegistrationPage = () => {
   );
 };
 
+// Styles for the Registraion Page component
 const styles = StyleSheet.create(
   {
   regsBtnText: 
@@ -365,5 +386,6 @@ const styles = StyleSheet.create(
 }
 );
 
+// Export the Registration Page component
 export default RegistrationPage;
 

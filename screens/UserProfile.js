@@ -1,87 +1,105 @@
-import * as React from "react";
-import {Image} from "expo-image";
-import {StyleSheet, View, Pressable, Text} from "react-native";
-import {Button} from "@rneui/themed";
-import {useNavigation} from "@react-navigation/native";
-import CardView from "../components/CardView";
-import {Padding, Border, Color, FontSize, FontFamily} from "../GlobalStyles";
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { app } from "../App";
-import {useState} from "react";
-import { useEffect } from "react";
-import { getAuth } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import {getDatabase, ref, onValue} from 'firebase/database';
-import { LinearGradient } from "expo-linear-gradient";
+/*  
+Date: 19-11-2023
+Screen: UserProfile
+Purpose: UserProfile displays the user's personal profile information in the Carbono app,
+ allowing them to view and manage their account details and preferences.
+*/
 
+// React and Expo imports
+import * as React from "react";
+import { Image } from "expo-image";
+import { StyleSheet, View, Pressable, Text } from "react-native";
+
+// External library imports
+import { Button } from "@rneui/themed"; // Themed button component
+import { useNavigation } from "@react-navigation/native"; // Navigation hook
+import CardView from "../components/CardView"; // Custom CardView component
+import {Padding, Border, Color, FontSize, FontFamily} from "../GlobalStyles";
+import FontAwesome from '@expo/vector-icons/FontAwesome'; // FontAwesome icons
+import { app } from "../App"; // Firebase app
+import { useState, useEffect } from "react"; // State and effect hooks
+import { getAuth } from "firebase/auth"; // Firebase authentication
+import { onAuthStateChanged } from "firebase/auth"; // Firebase auth state change listener
+import { getDatabase, ref, onValue } from 'firebase/database'; // Firebase Realtime Database
+import { LinearGradient } from "expo-linear-gradient"; // Gradient component for buttons and backgrounds
+
+
+/**
+ * UserProfile component represents the user profile screen.
+ * It includes profile information, articles, and navigation options.
+ */
 const UserProfile = () => {
   const navigation = useNavigation();
 
+  // Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // State variables for managing user data
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
 
+  // Firebase authentication and database setup
   const auth = getAuth(app);
   const database = getDatabase();
 
+  // Effect hook to listen for changes in authentication state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
-      if(user) 
-      {
-        setCurrentUser(user); 
+      if (user) {
+        setCurrentUser(user);
       }
     });
     return () => unsubscribe();
   }, [auth])
 
+  // Effect hook to fetch user data when the current user is available
   useEffect(() => {
-    if(currentUser) 
-    {
-      const user = auth.currentUser; 
+    if (currentUser) {
+      const user = auth.currentUser;
       console.log('Current user:', user);
 
       // Get email from current user
-      const email = user.email; 
+      const email = user.email;
       console.log('Current user email:', email);
 
+      // Reference to the 'users' node in the database
       const userRef = ref(database, 'users/');
       console.log('User reference:', userRef);
-      console.log('User UID:', user.uid); 
+      console.log('User UID:', user.uid);
 
+      // Listen for changes in the 'users' node
       onValue(userRef, (snapshot) => {
-        // Find matching user  
+        // Find matching user
         const users = snapshot.val();
         const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
 
-        if (matchingUser) 
-        {
+        if (matchingUser) {
           setName(matchingUser.name);
-        } 
-        else 
-        {
+        } else {
           console.log('User not found in the database');
         }
       })
     }
   }, [currentUser, database]);
 
+  // JSX representing the user profile screen layout
   return (
     <View style={styles.userProfile}>
+      {/* Ellipse Images for decorative purposes */}
       <Image
         style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-
       <Image
         style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
 
+      {/* Card displaying article information */}
       <View style={[styles.card, styles.cardLayout]}>
         <View style={styles.cardBody}>
           <Text
@@ -89,7 +107,6 @@ const UserProfile = () => {
           >
             Reducing your Transport Footprint
           </Text>
-
           <Text
             style={[styles.subText, styles.articleBox]}
           >
@@ -97,21 +114,12 @@ const UserProfile = () => {
           </Text>
         </View>
 
+        {/* Button to navigate to the Educational screen */}
         <View style={styles.cardFooter}>
-        {/* <Button
-          style={[styles.articleBtn, styles.cardLayout]}
-          title="READ ARTICLE"
-          radius="5"
-          iconPosition="left"
-          type="outline"
-          titleStyle={styles.articleBtnText}>
-            READ ARTICLE
-          </Button> */}
-          
           <Pressable
             style={styles.nextButton}
             onPress={() => handleNavigation("Educational")}
-            >
+          >
             <LinearGradient
               style={styles.gradientButton}
               start={{ x: 0, y: 0 }}
@@ -122,34 +130,29 @@ const UserProfile = () => {
             </LinearGradient>
           </Pressable>
         </View>
-
-       
-
       </View>
-      <CardView/>
 
-      {/* <View style={[styles.headingBox]}>
-        <Text style={styles.headingBox} numberOfLines={1}>
-          Tips for you
-        </Text>
-      </View> */}
+      {/* Custom CardView component */}
+      <CardView />
 
+      {/* Section displaying tips for the user */}
       <View style={[styles.tipTitleContainer]}>
         <Text style={styles.tipsForYou1} numberOfLines={1}>Tips for you</Text>
       </View>
-      
+
+      {/* Section displaying user's name and settings button */}
       <View style={styles.name}>
         <Text style={styles.userNameBox} numberOfLines={1}>
           Hello {name}!
         </Text>
-
         <View style={styles.settingsBtnIcon}>
-          <FontAwesome.Button backgroundColor='#00000000' name="gear" color= "#ffffff" size={26} onPress={() => navigation.navigate("SettingsPage")} />
+          <FontAwesome.Button backgroundColor='#00000000' name="gear" color="#ffffff" size={26} onPress={() => navigation.navigate("SettingsPage")} />
         </View>
       </View>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
+        {/* Navigation icons for various screens */}
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
             style={styles.bottomNavIcon}
@@ -191,20 +194,14 @@ const UserProfile = () => {
           source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-
     </View>
   );
 };
 
+
+// Styles for the UserProfile component
 const styles = StyleSheet.create(
   {
-  // articleBtnText: 
-  // {
-  //   color: "#000",
-  //   fontSize: 13,
-  //   fontWeight: "700",
-  //   fontFamily: "Roboto-Bold",
-  // },
   articleBtn: {
     borderStyle: "solid",
     width: 132,
@@ -256,14 +253,6 @@ const styles = StyleSheet.create(
     left: -100,
     position: "absolute",
   },
-
-  // iconCalc: 
-  // {
-  //   top: 749,
-  //   left: 166,
-  //   padding: Padding.p_3xs,
-  //   position: "absolute",
-  // },
 
   articleTitle: 
   {
@@ -483,4 +472,5 @@ const styles = StyleSheet.create(
 }
 );
 
+// Export the UserProfile component
 export default UserProfile;

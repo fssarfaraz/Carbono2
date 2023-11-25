@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { LinearGradient } from "expo-linear-gradient";  // Importing LinearGradient for gradient styles
+import { useNavigation } from "@react-navigation/native";  // To navigate between screens
+import { FontAwesome5 } from "@expo/vector-icons";   // Importing FontAwesome icons
+import { Color, FontSize, FontFamily } from "../GlobalStyles";  // Importing global style constants
 
 const CalcCar = () => {
+  // State variables for vehicle make and model
   const [vehicleMake, setVehicleMake] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
-  const navigation = useNavigation();
+  const navigation = useNavigation();     // Navigation hook
 
+  // Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
@@ -99,6 +101,7 @@ const CalcCar = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
+      {/* // Pressable icons for navigating to UserProfile, Educational, Forum, and Games */}
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
             style={styles.bottomNavIcon}
@@ -144,7 +147,9 @@ const CalcCar = () => {
   );
 };
 
+// StyleSheet to style the component
 const styles = StyleSheet.create({
+  // Styling definitions for container, backgroundImage, content area, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
@@ -163,12 +168,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 40,
+    bottom: 25,
+    left: 4,
   },
   backButton: {
     flex: 1,
     width: "100%",
     overflow: "hidden",
-    padding: 10,
+    padding: 15,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,

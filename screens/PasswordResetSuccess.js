@@ -1,34 +1,48 @@
+/*  
+Date: 19-11-2023
+Screen: PasswordResetSucess
+Purpose: PasswordResetSuccess confirms the successful reset of a user's password, 
+ensuring a secure and seamless account recovery process in the Carbono app.
+*/
+
+// React and Expo imports
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, Pressable, View, StatusBar, Text } from "react-native";
-import { Button } from "@rneui/themed";
-import Property1HomeImage from "../components/Property1HomeImage";
-import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
+
+// External library imports
+import { Button } from "@rneui/themed"; // Themed button component
+import Property1HomeImage from "../components/Property1HomeImage"; // Custom image component
+import { useNavigation } from "@react-navigation/native"; // Navigation hook
+import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";  // Style component for dark mode
 import { Color, FontFamily, FontSize, Padding } from "../GlobalStyles";
-import { LinearGradient } from "expo-linear-gradient";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient"; // Component for creating gradient effects
+import { FontAwesome5 } from "@expo/vector-icons"; //Icons for UI elements
 
+// PasswordResetSucess functional component definition
 const PasswordResetSuccess = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Hook to enable navigation actions
 
+   // Function to navigate to a specified screen
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
+    // Main View container for the Password Reset Success screen
     <View style={styles.passwordResetSuccess}>
+      {/* Background Ellipse Images */}
       <Image
-        style={[styles.passwordResetSuccessChild, styles.passwordPosition]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.passwordResetSuccessItem, styles.passwordPosition]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      
+      {/* Header with back button */}
       <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -38,18 +52,21 @@ const PasswordResetSuccess = () => {
           </Pressable>
       </View>
 
+     {/* Success Icon */}
       <Image
         style={styles.vectorIcon}
         contentFit="cover"
         source={require("../assets/vector7.png")}
       />
-
+     {/* Reset Password Title Text */}
       <Text style={styles.resetPassword}>Reset Password</Text>
 
+       {/* Success Message */}
       <Text
         style={styles.yourPasswordHas}
       >{"Your password has been reset successfully"}</Text>
       
+       {/* Continue Button to navigate to the login page */}
       <Pressable
             style={styles.nextButton1}
             onPress={() => handleNavigation("LoginPage")}
@@ -113,6 +130,7 @@ const PasswordResetSuccess = () => {
   );
 };
 
+//Styles for PasswordResetSuccess component
 const styles = StyleSheet.create({
   iconCalculatorBtn: {
     position: "relative",
@@ -120,11 +138,6 @@ const styles = StyleSheet.create({
   iconCalculatorBtn1: {
     width: 41,
     height: 45,
-  },
-  passwordPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
   },
   iconLayout: {
     width: 33,
@@ -145,13 +158,19 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     position: "absolute",
   },
-  passwordResetSuccessChild: {
-    top: 0,
-    height: 455,
+  ellipse1: {
+    top: -190,
+    height: 600,
+    width: 500,
+    position: "absolute",
+    left: 10,
   },
-  passwordResetSuccessItem: {
-    top: 422,
-    height: 430,
+  ellipse2: {
+    top: 470,
+    height: 600,
+    width: 500,
+    left: -90,
+    position: "absolute",
   },
   icon: {
     height: "100%",
@@ -307,4 +326,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Export the PasswordResetSucess component 
 export default PasswordResetSuccess;

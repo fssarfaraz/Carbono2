@@ -1,29 +1,47 @@
+/*
+Date: 19/11/2023
+Screen: Air Travel Carbon Footprint Calculation Screen
+Purpose: This screen allows users to input departure and arrival airport codes to calculate the carbon footprint of their air travel.
+*/
+
+// React state hook and basic components from React Native for building the UI
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
+
+// LinearGradient for visually appealing gradient designs in UI elements
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hook from React Navigation for handling screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// FontAwesome icons for enhancing UI elements
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Color, FontSize, and FontFamily for consistent styling across the app
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
 
 const CalcAir = () => {
+    // State for storing departure and arrival airport codes
   const [departure, SetDepature] = useState("");
   const [arrival, setArrival] = useState("");
-  // const [vehicleModel, setVehicleModel] = useState("");
+  // Navigation hook for screen transition functionality
   const navigation = useNavigation();
 
+  // Function for navigating to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
-      {/* Background Image */}
+      {/* Background Image for visual appeal */}
       <Image
         style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
 
-      {/* Content Container */}
+      {/* Main Content Container */}
       <View style={styles.contentContainer}>
         {/* Header */}
         <View style={styles.header}>
@@ -35,7 +53,8 @@ const CalcAir = () => {
           </Pressable>
         </View>
 
-        <Text style={styles.headerTitle}>ENTER TRAVEL ROUTE AS THREE DIGIT AIRPORT CODES</Text>
+        {/* Title instructing user on input format */}
+        <Text style={styles.headerTitle}>ENTER TRAVEL ROUTE AS THREE LETTER AIRPORT CODES</Text>
 
         {/* Saly6 Image */}
         <View style={styles.saly6Container}>
@@ -46,6 +65,7 @@ const CalcAir = () => {
           />
         </View>
 
+        {/* Input fields for departure and arrival airport codes */}
         {/* Vehicle Type Input */}
         <LinearGradient
           style={styles.inputContainer}
@@ -82,10 +102,11 @@ const CalcAir = () => {
           />
         </LinearGradient>
 
+        {/* Button to proceed to the next screen with the entered data */}
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcAir2")}
+          onPress={() => {navigation.navigate('CalcAir2', {departure, arrival});}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -142,10 +163,13 @@ const CalcAir = () => {
         />
       </Pressable>
     </View>
+    </ScrollView>
   );
 };
 
+// StyleSheet for defining the component's appearance
 const styles = StyleSheet.create({
+  // Styling rules for container, background, input fields, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",
@@ -170,7 +194,7 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     padding: 10,
-    top: -4,
+    top: 30,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,
@@ -179,7 +203,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     position: "absolute",
-    top: 110,
+    top: 80,
     left: 0,
     right: 0,
     paddingHorizontal: 30,

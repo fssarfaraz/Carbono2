@@ -1,28 +1,49 @@
+/*
+Date: 19/11/2023
+Screen: Public Transport Type Selection Screen
+Purpose: This screen allows users to select the type of public transportation they use, which will be used to calculate the carbon footprint of their travel.
+*/
+
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const CalcBus = () => {
-  const [transportType, setTransportType] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+  
+  console.log('testing');
+
+  const data = [
+    {key:'1', value:'Taxi', lable: 'Taxi'},
+    {key:'2', value: "ClassicBus", label: "Classic Bus" },
+    {key:'3', value: "EcoBus", label: "Eco Bus"},
+    {key:'4', value: "Coach", label: "Coach"},
+    {key:'5', value: "NationalTrain", label: "National Train"},
+    {key:'6', value: "LightRail", label: "Light Rail"},
+    {key:'7', value: "Subway", label: "Subway"},
+    {key:'8', value: "FerryOnFoot", label: "Ferry On Foot"},
+    {key:'9', value: "FerryInCar", label: "Ferry In Car"}
+  ]
 
   return (
     <View style={styles.container}>
       {/* Background Image */}
       <Image
-        style={[styles.calcElectricity2Child, styles.calcLayout]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.calcElectricity2Item, styles.calcLayout]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -51,27 +72,19 @@ const CalcBus = () => {
         </View>
 
         {/* Vehicle Type Input */}
-        <LinearGradient
-          style={styles.inputContainer}
-          locations={[0, 1]}
-          colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
-        >
-          <TextInput
-            style={styles.textInput}
-            value={transportType}
-            onChangeText={setTransportType}
-            placeholder="Type of Transport"
-            placeholderTextColor="#fff"
-            fontWeight="700"
-            textAlign="center"
-            fontSize={FontSize.size_3xl}
-          />
-        </LinearGradient>
+        <View style={styles.selectListContainer}>
+            <SelectList 
+              setSelected={(val) => setSelectedType(val)} 
+              data={data} 
+              save="value"
+              placeholder={"Select Type of Transport"}
+            />
+        </View>
 
         {/* Next Button */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("CalcCar2")}
+          onPress={() => {navigation.navigate('CalcBus2', {type: selectedType });}}
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -141,18 +154,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  calcLayout: {
-    height: 330,
-    width: 400,
-    left: 0,
+  ellipse1: {
+    top: -115,
+    height: 400,
+    width: 550,
+    left: -210,
     position: "absolute",
   },
-  calcElectricity2Child: {
-    left: 100,
-    top: 0,
-  },
-  calcElectricity2Item: {
+  ellipse2: {
     top: 545,
+    height: 400,
+    width: 550,
+    left: 0,
+    position: "absolute",
   },
   contentContainer: {
     flex: 1,
@@ -164,13 +178,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 40,
-    top: 142
+    top: 125
   },
   backButton: {
     flex: 1,
     width: "100%",
     overflow: "hidden",
-    padding: 10,
+    padding: 14,
   },
   headerTitle: {
     fontSize: FontSize.size_3xl,
@@ -194,6 +208,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   inputContainer: {
+    fontSize: 20,
+    lineHeight: 30,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#fff",
+    textAlign: "center",
     borderRadius: 10,
     marginBottom: 16,
     width: "94%",
@@ -261,6 +281,28 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     zIndex: 2,
+  },
+  selectListContainer: {
+    width: "80%",
+    alignSelf: "center"
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  inputContainer: {
+    borderRadius: 10,
+    marginBottom: 16,
+    width: "94%",
+    alignSelf: "center",
+  },
+  selectListText: {
+    fontSize: 20,
+    lineHeight: 30,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#fff",
+    textAlign: "center"
   },
 });
 

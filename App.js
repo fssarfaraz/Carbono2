@@ -64,6 +64,7 @@ import CalcTravel from "./screens/CalcTravel";
 import CalcCar from "./screens/CalcCar";
 import CalcCar2 from "./screens/CalcCar2";
 import CalcBus from "./screens/CalcBus";
+import CalcBus2 from "./screens/CalcBus2";
 import CalcAir from "./screens/CalcAir";
 import CalcEnergy from "./screens/CalcEnergy";
 import CalcElectricity from "./screens/CalcElectricity";
@@ -113,16 +114,16 @@ const database = getDatabase(app);
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
   const [bottomTabItemsNormal] = React.useState([
-    <IconPersonOutline />,
-    <IconBookSaved />,
-    <IconDiscussion />,
-    <IconGameControllerOutline />,
+    // <IconPersonOutline />,
+    // <IconBookSaved />,
+    // <IconDiscussion />,
+    // <IconGameControllerOutline />,
   ]);
   const [bottomTabItemsActive] = React.useState([
-    <IconPersonOutline />,
-    <IconBookSaved />,
-    <IconDiscussion />,
-    <IconGameControllerOutline />,
+    // <IconPersonOutline />,
+    // <IconBookSaved />,
+    // <IconDiscussion />,
+    // <IconGameControllerOutline />,
   ]);
   return (
     <Tab.Navigator
@@ -195,7 +196,7 @@ const App = () => {
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
     "Inter-Medium": require("./assets/fonts/Inter-Medium.ttf"),
     "Inter-Bold": require("./assets/fonts/Inter-Bold.ttf"),
-    "Numans-Regular": require("./assets/fonts/Numans-Regular.ttf"),
+    // "Numans-Regular": require("./assets/fonts/Numans-Regular.ttf"),
     "DMSans-Bold": require("./assets/fonts/DMSans-Bold.ttf"),
     "FiraSans-Regular": require("./assets/fonts/FiraSans-Regular.ttf"),
     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
@@ -531,6 +532,11 @@ const App = () => {
                 component={CalcBus}
                 options={{ headerShown: false }}
               />
+               <Stack.Screen
+                name="CalcBus2"
+                component={CalcBus2}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="CalcAir"
                 component={CalcAir}
@@ -586,4 +592,4 @@ const App = () => {
   );
 };
 export default App;
-
+ 

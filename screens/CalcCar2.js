@@ -1,18 +1,43 @@
+/*
+Date: 19/11/2023
+Screen: Vehicle Distance Input Screen for Carbon Footprint Calculation
+Purpose: This screen enables users to input the distance traveled by their vehicle to calculate its carbon footprint.
+*/
+
+
+// React basics and hooks for building the UI and handling state
 import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+
+// LinearGradient for visually appealing gradients in UI components
 import { LinearGradient } from "expo-linear-gradient";
+
+// Navigation hook for screen transitions
 import { useNavigation } from "@react-navigation/native";
+
+// FontAwesome icons for enhanced UI elements
 import { FontAwesome5 } from "@expo/vector-icons";
+
+// Global styles for consistent theming across the app
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+
+// API function for calculating car carbon footprint
 import { calcCar } from "../components/API";
+
 import { useRoute } from '@react-navigation/native';
+
+// Firebase database and authentication services
 import {getDatabase, ref, set} from "firebase/database";
 import { getAuth} from 'firebase/auth';
+
+// Firebase app configuratio
 import { app } from "../App";
 
 
 const CalcCar2 = () => {
+  // State for storing distance input
   const [distance, setDistanceKM] = useState("");
+  // Navigation hooks for handling screen transitions and accessing route parameters
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
@@ -21,6 +46,7 @@ const CalcCar2 = () => {
 
   const route = useRoute();
 
+  // Extracting vehicle details from the previous screen's parameters
   const { vehicleMake, vehicleModel } = route.params;
 
   // Create a reference to the database
@@ -38,6 +64,7 @@ const CalcCar2 = () => {
   const emailName = emailParts[0];
   console.log(emailName);
 
+  // Function to add calculation results to Firebase
   const addToDatabase = async (result) => {
       // Get the current date
       const date = new Date();
@@ -64,7 +91,9 @@ const CalcCar2 = () => {
       });
   }
 
+  // Form submission and calculation handling
   const handleSubmit = async () => {
+    // Prevent submission if distance is empty
     if(!distance) 
     {
       alert('Please enter distance');
@@ -82,13 +111,16 @@ const CalcCar2 = () => {
     const distanceNum = parseInt(distance);
     try 
     {
+      // Calling calcCar function
       console.log('Calling calcCar with:', vehicleMake, vehicleModel, distanceNum);
       console.log(typeof vehicleMake, typeof vehicleModel, typeof distanceNum);
       console.log('CalcCar called');
+      // Calculate carbon footprint using calcCar
       const result = await calcCar(vehicleMake, vehicleModel, distanceNum);
       try
       {
         console.log('calling database');
+        // Add calculated CO2 to Firebase database
         await addToDatabase(result);
         console.log('Added to database');
       }
@@ -97,6 +129,7 @@ const CalcCar2 = () => {
         console.error(error);
         alert('Error adding to the database');
       }
+      // Navigate to the next screen with the result
       navigation.navigate('CalcCar3', {result});
     } 
     catch (error) 
@@ -127,6 +160,7 @@ const CalcCar2 = () => {
           </Pressable>
         </View>
 
+        {/* Title instructing user on input format */}
         <Text style={styles.headerTitle}>ENTER TRAVEL DISTANCE</Text>
 
         {/* Saly6 Image */}
@@ -143,6 +177,7 @@ const CalcCar2 = () => {
           locations={[0, 1]}
           colors={["rgba(225, 135, 245, 0.78)", "rgba(90, 9, 193, 0.89)"]}
         >
+          {/* Input fields for distance */}
           <TextInput
             style={styles.textInput}
             value={distance}
@@ -218,7 +253,9 @@ const CalcCar2 = () => {
   );
 };
 
+// StyleSheet for styling the UI components
 const styles = StyleSheet.create({
+  // Style rules for container, background, input fields, buttons, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

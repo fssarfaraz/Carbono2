@@ -1,324 +1,212 @@
-import * as React from "react";
-import { Image } from "expo-image";
-import {
-  StyleSheet,
-  ScrollView,
-  Text,
-  View,
-  Pressable,
-  StatusBar,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Button } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import Property1HomeImage from "../components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import { Border, Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { calcCar } from "../components/API";
+import { useRoute } from '@react-navigation/native';
+import {getDatabase, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
+
 
 const Articles = () => {
+  const [distance, setDistanceKM] = useState("");
   const navigation = useNavigation();
 
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
-    <View style={styles.articles}>
+    <View style={styles.container}>
+      {/* Background Image */}
       <Image
-        style={[styles.articlesChild, styles.articlesPosition]}
-        contentFit="cover"
+        style={styles.backgroundImage}
         source={require("../assets/ellipse-3.png")}
       />
-      <Image
-        style={[styles.articlesItem, styles.articlesPosition]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
-      />
-      <Image
-        style={[styles.gradientLayerIcon, styles.gradientPosition]}
-        contentFit="cover"
-        source={require("../assets/gradient-layer.png")}
-      />
-      <ScrollView
-        style={styles.modal}
-        showsVerticalScrollIndicator={true}
-        showsHorizontalScrollIndicator={true}
-      >
-        <View style={[styles.header, styles.headerPosition]}>
-          <View style={styles.titleWrapper}>
-            <View style={[styles.title, styles.gradientPosition]}>
-              <View>
-                <Text style={[styles.theGlobalEffect, styles.dummyFlexBox]}>
-                  The Global Effect Of Car Emissions
-                </Text>
-                <Text style={[styles.dummyTextDummy, styles.dummyFlexBox]}>
-                  Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy
-                  Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text
-                  Dummy Text Dummy Text Dummy Text
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={[styles.headerChild, styles.headerPosition]} />
+
+      {/* Content Container */}
+      <View style={styles.contentContainer}>
+       {/* Header */}
+       <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
+      </View>
+
+        <View style={styles.saly3Container}>
           <Image
-            style={styles.maskIcon}
-            contentFit="cover"
-            source={require("../assets/mask.png")}
-          />
-          <LinearGradient
-            style={[styles.gradientLayer, styles.gradientPosition]}
-            locations={[0, 1]}
-            colors={["#01427a", "rgba(44, 44, 46, 0)"]}
+            style={styles.saly3Icon}
+            resizeMode="contain"
+            source={require("../assets/header.png")}
           />
         </View>
-        <Button
-          title="Close"
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          titleStyle={styles.backBtn}
-          icon={{ name: "chevron-down", type: "material-community" }}
-          onPress={() => navigation.goBack()}
-          containerStyle={styles.backBtn1}
-          buttonStyle={styles.backBtn2}
-        />
-      </ScrollView>
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr16.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={styles.iconPersonOutlineParent}>
-        <Pressable
-          style={styles.iconLayout1}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
-        >
+
+        <View style={styles.textContainer}>
+          <Text style={[styles.title]}>The Global Effect Of Car Emissions</Text>
+          <Text style={[styles.text]}>Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text</Text>
+        </View>
+      </View>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-person-outline.png")}
           />
         </Pressable>
-        <Image
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-book-saved.png")}
-        />
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Educational")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
             source={require("../assets/-icon-discussion.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
+        <Pressable onPress={() => handleNavigation("Games")}>
           <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline4.png")}
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
           />
         </Pressable>
       </View>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
         />
       </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  backBtn: {
-    color: "#fff",
-    fontSize: 15,
-    fontWeight: "700",
-    fontFamily: "Inter-Bold",
-  },
-  backBtn1: {
-    left: "50%",
-    paddingLeft: 20,
-    paddingTop: 32,
-    marginLeft: -197,
-    marginTop: -374,
-    top: "50%",
-    position: "absolute",
-  },
-  backBtn2: {
-    width: 102,
-    height: 52,
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  iconCalculatorBtn: {
-    position: "relative",
-  },
-  iconCalculatorBtn1: {
-    width: 41,
-    height: 45,
-  },
-  articlesPosition: {
-    width: 400,
-    left: 0,
-    position: "absolute",
-  },
-  gradientPosition: {
-    left: 0,
-    position: "absolute",
-  },
-  headerPosition: {
-    borderTopRightRadius: Border.br_3xs,
-    borderTopLeftRadius: Border.br_3xs,
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  dummyFlexBox: {
-    textAlign: "left",
-    color: Color.black,
-    width: 342,
-  },
-  iconLayout: {
-    width: 33,
-    marginLeft: 72,
-  },
-  iconLayout1: {
-    height: 30,
-    width: 30,
-  },
-  articlesChild: {
-    height: 394,
-    top: 0,
-  },
-  articlesItem: {
-    top: 435,
-    height: 417,
-  },
-  gradientLayerIcon: {
-    top: 44,
-    borderRadius: Border.br_xl,
-    height: 46,
-    width: 394,
-  },
-  theGlobalEffect: {
-    fontSize: FontSize.size_3xl,
-    lineHeight: 28,
-    fontWeight: "700",
-    fontFamily: FontFamily.nunitoBold,
-  },
-  dummyTextDummy: {
-    fontSize: FontSize.body17Regular_size,
-    lineHeight: 22,
-    fontFamily: FontFamily.body15Regular,
-    marginTop: 10,
-  },
-  title: {
-    top: 0,
-  },
-  titleWrapper: {
-    top: 412,
-    left: 15,
-    height: 176,
-    width: 342,
-    position: "absolute",
-  },
-  headerChild: {
-    width: 375,
-    height: 710,
-  },
-  maskIcon: {
-    left: 1,
-    width: 658,
-    height: 482,
-    top: 0,
-    position: "absolute",
-  },
-  gradientLayer: {
-    top: 665,
-    height: 81,
-    backgroundColor: "transparent",
-    width: 394,
-  },
-  header: {
-    height: 748,
-    width: 394,
-    overflow: "hidden",
-  },
-  modal: {
-    top: 65,
-    left: -1,
-    maxWidth: 394,
-    width: 394,
-    position: "absolute",
+  container: {
     flex: 1,
+    backgroundColor: "#FFF",
   },
-  icon: {
+  backgroundImage: {
+    position: "absolute",
     height: "100%",
     width: "100%",
   },
-  iconBookSaved: {
-    height: 31,
-    marginLeft: 72,
-  },
-  iconDiscussion: {
-    marginLeft: 72,
-  },
-  iconGameControllerOutline: {
-    height: 24,
-    marginLeft: 72,
-  },
-  iconPersonOutlineParent: {
-    top: 807,
-    left: 24,
-    width: 385,
-    flexDirection: "row",
-    alignItems: "flex-end",
-    position: "absolute",
-  },
-  iconCalculatorWrapper: {
-    top: 745,
-    left: 165,
-    padding: Padding.p_3xs,
-    position: "absolute",
-  },
-  articles: {
-    backgroundColor: Color.labelDarkPrimary,
-    height: 852,
-    overflow: "hidden",
-    width: "100%",
+  contentContainer: {
     flex: 1,
+    justifyContent: "flex-end",
+    // padding: 16,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    zIndex: 3,
+    position: "absolute",
+    top: 38,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 25,
+  },
+  saly3Container: {
+    flex: 1,
+    bottom: 45,
+    width: "100%",
+    height: "100%",
+   },
+  saly3Icon: {
+    position: "absolute",
+  },
+  gradientButton: {
+    padding: 16,
+    alignItems: "center",
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 150,
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
+  },
+  title: {
+    justifyContent: "flex-end",
+    marginBottom: 20,
+    fontSize: 22,
+    lineHeight: 28,
+    fontWeight: "700",
+    fontFamily: "Nunito-Bold",
+    color: "#000",
+    textAlign: "left",
+  },
+  text: {
+    justifyContent: "flex-end",
+    fontSize: 17,
+    lineHeight: 22,
+    fontFamily: "Inter-Regular",
+    color: "#000",
+    textAlign: "left",
+    // width: 342
+  },
+  
 });
 
 export default Articles;

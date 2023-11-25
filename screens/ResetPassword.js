@@ -1,3 +1,11 @@
+/*  
+Date: 19-11-2023
+Screen: ResetPassword
+Purpose: ResetPassword in the Carbono app enables users to securely update their passwords, 
+incorporating validation and confirmation for enhanced security and account recovery.
+*/
+
+// React and Expo imports
 import * as React from "react";
 import {Image} from "expo-image";
 import 
@@ -8,30 +16,36 @@ import
   View,
 } from "react-native";
 
-import {Button} from "@rneui/themed";
-import {useNavigation} from "@react-navigation/native";
+// External library imports
+import {Button} from "@rneui/themed"; // Themed button component
+import {useNavigation} from "@react-navigation/native"; // Navigation hook
 import {FontSize, FontFamily, Padding, Color, Border} from "../GlobalStyles";
-import { getAuth, sendPasswordResetEmail, updatePassword } from "firebase/auth";
-import { getDatabase, ref, update, onValue } from "firebase/database";
-import { app } from "../App";
-import {useState} from "react";
-import {ScrollView} from 'react-native';
+import { getAuth, sendPasswordResetEmail, updatePassword } from "firebase/auth"; //Firebase authentication
+import { getDatabase, ref, update, onValue } from "firebase/database"; // Firebase database methods for user data handling
+import { app } from "../App"; // Firebase app instance
+import {useState} from "react"; //useState hook for managing component state
+import {ScrollView} from 'react-native'; // ScrollView component for scrollable content
 
+// ResetPassword functional component definition
 const ResetPassword = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); // Initializing navigation hook
 
+  // State variables for storing user inputs
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // Function to handle password reset process
   const handleResetPassword = async () => 
   {
+    // Checking if the new password and confirm password fields match
     if (newPassword !== confirmPassword) 
     {
       alert("Error", "New passwords do not match. Please try again.");
       return;
     }
 
+    // Regex for validating the password complexity
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
     if (!passwordRegex.test(newPassword)) 
     {
@@ -39,12 +53,14 @@ const ResetPassword = () => {
       return;
     }
 
+    // Initializing Firebase Authentication and Database
     const auth = getAuth(app);
     const database = getDatabase();
     const usersRef = ref(database, 'users');
 
     try 
     {
+      // Checking the user's email against the database
       onValue(usersRef, (snapshot) => 
       {
         const users = snapshot.val();
@@ -52,20 +68,21 @@ const ResetPassword = () => {
         for (const user in users) 
         {
           if (users[user].email === email) 
-          {
+          { // Checking if the new password is different from the old password
             if (newPassword === users[user].password) 
             {
               alert("Error", "New password cannot be the same as the existing password.");
               return;
             }
             else
-            {
+            { // Updating the user's password in Firebase Authentication
               updatePassword(users[user], newPassword);
               update(ref(database, 'users/' + user), 
               {
                 password: newPassword,
               });
               alert("Success", "Password updated successfully.");
+               // Navigating to the login page
               navigation.navigate("LoginPage");
               break;
             }
@@ -81,27 +98,31 @@ const ResetPassword = () => {
 
 
   return (
+    // ScrollView to allow content to be scrollable
     <ScrollView>
-
+  {/* Main View container for the ResetPassword screen */}
     <View style={styles.resetPassword}>
+      {/* Background Ellipse Images */}
       <Image
         style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
 
+  
       <Image
         style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-14.png")}
       />
-
+  {/* Logo of the app */}
       <ImageBackground
         style={styles.logoIcon}
         resizeMode="cover"
         source={require("../assets/logo.png")}
       />
 
+  {/* Reset Password Button */}
       <Button
         title="Reset Password"
         radius={30}
@@ -114,6 +135,7 @@ const ResetPassword = () => {
         buttonStyle={styles.resetBtn}
       />
 
+   {/* Text Inputs for email and passwords */}
       <TextInput
         style={[styles.userBox, styles.textInput]}
         placeholder="Enter Email"
@@ -144,6 +166,7 @@ const ResetPassword = () => {
   );
 };
 
+ // Styles for the ResetPassword component
 const styles = StyleSheet.create(
   {
   resetBtnText: 
@@ -258,5 +281,5 @@ const styles = StyleSheet.create(
   },
 }
 );
-
+// Exporting the ResetPassword component
 export default ResetPassword;

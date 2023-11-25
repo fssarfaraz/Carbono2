@@ -3,18 +3,21 @@ import { Image } from "expo-image";
 import {
   StyleSheet,
   View,
-  StatusBar,
   Text,
   TextInput,
   Pressable,
 } from "react-native";
-import { Button } from "@rneui/themed";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import {useState} from "react";
+import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
+import {getDatabase, ref, onValue, update} from 'firebase/database';
+import { app } from "../App";
+import {ScrollView} from 'react-native';
 
 const PasswordResetInApp = () => {
   const navigation = useNavigation();
@@ -23,15 +26,91 @@ const PasswordResetInApp = () => {
     navigation.navigate(screen);
   };
 
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const auth = getAuth(app);
+  const database = getDatabase();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if(user) 
+      {
+        setCurrentUser(user); 
+      }
+    });
+    return () => unsubscribe();
+  }, [auth])
+
+  const handleResetPassword = async () => {
+    if (newPassword !== confirmPassword) 
+    {
+      alert("Error", "New passwords do not match. Please try again.");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    if (!passwordRegex.test(newPassword)) 
+    {
+      alert("Error", "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+      return;
+    }
+
+    if(currentUser) 
+    {
+      const user = auth.currentUser; 
+      console.log('Current user:', user);
+
+      // Get email from current user
+      const email = user.email; 
+      console.log('Current user email:', email);
+
+      const userRef = ref(database, 'users/');
+      console.log('User reference:', userRef);
+      console.log('User UID:', user.uid); 
+
+      onValue(userRef, (snapshot) => {
+        // Find matching user in database 
+        const users = snapshot.val();
+        const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+
+        if (matchingUser) 
+        {
+          if (newPassword === matchingUser.password) 
+          {
+            alert("Error", "New password cannot be the same as the existing password.");
+            return;
+          }
+          else
+          {
+            updatePassword(user, newPassword);
+            update(ref(database, 'users/' + matchingUser.username), 
+            {
+              password: newPassword,
+            });
+            alert("Success", "Password updated successfully.");
+            navigation.navigate("PasswordResetSuccess");
+          }
+        } 
+        else 
+        {
+          console.log('User not found in the database');
+        }
+      });
+    }
+  };
+
   return (
+    <ScrollView>
     <View style={[styles.passwordResetInApp, styles.fieldLayout]}>
       <Image
-        style={[styles.passwordResetInAppChild, styles.passwordPosition1]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
       <Image
-        style={[styles.passwordResetInAppItem, styles.passwordPosition1]}
+        style={[styles.ellipse2]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
@@ -62,6 +141,8 @@ const PasswordResetInApp = () => {
             placeholder="New Password"
             placeholderTextColor="#333"
             secureTextEntry={true}
+            onChangeText={setNewPassword}
+            value={newPassword}
           />
         </View>
 
@@ -72,6 +153,8 @@ const PasswordResetInApp = () => {
             placeholder="Re-enter Password"
             placeholderTextColor="#333"
             secureTextEntry={true}
+            onChangeText={setConfirmPassword}
+            value={confirmPassword}
           />
         </View>
       </View>
@@ -79,7 +162,7 @@ const PasswordResetInApp = () => {
       <View style={[styles.buttonContainer]}>
         <Pressable
             style={styles.nextButton}
-            onPress={() => handleNavigation("PasswordResetSuccess")}
+            onPress={handleResetPassword}
           >
             <LinearGradient
               style={styles.gradientButton}
@@ -151,6 +234,7 @@ const PasswordResetInApp = () => {
       </Pressable>
       
     </View>
+    </ScrollView>
   );
 };
 
@@ -185,11 +269,6 @@ const styles = StyleSheet.create({
   fieldLayout: {
     width: "100%",
     backgroundColor: Color.labelDarkPrimary,
-  },
-  passwordPosition1: {
-    width: 400,
-    left: 0,
-    position: "absolute",
   },
   iconLayout: {
     width: 33,
@@ -227,13 +306,19 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     fontSize: FontSize.primaryText_size,
   },
-  passwordResetInAppChild: {
-    top: 0,
-    height: 455,
+  ellipse1: {
+    top: -190,
+    height: 600,
+    width: 500,
+    position: "absolute",
+    left: 10,
   },
-  passwordResetInAppItem: {
-    top: 422,
-    height: 430,
+  ellipse2: {
+    top: 470,
+    height: 600,
+    width: 500,
+    left: -100,
+    position: "absolute",
   },
   iconBookSaved: {
     height: 31,
