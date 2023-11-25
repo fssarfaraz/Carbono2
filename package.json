@@ -38,7 +38,11 @@
     "react-native": "0.71.14",
     "react-native-dropdown-picker": "^5.4.2",
     "react-native-game-engine": "^1.2.0",
+<<<<<<< HEAD
     "react-native-gesture-handler": "^2.13.2",
+=======
+    "react-native-gesture-handler": "2.13.2",
+>>>>>>> fbba1208522eeacdbb46dfb6365f66c94f35b7ad
     "react-native-paper": "^4.12.2",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
