@@ -9,6 +9,7 @@ import { Padding, Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+
 const GameSelectedScreen = () => {
   const navigation = useNavigation();
 
@@ -43,18 +44,14 @@ const GameSelectedScreen = () => {
         <Image
           style={[styles.stChild]}
           contentFit="cover"
-          source={require("../assets/rectangle-45.png")}
+          source={require("../assets/FlappyCupSplash.png")}
         />
-        <Image
-          style={styles.monumnetValley2Logo2}
-          contentFit="cover"
-          source={require("../assets/monumnet-valley-2-logo-1.png")}
-        />
+       
       </View>
 
       <View style={[styles.textContainer]}>
         <View style={[styles.titleContainer]}>
-          <Text style={[styles.title]}>Monument Valley 2</Text>
+          <Text style={[styles.title]}>Flappy Cup</Text>
         </View>
 
         <View style={[styles.informationContainer]}>
@@ -64,28 +61,28 @@ const GameSelectedScreen = () => {
         <View style={[styles.itemContainer]}>
           <View style={[styles.genreContainer]}>
             <Text style={[styles.genre1]}>Genre</Text>
-            <Text style={[styles.adventure]}>Adventure</Text>
+            <Text style={[styles.adventure]}>Arcade</Text>
           </View>
 
           <View style={styles.separator1} />
 
           <View style={[styles.createdContainer]}>
             <Text style={[styles.created]}>Created</Text>
-            <Text style={[styles.date]}>09 Sept 2023</Text>
+            <Text style={[styles.date]}>12 Nov 2023</Text>
           </View>
 
           <View style={styles.separator2} />
 
           <View style={[styles.updatedContainer]}>
             <Text style={[styles.updated]}>Updated</Text>
-            <Text style={[styles.date1]}>16 Oct 2023</Text>
+            <Text style={[styles.date1]}>19 Nov 2023</Text>
           </View>
         </View>
       </View>
 
       <Pressable
             style={styles.nextButton1}
-            onPress={() => handleNavigation("")}
+            onPress={() => handleNavigation("GameScreen")}
           >
             <LinearGradient
               style={styles.gradientButton}
