@@ -77,6 +77,7 @@ import IconPersonOutline2 from "./components/IconPersonOutline2";
 import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
+import GameScreen from "./screens/WebGame";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -354,6 +355,11 @@ const App = () => {
                 name="AllGames"
                 component={AllGames}
                 options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="GameScreen"
+                component={GameScreen}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="PopularGames"
