@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   post: {
     fontSize: FontSize.primaryText_size,
     letterSpacing: 2,
-    lineHeight: 20,
+    // lineHeight: 20,
     textTransform: "uppercase",
     fontWeight: "700",
     fontFamily: FontFamily.nunitoBold,

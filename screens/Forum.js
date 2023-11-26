@@ -11,9 +11,15 @@ import { useEffect, useState } from "react";
 import {getDatabase, onValue, ref, set} from "firebase/database";
 import { getAuth} from 'firebase/auth';
 import { app } from "../App";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Vi } from "react-flags-select";
 
 const Forum = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   const [title, setTitle] = useState("");
   const [post, setPost] = useState("");
@@ -66,11 +72,18 @@ const Forum = () => {
       <Image style={[styles.ellipse1, styles]} contentFit="cover" source={require("../assets/ellipse-3.png")} />
       <Image style={[styles.ellipse2, styles]} contentFit="contain" source={require("../assets/ellipse-3.png")} />
 
+      {/* Back Button */}
+      <View style={styles.backButtonContainer}>
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
+      </View>
+
       {/*Whats on your mind*/}
       <SectionForm1 />
       
       {/* Trending posts*/}
-        <View style={{ top: -400 }}>
+        <View style={{ top: -300 }}>
           {posts.length > 0 ? (
             posts.map((post, index) => (
               <View key={index}>
@@ -83,7 +96,7 @@ const Forum = () => {
             <Text>No posts to show</Text>
           )}
         </View>
-
+      <View style={styles.searchContainer}>
       <Search
         searchInputValue={require("../assets/search2.png")}
         searchPlaceholder="Search"
@@ -101,6 +114,7 @@ const Forum = () => {
         searchFontFamily="Nunito-Regular"
         onSearchPress={() => navigation.navigate("SearchQuery")}
       />
+      </View>
       <Text style={styles.trendingTopics}>TRENDING TOPICS</Text>
 
       {/* Bottom Navigation Bar */}
@@ -146,7 +160,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   trendingTopics: {
-    top: 262,
+    top: 350,
     left: 12,
     fontSize: FontSize.primaryText_size,
     lineHeight: 30,
@@ -178,7 +192,7 @@ const styles = StyleSheet.create({
   bottomNavIcon: {
     width: 30,
     height: 30,
-    top: 700,
+    top: 755,
   },
   surfaceIcon: {
     flex: 1,
@@ -202,6 +216,24 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     zIndex: 2,
+  },
+  backButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 54,
+    left: 16,
+    zIndex: 4,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
+  },
+  searchContainer: {
+    top: 80,
   },
 });
 

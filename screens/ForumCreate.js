@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.body15Regular_size,
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
-    lineHeight: 16,
+    // lineHeight: 16,
   },
   discardPosition: {
     top: 4,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
-    lineHeight: 16,
+    // lineHeight: 16,
     top: 0,
   },
   discard1: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     left: -6,
   },
   intro: {
-    top: 65,
+    top: 100,
     left: 29,
     width: 340,
     height: 30,

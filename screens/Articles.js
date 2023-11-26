@@ -49,7 +49,10 @@ const Articles = () => {
 
         <View style={styles.textContainer}>
           <Text style={[styles.title]}>The Global Effect Of Car Emissions</Text>
-          <Text style={[styles.text]}>Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text</Text>
+          <Text style={[styles.text]}>
+          Our personal vehicles are a major cause of global warming. Collectively, cars and trucks account for nearly one-fifth of all US emissions, emitting around 24 pounds of carbon dioxide and other global-warming gases for every gallon of gas. About five pounds comes from the extraction, production, and delivery of the fuel, while the great bulk of heat-trapping emissions—more than 19 pounds per gallon—comes right out of a car’s tailpipe.
+            
+          </Text>
         </View>
       </View>
 
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   textContainer: {
+    top: 80,
     flex: 1,
     justifyContent: "flex-end",
     marginBottom: 150,

@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   forumInner: {
-    top: 60,
+    top: 130,
     left: 12,
   },
 });

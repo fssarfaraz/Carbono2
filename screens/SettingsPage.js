@@ -37,7 +37,7 @@ const SettingsPage = () => {
   };
 
   return (
-    // Main View container for the Settings screen
+
     <View style={styles.settingsPage}>
        {/* Background Ellipse Images */}
       <Image
@@ -51,7 +51,7 @@ const SettingsPage = () => {
         source={require("../assets/ellipse-3.png")}
       />
 
-      {{/* Header with back button */}}
+      {/* Header with back button */}
       <View style={styles.header}>
         <Pressable
           style={styles.backButton}
@@ -61,7 +61,7 @@ const SettingsPage = () => {
         </Pressable>
       </View>
 
-      { {/* Settings Title */}}
+       {/* Settings Title */}
       <View style={styles.settingContainer}>
         <Text style={styles.settings}>SETTINGS</Text>
       </View>
@@ -226,7 +226,6 @@ const SettingsPage = () => {
   );
 };
 
-// Styles for the SettingsPage component
 const styles = StyleSheet.create({
   iconCalculatorBtn: {
     position: "relative",

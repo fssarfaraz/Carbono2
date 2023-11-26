@@ -33,6 +33,7 @@ const CalcTrack = () => {
   //fetching footprint data from database
   const handleLoadChart = () => {
     const email = auth.currentUser.email;
+    console.log("waiting for energieeee and traveld");
   
     //fetching energy data
     const energyRef = ref(database, "footprint-energy/");
@@ -108,13 +109,17 @@ const CalcTrack = () => {
   }
 
   const renderChart = () => {
+    console.log('in render chart');
     if (energyData.length > 0 && travelData.length > 0 && !isLoading) 
     {
+      console.log('in if statement')
       let mappedEnergyData;
       let mappedTravelData;
+      console.log('mapping energy data')
 
       mappedEnergyData = energyData.map(data => data.y);
       mappedTravelData = travelData.map(data => data.y);
+      console.log('mapped energy data');
       console.log(mappedEnergyData);
       console.log(mappedTravelData);
         
@@ -130,7 +135,9 @@ const CalcTrack = () => {
       };
 
       const screenWidth = Dimensions.get("window").width;
+      console.log('Got screen width');
       const labels = labelLength(mappedEnergyData, mappedTravelData);
+      console.log("got labels");
       return (
         <LineChart
           data=
@@ -164,6 +171,12 @@ const CalcTrack = () => {
       {/* Background Images */}
       <Image style={[styles.ellipse1]} contentFit="cover" source={require("../assets/ellipse-3.png")} />
       <Image style={[styles.ellipse2]} contentFit="contain" source={require("../assets/ellipse-3.png")} />
+
+      <View style={styles.backButtonContainer}>
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
+      </View>
 
       {/* Header Buttons */}
       <View style={styles.headerButton}>
@@ -220,7 +233,8 @@ const CalcTrack = () => {
 
       {/* Select Category Text */}
       <Text style={styles.selectCategoryFor}>SELECT CATEGORY FOR HISTORY</Text>
-
+      
+      <View style={styles.formSection}>
       {/* Form Containers */}
       <FormContainer
         itemType="Food"
@@ -262,6 +276,8 @@ const CalcTrack = () => {
           }
         }}
       />
+
+      </View>
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
@@ -522,6 +538,31 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     zIndex: 1,
+  },
+  formSection: {
+    top: 40,
+    width: "100%",
+    height: 103,
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    zIndex: 1,
+  },
+  backButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 54,
+    left: 16,
+    zIndex: 4,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
   },
 });
  
