@@ -1,84 +1,94 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View, StatusBar, Pressable, Text } from "react-native";
-import Property1HomeImage from "../components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
+import { StyleSheet, View, StatusBar, Pressable, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import SectionForm from "../components/SectionForm";
-import FormContainer1 from "../components/FormContainer1";
 import { FontSize, FontFamily, Padding, Color } from "../GlobalStyles";
+import { useState } from "react";
+import {getDatabase, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
 
 const ForumCreate = () => {
   const navigation = useNavigation();
-// Test comment 1
+
+  const [title, setTitle] = useState("");
+  const [post, setPost] = useState("");
+
+  // Create a reference to the database
+  const database = getDatabase();
+  const auth = getAuth(app);
+  const user = auth.currentUser; 
+  const email = user.email; 
+  // Split email on "@" 
+  const emailParts = email.split('@');
+  // Get first part (before "@")
+  const emailName = emailParts[0];
+  console.log(emailName);
+
+  const addToDatabase = async (title, post) => {
+    // Get the current date
+    const date = new Date();
+    const formattedDate = date.toISOString().split('T')[0];
+    console.log(formattedDate);
+    const key = `${formattedDate}-${emailName}-${title}`;
+    console.log('Defined key', key);
+    const entry = 
+    {
+      email: email,
+      title: title,
+      post: post,
+      likes: 0,
+      comments: 0,
+      date: formattedDate,
+    };
+    console.log('Defined entry')
+    // Set the user data in the database
+    set(ref(database, 'posts/' + key), entry).then(() => 
+    {
+    }).catch((error) => 
+    {
+      // An error occurred
+      alert("Error adding to database: " + error.message);
+    });
+  }
+
+  const handleSubmit = async () => {
+    if(!title)
+    {
+      alert("Please enter a title for the post");
+    }
+    if(!post)
+    {
+      alert("Please enter post content");
+    }
+    if(title && post)
+    {
+      addToDatabase(title, post);
+      alert("Post created.");
+      navigation.navigate('Forum');
+    }
+  }
+
   return (
     <View style={styles.forumCreate}>
       <Image
-        style={[styles.forumCreateChild, styles.forumPosition]}
+        style={[styles.ellipse1]}
         contentFit="cover"
         source={require("../assets/ellipse-1.png")}
       />
-      <Image
-        style={[styles.forumCreateItem, styles.forumPosition]}
-        contentFit="cover"
-        source={require("../assets/ellipse-3.png")}
-      />
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr4.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={[styles.iconPersonOutlineParent, styles.publishFlexBox]}>
-        <Image
-          style={styles.iconLayout1}
-          contentFit="cover"
-          source={require("../assets/-icon-person-outline.png")}
-        />
-        <Image
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-book-saved3.png")}
-        />
-        <Image
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          contentFit="cover"
-          source={require("../assets/-icon-discussion1.png")}
-        />
-        <Image
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/-icon-game-controller-outline4.png")}
-        />
-      </View>
-      <View style={styles.iconCalculatorWrapper}>
-        <Image
-          style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator3.png")}
-        />
-      </View>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
+
       <View style={styles.intro}>
-        <Pressable style={[styles.publish, styles.publishFlexBox]}>
+        <Pressable style={[styles.publish, styles.publishFlexBox]}
+          onPress={handleSubmit}>
           <Text
             style={[styles.publish1, styles.publish1Typo]}
           >{`Publish `}</Text>
         </Pressable>
+
         <Text style={[styles.createPost, styles.discardPosition]}>
           Create Post
         </Text>
+
         <Pressable
           style={[styles.discard, styles.discardPosition]}
           onPress={() =>
@@ -88,13 +98,22 @@ const ForumCreate = () => {
           <Text style={[styles.discard1, styles.publish1Typo]}>Discard</Text>
         </Pressable>
       </View>
-      <SectionForm />
-      <FormContainer1
-        dimensionCode={require("../assets/rectangle4.png")}
-        carDimensions={require("../assets/rectangle5.png")}
-        productCode={require("../assets/rectangle6.png")}
-      />
-      <View style={styles.cursor} />
+
+      <View style={styles.inputBoxes}>
+        <TextInput
+          style={styles.titleInput}
+          placeholder="Title"
+          value={title}
+          onChangeText={setTitle}
+        />
+        <TextInput
+          style={styles.postInput}
+          placeholder="What's on your mind?"
+          multiline={true}
+          value={post}
+          onChangeText={setPost}
+        />
+      </View>
     </View>
   );
 };
@@ -127,10 +146,11 @@ const styles = StyleSheet.create({
     top: 4,
     position: "absolute",
   },
-  forumCreateChild: {
-    width: 529,
-    height: 330,
-    top: 0,
+  ellipse1: {
+    width: 500,
+    height: 380,
+    top: -150,
+    left: -35
   },
   forumCreateItem: {
     top: 505,
@@ -178,8 +198,8 @@ const styles = StyleSheet.create({
     top: 0,
   },
   createPost: {
-    left: 92,
-    fontSize: FontSize.paragraphH1Reg_size,
+    left: 95,
+    fontSize: 17,
     letterSpacing: 1.8,
     textTransform: "uppercase",
     color: Color.colorDarkslateblue_100,
@@ -187,7 +207,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.nunitoBold,
     fontWeight: "700",
     lineHeight: 16,
-    top: 4,
+    top: 0,
   },
   discard1: {
     color: Color.colorGray_400,
@@ -196,10 +216,10 @@ const styles = StyleSheet.create({
     left: -6,
   },
   intro: {
-    top: 62,
+    top: 65,
     left: 29,
     width: 340,
-    height: 24,
+    height: 30,
     position: "absolute",
   },
   cursor: {
@@ -218,6 +238,25 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 852,
     overflow: "hidden",
+  },
+  inputBoxes: {
+    marginTop: 10,
+    padding: 16,
+    top: -250,
+  },
+  titleInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 16,
+  },
+  postInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 8,
+    height: 210,
   },
 });
 

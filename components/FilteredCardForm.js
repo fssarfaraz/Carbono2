@@ -1,9 +1,85 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
+import { useState, useEffect, useCallback } from "react";
+import {getDatabase, onValue, ref, update} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
-const FilteredCardForm = () => {
+const FilteredCardForm = ({post}) => {
+
+  const navigation = useNavigation();
+
+  const [name, setName] = useState("");
+  const [likes, setLikes] = useState(post.likes);
+
+   // Create a reference to the database
+   const database = getDatabase();
+   const auth = getAuth(app);
+
+  const getName = () => {
+    const userRef = ref(database, 'users/');
+    const user = auth.currentUser; 
+    const email = user.email; 
+
+    onValue(userRef, (snapshot) => {
+      // Find matching user  
+      const users = snapshot.val();
+      const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+
+      if (matchingUser) 
+      {
+        setName(matchingUser.name);
+      } 
+      else 
+      {
+        console.log('User not found in the database');
+      }
+    })
+  }
+
+  useEffect(() => {
+    getName();
+  }, [database]);
+
+  const updatePostLikes = useCallback((post, setLikes) => {
+    const postsRef = ref(database, 'posts/');
+
+    onValue(postsRef, (snapshot) => {
+      // Find matching user  
+      const posts = snapshot.val();
+      const email = post.email;
+      const matchingPost = Object.values(posts).find((u) => u.email.toLowerCase() === email);
+
+      if (matchingPost) 
+      {
+        const emailParts = email.split('@');
+        // Get first part (before "@")
+        const emailName = emailParts[0];
+        const key = `${matchingPost.date}-${emailName}-${matchingPost.title}`;
+        update(ref(database, 'posts/' + key), 
+        {
+          likes: post.likes + 1,
+          comments: post.comments,
+          date: post.date,
+          email: post.email,
+          post: post.post,
+          title: post.title
+        });
+        console.log('Like added');
+      } 
+      else 
+      {
+        console.log('Post not found in the database');
+      }
+    });
+    setLikes(post.likes + 1);
+  }, [post]);
+  
+
   return (
     <View style={[styles.posts, styles.postsFlexBox]}>
       <View style={[styles.post1, styles.postsFlexBox]}>
@@ -17,9 +93,9 @@ const FilteredCardForm = () => {
               />
               <View style={styles.jacobWashingtonParent}>
                 <Text style={[styles.jacobWashington, styles.ifYouThinkTypo]}>
-                  Jacob Washington
+                  {name}
                 </Text>
-                <Text style={[styles.mAgo, styles.mAgoTypo]}>20m ago</Text>
+                <Text style={[styles.mAgo, styles.mAgoTypo]}>{post.date}</Text>
               </View>
             </View>
             <Image
@@ -30,24 +106,27 @@ const FilteredCardForm = () => {
           </View>
           <Text
             style={[styles.ifYouThink, styles.ifYouThinkTypo]}
-          >{`“If you think you are too small to make a difference, try sleeping with a mosquito.”
-~ Dalai Lama`}</Text>
+          >{post.post}</Text>
+
           <View style={[styles.postActions, styles.profileInfoFlexBox]}>
             <View style={styles.infoFlexBox}>
-              <Image
-                style={styles.iconLike}
-                contentFit="cover"
-                source={require("../assets/icon--like.png")}
-              />
-              <Text style={[styles.text, styles.mAgoTypo]}>2,245</Text>
+            <Pressable onPress={() => updatePostLikes(post, setLikes)}>
+                <Image
+                  style={styles.iconLike}
+                  contentFit="cover"
+                  source={require("../assets/icon--like.png")}
+                />
+              </Pressable>
+              <Text style={[styles.text, styles.mAgoTypo]}>{likes}</Text>
             </View>
+
             <View style={[styles.comment, styles.infoFlexBox]}>
               <Image
                 style={styles.iconLike}
                 contentFit="cover"
                 source={require("../assets/icon--comment.png")}
               />
-              <Text style={[styles.text, styles.mAgoTypo]}>45</Text>
+              <Text style={[styles.text, styles.mAgoTypo]}>{post.comments}</Text>
             </View>
           </View>
         </View>
@@ -74,7 +153,7 @@ const styles = StyleSheet.create({
   },
   mAgoTypo: {
     color: Color.colorDarkslateblue_100,
-    fontSize: FontSize.secondaryText_size,
+    fontSize: 14,
     textAlign: "left",
     fontFamily: FontFamily.nunitoRegular,
     lineHeight: 16,
@@ -117,12 +196,13 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   iconLike: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
     overflow: "hidden",
   },
   text: {
     marginLeft: 8,
+    top: 2,
   },
   comment: {
     width: 456,
@@ -159,3 +239,4 @@ const styles = StyleSheet.create({
 });
 
 export default FilteredCardForm;
+
