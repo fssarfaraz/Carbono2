@@ -64,12 +64,12 @@ const Educational = () => {
         showsHorizontalScrollIndicator={false}
         style={[styles.scrollContainer, { zIndex: 3 }]}
       >
-        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("TransportArticle")}>
           <LinearGradient
             colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
             style={styles.communityCard1}
           >
-          {/* Replace this with your EnergyCard component */}
+          {/* Replace this with your TransportCard component */}
           <View style={styles.communityCard1Child} />
           <Image
             style={styles.communityCard1Item}
@@ -82,8 +82,8 @@ const Educational = () => {
           </LinearGradient>
         </Pressable>
 
-        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
-          {/* Replace this with your TravelCard component */}
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("EnergyArticle")}>
+          {/* Replace this with your EnergyCard component */}
           <LinearGradient
             colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
             style={styles.communityCard1}
@@ -150,7 +150,7 @@ const Educational = () => {
           <Image style={styles.cardImage} source={require("../assets/card1.png")} />
           </Pressable>
 
-        <Pressable style={styles.card} onPress={() => handleNavigation('VideoResource')}>
+        <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
           <Image style={styles.cardImage} source={require("../assets/card2.png")} />
           </Pressable>
         </View>
