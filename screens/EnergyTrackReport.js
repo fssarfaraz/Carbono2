@@ -20,7 +20,7 @@ const EnergyTrackReport = () => {
   const route = useRoute();
 
   const {energyData} = route.params;
-  console.log("Energy: ", energyData);
+    console.log("Energy: ", energyData);
 
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
