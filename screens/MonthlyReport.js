@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { useRoute } from '@react-navigation/native';
+import { Svg, Rect, Line, Path } from "react-native-svg";
 
 const MonthlyReport = () => {
   const navigation = useNavigation();
@@ -11,6 +13,107 @@ const MonthlyReport = () => {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+
+  const route = useRoute();
+
+  const {monthlyLabels, monthlyValues} = route.params;
+  console.log("Monthly Labels: ", monthlyLabels);
+  console.log("Monthly Values: ", monthlyValues);
+
+  const chartConfig = {
+    backgroundGradientFrom: "#ffffff",
+    backgroundGradientFromOpacity: 1,
+    backgroundGradientTo: "#ffffff",
+    backgroundGradientToOpacity: 1,
+    strokeWidth: 3, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: true, // optional
+    color: (opacity = 0.9) => `rgba(66, 141, 248, ${opacity})`,
+    margin: {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 20,
+    },
+  };
+
+
+  const screenWidth = Dimensions.get("window").width;
+
+  // Bar chart component 
+  const MonthlyBarChart = ({monthlyLabels, monthlyValues, chartConfig}) => {
+    // Get color from chartConfig color function
+    const barColor = chartConfig.color();
+    // Use default bar width if not specified
+    const barWidth = 45;
+    // Calculate height scaling 
+    const maxValue = Math.max(...monthlyValues);
+    const scale = 220 / maxValue;
+
+    return (
+      <Svg height="220" width={screenWidth}>
+        <Line 
+          x1="35" 
+          y1="220"
+          x2={screenWidth}
+          y2="220"
+          stroke = "#000000" 
+        />
+
+        <Line
+          x1="35"
+          y1="0"
+          x2="35" 
+          y2="220"
+          stroke="#000000" 
+        />
+
+        <View style={{transform: [{ rotate: '90deg' }], top: 240, left: -190}} >
+          <Text 
+            textAnchor="middle"
+            style={{fontSize: 20, fontFamily: "Nunito-Bold",}}
+          >
+            Total Footprint  
+          </Text>
+        </View>
+
+        <View style={{top: 200, left: 57}}>
+          {monthlyLabels.map((label, i) => (
+            <Text  
+              key={i}
+              x={-10}
+              y={220 - i*(maxValue/monthlyLabels.length)*scale}
+              style={{fontFamily: "Nunito-Bold", fontSize: 13}}
+            >
+              {label}
+          </Text>
+        ))}
+        </View>
+
+        {monthlyValues.map((value, i) => (
+          <React.Fragment key={i}>
+            <Rect
+              key={i}
+              x={i * (barWidth + 5) + 60}
+              y={220 - value * scale}
+              height={value * scale}
+              width={barWidth}
+              fill={barColor}
+            />
+            <Text
+              key={`value-${i}`}
+              x={i * (barWidth + 5) + 60 + barWidth / 2}
+              y={220 - value * scale - 10}
+              textAnchor="middle"
+              style={{fontFamily: "Nunito-Bold", fontSize: 10, top: 100, left: 65}}
+            >
+              {value}
+            </Text>
+          </React.Fragment>
+        ))}
+      </Svg>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -41,9 +144,11 @@ const MonthlyReport = () => {
 
         {/* Saly6 Image */}
         <View style={styles.frameIconContainer}>
-          <Image style={styles.frameIcon} 
-            resizeMode="cover" 
-            source={require("../assets/frame82.png")} />
+            <MonthlyBarChart
+              monthlyLabels={monthlyLabels}
+              monthlyValues={monthlyValues} 
+              chartConfig={chartConfig} 
+            />
         </View>
 
         <Text style={styles.commiserationsThereWasContainer} numberOfLines={5}>
@@ -101,6 +206,7 @@ const MonthlyReport = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -114,9 +220,6 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   backgroundImage1: {
-    // position: "absolute",
-    // height: "100%",
-    // width: "100%",
     top: 500,
     position: "absolute",
     flex: 1,
@@ -177,7 +280,6 @@ const styles = StyleSheet.create({
     color: "#000"
   },
   commiserationsThereWasContainer1: {
-    lineBreak: "anywhere",
     width: "100%"
   },
   commiserationsThereWasContainer: {
@@ -232,4 +334,6 @@ const styles = StyleSheet.create({
 });
 
 export default MonthlyReport;
+
+
 
