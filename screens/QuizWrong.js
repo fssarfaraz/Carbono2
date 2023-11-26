@@ -101,26 +101,27 @@ const QuizWrong = () => {
           </View>
         </View>
 
-        <View style={styles.continueContainer}>
-          <Pressable 
-            onPress={() => handleNavigation("QuizFinal")}
-            style={styles.continueButton}>
-            <Text style={styles.continueText}>Continue</Text>
-          </Pressable>
-        </View>
-        
         {/* Correct icon display over the text */}
         <View style={styles.correctAnswer}>
           <LinearGradient
             colors={['#FFFFFF', '#FB555500']}
-            style={styles.correctAnswer}
+            style={styles.correctAnswerGradient}
           >
-          <Image
-            style={styles.vector7}
-            source={require("../assets/Cancel.png")}
-          />
-          <Text style={styles.okText}>Wrong</Text>
+            <Image
+              style={styles.vector7}
+              source={require("../assets/Cancel.png")}
+            />
+            <Text style={styles.okText}>Wrong</Text>
           </LinearGradient>
+        </View>
+
+        <View style={styles.continueContainer}>
+          <Pressable
+            zIndex={100}
+            onPress={() => handleNavigation("QuizFinal")}
+            style={styles.continueButton}>
+            <Text style={styles.continueText}>Continue</Text>
+          </Pressable>
         </View>
 
       </View>
@@ -380,6 +381,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     bottom: 20,
+    zIndex: 2,
   },
   continueButton: {
     width: 250,
@@ -389,7 +391,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
-    backgroundColor: "#428df8"
+    backgroundColor: "#428df8",
+    zIndex: 2,
   },
   continueText: {
     fontSize: 22,
@@ -397,20 +400,28 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Nunito-SemiBold",
     color: "#fdfdfd",
-    textAlign: "center"
+    textAlign: "center",
+    zIndex: 2,
   },
   correctAnswer: {
-    flex: 1, 
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     bottom: 70,
-    zIndex: 2,
     width: 200,
     height: 200,
     padding: 20,
     position: "absolute",
     borderRadius: 20,
+    zIndex: 1, // Lower zIndex
+    
+  },
+  correctAnswerGradient: {
+    flex: 1,
+    borderRadius: 20,
+    width: "100%",
+    height: "100%",
   },
   vector7: {
     width: 90,

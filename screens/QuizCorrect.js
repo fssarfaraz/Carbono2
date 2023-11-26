@@ -380,6 +380,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     bottom: 20,
+    zIndex: 2,
   },
   continueButton: {
     width: 250,
@@ -389,7 +390,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
-    backgroundColor: "#428df8"
+    backgroundColor: "#428df8",
+    zIndex: 2,
   },
   continueText: {
     fontSize: 22,
@@ -397,7 +399,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontFamily: "Nunito-SemiBold",
     color: "#fdfdfd",
-    textAlign: "center"
+    textAlign: "center",
+    zIndex: 2,
   },
   correctAnswer: {
     flex: 1, 
@@ -411,6 +414,7 @@ const styles = StyleSheet.create({
     padding: 20,
     position: "absolute",
     borderRadius: 20,
+    zIndex: -1,
   },
   vector7: {
     width: 90,

@@ -1033,6 +1033,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     bottom: 20,
+    zIndex: 2,
   },
   continueButton: {
     width: 250,
