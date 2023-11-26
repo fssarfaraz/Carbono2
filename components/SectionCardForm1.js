@@ -1,10 +1,53 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Image } from "expo-image";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import { useState, useEffect } from "react";
+import {getDatabase, onValue, ref, set} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
+import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
-const SectionCardForm1 = () => {
+
+const SectionCardForm1 = ({post}) => {
+
+  const navigation = useNavigation();
+
+  const [name, setName] = useState("");
+
+   // Create a reference to the database
+   const database = getDatabase();
+   const auth = getAuth(app);
+
+  const getName = () => {
+    const userRef = ref(database, 'users/');
+    const user = auth.currentUser; 
+    const email = user.email; 
+
+    onValue(userRef, (snapshot) => {
+      // Find matching user  
+      const users = snapshot.val();
+      const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+
+      if (matchingUser) 
+      {
+        setName(matchingUser.name);
+      } 
+      else 
+      {
+        console.log('User not found in the database');
+      }
+    })
+  }
+
+  useEffect(() => {
+    getName();
+  }, [database]);
+
+
   return (
+    <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
     <View style={[styles.rectangleParent, styles.groupChildLayout]}>
       <View style={[styles.groupChild, styles.groupChildLayout]} />
       <Image
@@ -12,29 +55,33 @@ const SectionCardForm1 = () => {
         contentFit="cover"
         source={require("../assets/ellipse-13.png")}
       />
-      <Text style={[styles.kristonWatshon, styles.amFlexBox]}>
-        Kriston Watshon
-      </Text>
+      <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
+        <Text style={[styles.kristonWatshon, styles.amFlexBox]}>
+          {name}
+        </Text>
+      </Pressable>
       <Text style={[styles.am, styles.amTypo]}>
-        <Text style={styles.text}>{`08:39 `}</Text>
-        <Text style={styles.am1}>am</Text>
+        <Text style={styles.text}>{post.date}</Text>
       </Text>
-      <Text style={[styles.loremIpsumDolor, styles.text1Typo]}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fringilla
-        natoque id aenean.
-      </Text>
-      <Image
-        style={[styles.groupInner, styles.groupInnerPosition]}
-        contentFit="cover"
-        source={require("../assets/rectangle-23.png")}
-      />
+
+      <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
+        <Text style={[styles.loremIpsumDolor, styles.text1Typo]}>
+          {post.title}
+        </Text>
+      </Pressable>
+
+      <Pressable onPress={() => navigation.navigate("ForumView", {post})} 
+        style={{top: 150, left: 270}}>
+        <Text style={{fontSize: 16, fontFamily: FontFamily.nunitoLight}}> View Post</Text>
+      </Pressable>
+
       <View style={[styles.like1Parent, styles.parentFlexBox]}>
         <Image
           style={styles.like1Icon}
           contentFit="cover"
           source={require("../assets/like-1.png")}
         />
-        <Text style={[styles.text1, styles.text1Typo]}>1,964</Text>
+        <Text style={[styles.text1, styles.likesSize]}>{post.likes}</Text>
       </View>
       <View style={[styles.vectorParent, styles.parentFlexBox]}>
         <Image
@@ -42,7 +89,7 @@ const SectionCardForm1 = () => {
           contentFit="cover"
           source={require("../assets/vector2.png")}
         />
-        <Text style={[styles.text1, styles.text1Typo]}>135</Text>
+        <Text style={[styles.text1, styles.likesSize]}>{post.comments}</Text>
       </View>
       <Image
         style={[styles.vectorIcon1, styles.iconLayout]}
@@ -55,12 +102,13 @@ const SectionCardForm1 = () => {
         source={require("../assets/group3.png")}
       />
     </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   groupChildLayout: {
-    height: 361,
+    height: 200,
     width: 370,
     position: "absolute",
   },
@@ -74,8 +122,16 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
   text1Typo: {
+    lineHeight: 30,
+    fontSize: 24,
+    textAlign: "left",
+    color: Color.black,
+    textTransform: "capitalize",
+  },
+  likesSize:
+  {
     lineHeight: 21,
-    fontSize: FontSize.size_sm,
+    fontSize: 14,
     textAlign: "left",
     color: Color.black,
     textTransform: "capitalize",
@@ -141,9 +197,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   loremIpsumDolor: {
-    top: 71,
-    width: 286,
-    height: 46,
+    top: 90,
+    width: 290,
+    height: 70,
     left: 38,
     position: "absolute",
     fontFamily: FontFamily.nunitoLight,
@@ -166,7 +222,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   like1Parent: {
-    top: 319,
+    top: 150,
     left: 45,
     justifyContent: "center",
   },
@@ -175,7 +231,7 @@ const styles = StyleSheet.create({
     width: 24,
   },
   vectorParent: {
-    top: 320,
+    top: 150,
     left: 127,
     width: 54,
     justifyContent: "flex-end",
@@ -203,3 +259,4 @@ const styles = StyleSheet.create({
 });
 
 export default SectionCardForm1;
+
