@@ -25,9 +25,12 @@ const TravelTrackReport = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
   const [sum, setSum] = useState('');
-  const [showReport, setShowReport] = useState(false);
+  const [showMonthlyReport, setShowMonthlyReport] = useState(false);
   const [monthlyLabels, setMonthlyLabels] = useState([]);
   const [monthlyValues, setMonthlyValues] = useState([]);
+  const [weeklyLabels, setWeeklyLabels] = useState([]);
+  const [weeklyValues, setWeeklyValues] = useState([]);
+  const [showWeeklyReport, setShowWeeklyReport] = useState(false);
 
   const auth = getAuth(app);
   const database = getDatabase();
@@ -46,11 +49,15 @@ const TravelTrackReport = () => {
     if(currentUser) 
     {
       const user = auth.currentUser; 
+      console.log('Current user:', user);
 
       // Get email from current user
       const email = user.email; 
+      console.log('Current user email:', email);
 
-      const userRef = ref(database, 'users/'); 
+      const userRef = ref(database, 'users/');
+      console.log('User reference:', userRef);
+      console.log('User UID:', user.uid); 
 
       onValue(userRef, (snapshot) => {
         // Find matching user  
@@ -97,7 +104,7 @@ const TravelTrackReport = () => {
       
       if(selectedTravelData.length > 0)
       {
-        setShowReport(true);
+        setShowMonthlyReport(true);
         let mappedTravelData;
         mappedTravelData = selectedTravelData.map(data => data.y);
         console.log(mappedTravelData);
@@ -107,6 +114,7 @@ const TravelTrackReport = () => {
         {
           sumT += mappedTravelData[i];
         }
+        console.log('Sum of T', sumT);
         const clippedSumT = sumT.toFixed(2);
         setSum(clippedSumT);
       }
@@ -163,6 +171,94 @@ const TravelTrackReport = () => {
     console.log("monthly labels: ", monthlyLabels);
     console.log("monthly values: ", monthlyValues);
   }, [monthlyLabels, monthlyValues]);
+
+  useEffect(() => {
+    weeklyReport();
+  }, []); 
+
+  function weeklyReport()
+  {
+    if(travelData.length > 0)
+    {
+      // Get the current month
+      const now = new Date();
+      const month = now.getMonth();
+      const year = now.getFullYear();
+
+      console.log('Getting this months data');
+      const selectedTravelData = Object.entries(travelData)
+        .filter(([key, value]) => {
+          const entryDate = new Date(value.x);
+          return (
+            entryDate.getFullYear() === year &&
+            entryDate.getMonth() === month
+          );
+        })
+        .map(([id, entry]) => ({
+          id,
+          x: entry.x,
+          y: entry.y  
+        }));
+
+        console.log('selectedTravelData: ', selectedTravelData);
+      
+      if(selectedTravelData.length > 0)
+      {
+        setShowWeeklyReport(true);
+
+        const weeklyData = [];
+        let weekStart = 0;
+
+        // Parse dates from strings 
+        const parsedData = selectedTravelData.map(item => ({
+          ...item,
+          x: new Date(item.x)  
+        }));
+
+        while(weekStart < parsedData.length) 
+        {
+          let weekEnd = weekStart + 7;
+          if(weekEnd > parsedData.length) weekEnd = parsedData.length;
+          weeklyData.push(parsedData.slice(weekStart, weekEnd));
+          weekStart = weekEnd;
+        }
+ 
+        // Sum and labels
+        const values = weeklyData.map(week => {
+          return week.reduce((sum, item) => {
+            return sum + item.y;
+          }, 0);
+        });
+
+        // Create labels for each week
+        const labels = weeklyData.map((week, i) => {
+          const firstDate = week[0].x;
+          const lastDate = week[week.length-1].x;
+          // Format dates as strings
+          
+          startDate = firstDate.toISOString().slice(0,10);  
+          endDate = lastDate.toISOString().slice(0,10);
+          
+          const start = startDate.substring(5);
+          const end = endDate.substring(5);
+          return `${start} to ${end}`;
+        });
+
+        // Round the weekly values to 2 decimal places
+        const roundedWeeklyValues = values.map((value) =>parseFloat(value.toFixed(2)));
+
+        // Set the weekly labels and values
+        setWeeklyLabels(labels);
+        setWeeklyValues(roundedWeeklyValues);
+      }
+    }
+  }
+
+  //used to test correct array population. Can be removed
+  useEffect(() => {
+    console.log("Weekly labels: ", weeklyLabels);
+    console.log("Weekly values: ", weeklyValues);
+  }, [weeklyLabels, weeklyValues]);
 
   return (
     <View style={styles.container}>
@@ -221,6 +317,7 @@ const TravelTrackReport = () => {
             resizeMode="cover" 
             source={require("../assets/car-icon-1.png")} />
 
+
           <Text style={styles.kg}>{sum} kg CO2</Text>
 
           <Text style={styles.consumption1}>Consumption</Text>
@@ -230,9 +327,9 @@ const TravelTrackReport = () => {
         <Pressable
           style={styles.ReportButton}
           onPress={() => {
-            if (showReport)
+            if (showWeeklyReport)
             {
-              navigation.navigate("WeeklyReport", {travelData})
+              navigation.navigate("WeeklyReport", {weeklyLabels, weeklyValues})
             }
             else
             {
@@ -253,7 +350,7 @@ const TravelTrackReport = () => {
         <Pressable
           style={styles.ReportButton}
           onPress={() => {
-            if (showReport)
+            if (showMonthlyReport)
             {
               navigation.navigate("MonthlyReport", {monthlyLabels, monthlyValues})
             }
@@ -330,6 +427,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   backgroundImage: {
+    // position: "absolute",
+    // height: "100%",
+    // width: "100%",
     top: -270,
     position: "absolute",
     flex: 1,
@@ -354,6 +454,7 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     padding: 10,
+    // paddingBottom: 18,
   },
   profileContainer: {
     flexDirection: "row",
@@ -391,6 +492,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 60,
     left: 55,
+    // marginBottom: 80,
   },
   checkYourTravel1: {
     fontSize: 20,
@@ -408,6 +510,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 250,
     alignSelf: "center",
+    // marginBottom: 80,
   },
   soFarThis1: {
     fontSize: 24,
@@ -572,3 +675,4 @@ const styles = StyleSheet.create({
 });
 
 export default TravelTrackReport;
+

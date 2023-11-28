@@ -17,21 +17,25 @@ const EnergyTrackReport = () => {
     navigation.navigate(screen);
   };
 
+  //route variables from a previous screen
   const route = useRoute();
-
   const {energyData} = route.params;
   console.log("Energy: ", energyData);
 
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
   const [sum, setSum] = useState('');
-  const [showReport, setShowReport] = useState(false);
+  const [showMonthlyReport, setShowMonthlyReport] = useState(false);
   const [monthlyLabels, setMonthlyLabels] = useState([]);
   const [monthlyValues, setMonthlyValues] = useState([]);
+  const [weeklyLabels, setWeeklyLabels] = useState([]);
+  const [weeklyValues, setWeeklyValues] = useState([]);
+  const [showWeeklyReport, setShowWeeklyReport] = useState(false);
 
   const auth = getAuth(app);
   const database = getDatabase();
 
+  //if current user
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if(user) 
@@ -49,6 +53,7 @@ const EnergyTrackReport = () => {
 
       // Get email from current user
       const email = user.email; 
+      console.log('Current user email:', email);
 
       const userRef = ref(database, 'users/');
 
@@ -69,6 +74,7 @@ const EnergyTrackReport = () => {
     }
   }, [currentUser, database]);
 
+  //call function when page loads
   useEffect(() => {
     monthlySum();
   }, []);
@@ -77,10 +83,12 @@ const EnergyTrackReport = () => {
   {
     if(energyData.length > 0)
     {
+      //get current month and year
       const now = new Date();
       const year = now.getFullYear();
       const month = now.getMonth();
 
+      //filter through energy data for entries matching current month and year. Then map those into selectedEnergyData
       const selectedEnergyData = Object.entries(energyData)
         .filter(([key, value]) => {
           const entryDate = new Date(value.x);
@@ -97,16 +105,20 @@ const EnergyTrackReport = () => {
       
       if(selectedEnergyData.length > 0)
       {
-        setShowReport(true);
+        setShowMonthlyReport(true);
         let mappedEnergyData;
+        //keep only results
         mappedEnergyData = selectedEnergyData.map(data => data.y);
         console.log(mappedEnergyData);
 
+        //sum of all results
         let sumE = 0;
         for(let i = 0; i < mappedEnergyData.length; i++) 
         {
           sumE += mappedEnergyData[i];
-        };
+        }
+        console.log('Sum of E', sumE);
+        //round to 2dp
         const clippedSumE = sumE.toFixed(2);
         setSum(clippedSumE);
       }
@@ -163,6 +175,95 @@ const EnergyTrackReport = () => {
     console.log("monthly labels: ", monthlyLabels);
     console.log("monthly values: ", monthlyValues);
   }, [monthlyLabels, monthlyValues]);
+
+  useEffect(() => {
+    weeklyReport();
+  }, []);  
+
+  function weeklyReport()
+  {
+    if(energyData.length > 0)
+    {
+      // Get the current month
+      const now = new Date();
+      const month = now.getMonth();
+      const year = now.getFullYear();
+
+      console.log('Getting this months data');
+      const selectedEnergyData = Object.entries(energyData)
+        .filter(([key, value]) => {
+          const entryDate = new Date(value.x);
+          return (
+            entryDate.getFullYear() === year &&
+            entryDate.getMonth() === month
+          );
+        })
+        .map(([id, entry]) => ({
+          id,
+          x: entry.x,
+          y: entry.y  
+        }));
+
+        console.log('selectedEnergyData: ', selectedEnergyData);
+      
+      if(selectedEnergyData.length > 0)
+      {
+        setShowWeeklyReport(true);
+
+        const weeklyData = [];
+        let weekStart = 0;
+
+        // Parse dates from strings 
+        const parsedData = selectedEnergyData.map(item => ({
+          ...item,
+          x: new Date(item.x)  
+        }));
+
+        //divide dates into weeks by bunching them together
+        while(weekStart < parsedData.length) 
+        {
+          let weekEnd = weekStart + 7;
+          if(weekEnd > parsedData.length) weekEnd = parsedData.length;
+          weeklyData.push(parsedData.slice(weekStart, weekEnd));
+          weekStart = weekEnd;
+        }
+ 
+        // Sum per week
+        const values = weeklyData.map(week => {
+          return week.reduce((sum, item) => {
+            return sum + item.y;
+          }, 0);
+        });
+
+        // Create labels for each week
+        const labels = weeklyData.map((week, i) => {
+          const firstDate = week[0].x;
+          const lastDate = week[week.length-1].x;
+
+          // Format dates as strings
+          startDate = firstDate.toISOString().slice(0,10);  
+          endDate = lastDate.toISOString().slice(0,10);
+          //remove the year from labels
+          const start = startDate.substring(5);
+          const end = endDate.substring(5);
+          return `${start} to ${end}`;
+        });
+
+        // Round the weekly values to 2 decimal places
+        const roundedWeeklyValues = values.map((value) =>parseFloat(value.toFixed(2)));
+
+        // Set the weekly labels and values
+        setWeeklyLabels(labels);
+        setWeeklyValues(roundedWeeklyValues);
+      }
+    }
+  }
+
+  //used to test correct array population. Can be removed
+  useEffect(() => {
+    console.log("Weekly labels: ", weeklyLabels);
+    console.log("Weekly values: ", weeklyValues);
+  }, [weeklyLabels, weeklyValues]);
 
   return (
     <View style={styles.container}>
@@ -227,6 +328,7 @@ const EnergyTrackReport = () => {
             resizeMode="cover" 
             source={require("../assets/lightning-bolt-1.png")} />
 
+
           <Text style={styles.kg}>{sum} kg CO2</Text>
 
           <Text style={styles.consumption1}>Consumption</Text>
@@ -236,9 +338,9 @@ const EnergyTrackReport = () => {
         <Pressable
           style={styles.ReportButton}
           onPress={() => {
-            if (showReport)
+            if (showWeeklyReport)
             {
-              navigation.navigate("WeeklyReport", {energyData})
+              navigation.navigate("WeeklyReport", {weeklyLabels, weeklyValues})
             }
             else
             {
@@ -259,7 +361,7 @@ const EnergyTrackReport = () => {
         <Pressable
           style={styles.ReportButton}
           onPress={() => {
-            if (showReport)
+            if (showMonthlyReport)
             {
               navigation.navigate("MonthlyReport", {monthlyLabels, monthlyValues})
             }
