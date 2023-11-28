@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import * as React from "react";
+import { Image } from "expo-image";
+import { StyleSheet, View, Pressable, StatusBar, Text, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { FontFamily, Border, Color, FontSize, Padding } from "../GlobalStyles";
+import { useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { useRoute } from '@react-navigation/native';
+import { BarChart } from "react-native-chart-kit";
+import { Svg, Rect, Line, Path } from "react-native-svg";
 
 const WeeklyReport = () => {
   const navigation = useNavigation();
@@ -11,6 +16,106 @@ const WeeklyReport = () => {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+
+  //routing variables from a previous screen
+  const route = useRoute();
+  const {weeklyLabels, weeklyValues} = route.params;
+  console.log("Weekly Labels: ", weeklyLabels);
+  console.log("Weekly Values: ", weeklyValues);
+
+  const chartConfig = {
+    backgroundGradientFrom: "#ffffff",
+    backgroundGradientFromOpacity: 1,
+    backgroundGradientTo: "#ffffff",
+    backgroundGradientToOpacity: 1,
+    strokeWidth: 3, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: true, // optional
+    color: (opacity = 0.9) => `rgba(90, 9, 193, ${opacity})`,
+    margin: {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 20,
+    },
+  };
+
+  const screenWidth = Dimensions.get("window").width;
+
+  // Bar chart component 
+  const WeeklyBarChart = ({weeklyLabels, weeklyValues, chartConfig}) => {
+    // Get color from chartConfig color function
+    const barColor = chartConfig.color();
+    // Use default bar width if not specified
+    const barWidth = 45;
+    // Calculate height scaling 
+    const maxValue = Math.max(...weeklyValues);
+    const scale = 220 / maxValue;
+
+    return (
+      <Svg height="220" width={screenWidth}>
+        <Line 
+          x1="35" 
+          y1="220"
+          x2={screenWidth}
+          y2="220"
+          stroke = "#000000" 
+        />
+
+        <Line
+          x1="35"
+          y1="0"
+          x2="35" 
+          y2="220"
+          stroke="#000000" 
+        />
+
+        <View style={{transform: [{ rotate: '90deg' }], top: 240, left: -190}} >
+          <Text 
+            textAnchor="middle"
+            style={{fontSize: 20, fontFamily: "Nunito-Bold",}}
+          >
+            Total Footprint  
+          </Text>
+        </View>
+
+        <View style={{top: 200, left: 50}}>
+          {weeklyLabels.map((label, i) => (
+            <Text  
+              key={i}
+              x={-10}
+              y={220 - i*(maxValue/weeklyLabels.length)*scale}
+              style={{fontFamily: "Nunito-Bold", fontSize: 9}}
+            >
+              {label}
+          </Text>
+        ))}
+        </View>
+
+        {weeklyValues.map((value, i) => (
+          <React.Fragment key={i}>
+            <Rect
+              key={i}
+              x={i * (barWidth + 5) + 60}
+              y={220 - value * scale}
+              height={value * scale}
+              width={barWidth}
+              fill={barColor}
+            />
+            <Text
+              key={`value-${i}`}
+              x={i * (barWidth + 5) + 60 + barWidth / 2}
+              y={220 - value * scale - 10}
+              textAnchor="middle"
+              style={{fontFamily: "Nunito-Bold", fontSize: 10, top: 100, left: 65, color: "#ffffff"}}
+            >
+              {value}
+            </Text>
+          </React.Fragment>
+        ))}
+      </Svg>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -36,20 +141,22 @@ const WeeklyReport = () => {
           </Pressable>
         </View>
 
-        <Text style={styles.hereIsA1} numberOfLines={2}>{("Here is a report of your weekly " +
-           "\ncarbon footprint emissions")}</Text>
+        <Text style={styles.hereIsA1} numberOfLines={2}>Here is a report of your weekly 
+            carbon footprint emissions</Text>
 
         {/* Saly6 Image */}
         <View style={styles.frameIconContainer}>
-          <Image style={styles.frameIcon} 
-            resizeMode="cover" 
-            source={require("../assets/frame83.png")} />
+            <WeeklyBarChart
+              weeklyLabels={weeklyLabels}
+              weeklyValues={weeklyValues} 
+              chartConfig={chartConfig} 
+            />
         </View>
 
         <Text style={styles.commiserationsThereWasContainer} numberOfLines={5}>
           <Text style={styles.commiserationsThereWasContainer1}>
-          <Text style={styles.commiserations}>{"Congratulations!\n\n"}</Text>
-          <Text style={styles.thereWasA}>There was a significant decline in your carbon emissions compared to last week.</Text>
+          <Text style={styles.commiserations}>{"Commiserations!\n\n"}</Text>
+          <Text style={styles.thereWasA}>There was a significant increase in your carbon emissions compared to last month.</Text>
           </Text>
         </Text>
       </View>
@@ -100,6 +207,7 @@ const WeeklyReport = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -169,7 +277,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "700",
     fontFamily: "Nunito-Bold",
-    color: "#21d211",
+    color: "#d21111",
   },
   thereWasA: {
     fontSize: 18,
@@ -177,7 +285,7 @@ const styles = StyleSheet.create({
     color: "#000"
   },
   commiserationsThereWasContainer1: {
-    lineBreak: "anywhere",
+    //lineBreak: "anywhere",
     width: "100%"
   },
   commiserationsThereWasContainer: {
@@ -232,4 +340,3 @@ const styles = StyleSheet.create({
 });
 
 export default WeeklyReport;
-
