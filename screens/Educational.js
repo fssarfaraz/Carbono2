@@ -64,7 +64,7 @@ const Educational = () => {
         showsHorizontalScrollIndicator={false}
         style={[styles.scrollContainer, { zIndex: 3 }]}
       >
-        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("TransportArticle")}>
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
           <LinearGradient
             colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
             style={styles.communityCard1}
@@ -82,7 +82,7 @@ const Educational = () => {
           </LinearGradient>
         </Pressable>
 
-        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("EnergyArticle")}>
+        <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
           {/* Replace this with your EnergyCard component */}
           <LinearGradient
             colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -142,30 +142,30 @@ const Educational = () => {
       </View>
 
       <ScrollView 
-        style={styles.scrollView2} 
-        contentContainerStyle={styles.scrollViewContent}
-        >
-      <View style={styles.card1Container}>
-        <Pressable style={styles.card} onPress={() => handleNavigation('Articles')}>
-          <Image style={styles.cardImage} source={require("../assets/card1.png")} />
+          style={styles.scrollView2} 
+          contentContainerStyle={styles.scrollViewContent}
+          >
+        <View style={styles.card1Container}>
+          <Pressable style={styles.card} onPress={() => handleNavigation('Articles')}>
+            <Image style={styles.cardImage} source={require("../assets/card1.png")} />
+            </Pressable>
+
+          <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
+            <Image style={styles.cardImage} source={require("../assets/card2.png")} />
+            </Pressable>
+          </View>
+          
+          <View style={styles.card2Container}>
+      
+          <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
+            <Image style={styles.cardImage} source={require("../assets/card3.png")} />
           </Pressable>
 
-        <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
-          <Image style={styles.cardImage} source={require("../assets/card2.png")} />
+          <Pressable style={styles.card} onPress={() => handleNavigation('VideoResource')}>
+            <Image style={styles.cardImage} source={require("../assets/card4.png")} />
           </Pressable>
         </View>
-        
-        <View style={styles.card2Container}>
-     
-        <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
-          <Image style={styles.cardImage} source={require("../assets/card3.png")} />
-        </Pressable>
-
-        <Pressable style={styles.card} onPress={() => handleNavigation('VideoResource')}>
-          <Image style={styles.cardImage} source={require("../assets/card4.png")} />
-        </Pressable>
-        </View>
-    </ScrollView>
+      </ScrollView>
 
       <View style={styles.bottomNavBar}>
         <Pressable onPress={() => handleNavigation("UserProfile")}>
