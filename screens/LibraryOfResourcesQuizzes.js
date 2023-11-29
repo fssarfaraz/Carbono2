@@ -1,519 +1,694 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Image } from "expo-image";
-import {
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  StatusBar,
-  TextInput,
-  ScrollView,
-} from "react-native";
-import { Button } from "@rneui/themed";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View, Pressable, StatusBar, Text, TextInput, ScrollView, Button } from "react-native";
+import { Datepicker as RNKDatepicker } from "@ui-kitten/components";
 import Property1HomeImage from "../components/Property1HomeImage";
+import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import Search from "../components/Search";
-import { FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
+import DateRangeContainer from "../components/DateRangeContainer";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
+import { LinearGradient } from 'expo-linear-gradient';
+import { Vi } from "react-flags-select";
 
-const LibraryOfResourcesQuizzes = () => {
+const LibraryofResourcesQuizzes = () => {
+  const [selectDatePicker, setSelectDatePicker] = useState(undefined);
   const navigation = useNavigation();
+  const [search, setSearch] = useState("");
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
-    <View style={styles.libraryOfResourcesQuizzes}>
+    <View style={[styles.calcTrack2, styles.iconLayout2]}>
       <Image
-        style={[styles.libraryOfResourcesQuizzesChild, styles.libraryPosition]}
+        style={[styles.calcTrack2Child, styles.calcLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Button
-        title="Social Aspect"
-        radius={10}
-        iconPosition="left"
-        type="solid"
-        color="linear-gradient(45.05deg, #ffab01, rgba(255, 171, 1, 0))"
-        titleStyle={styles.cardBtn}
-        onPress={() => navigation.navigate("Articles")}
-        containerStyle={styles.cardBtn1}
-        buttonStyle={styles.cardBtn2}
-      />
-      <Button
-        title="View All "
-        radius="5"
-        iconPosition="left"
-        type="clear"
-        color="#01427a"
-        titleStyle={styles.viewAllBtn}
-        containerStyle={styles.viewAllBtn1}
-        buttonStyle={styles.viewAllBtn2}
-      />
-      <Button
-        radius="5"
-        iconPosition="left"
-        type="clear"
-        color="#23538f"
-        icon={{ name: "chevron-right", type: "material-community" }}
-        containerStyle={styles.vectorIconBtn}
-        buttonStyle={styles.vectorIconBtn1}
-      />
-      <Button
-        title={`Making 
-A Plan`}
-        radius={10}
-        iconPosition="left"
-        type="solid"
-        color="linear-gradient(97.68deg, #b18cfe, #fff)"
-        titleStyle={styles.card1Btn}
-        onPress={() => navigation.navigate("Articles")}
-        containerStyle={styles.card1Btn1}
-        buttonStyle={styles.card1Btn2}
-      />
       <Image
-        style={[styles.libraryOfResourcesQuizzesItem, styles.libraryPosition]}
+        style={[styles.calcTrack2Item, styles.calcLayout]}
         contentFit="cover"
         source={require("../assets/ellipse-3.png")}
       />
-      <Button
-        title="SDGs"
-        radius={10}
-        iconPosition="left"
-        type="solid"
-        color="linear-gradient(-84.81deg, #4a743f, #fff)"
-        titleStyle={styles.card2Btn}
-        onPress={() => navigation.navigate("Articles")}
-        containerStyle={styles.card2Btn1}
-        buttonStyle={styles.card2Btn2}
-      />
-      <Text style={styles.subitle}>Top picks</Text>
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr20.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={402}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={[styles.iconPersonOutlineParent, styles.nameFlexBox]}>
-        <Pressable
-          style={styles.iconLayout1}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-person-outline.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-book-saved.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-discussion.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline.png")}
-          />
+      
+      {/* Back Button */}
+      <View style={styles.backButtonContainer}>
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
         </Pressable>
       </View>
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Button
-          radius="5"
-          iconPosition="left"
-          type="clear"
-          icon={{ name: "calculator", type: "material-community" }}
-          onPress={() => navigation.navigate("Calculator")}
-          containerStyle={styles.iconCalculatorBtn}
-          buttonStyle={styles.iconCalculatorBtn1}
-        />
-      </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
-      <View style={[styles.name, styles.nameFlexBox]}>
-        <Text style={styles.quizzes}>Quizzes</Text>
+      
+      <Text style={[styles.selectDateRange]}>
+      Library of Resources Transport
+      </Text>
+
+      <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.search}
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Search"
+            placeholderTextColor="#fff"
+            fontSize={18}
+            zIndex={20}
+            />
+        
+        <Image style={styles.searchIcon1} 
+          resizeMode="cover" 
+          source={require("../assets/search.png")} />
       </View>
-      <Search
-        searchPosition="absolute"
-        searchWidth={340}
-        searchTop={114}
-        searchLeft={30}
-        searchBorderRadius={20}
-        searchMarginLeft="unset"
-      />
-      <Button
-        title="UN Progress"
-        radius={10}
-        iconPosition="left"
-        type="solid"
-        color="linear-gradient(-84.81deg, #fe6250, #fff)"
-        titleStyle={styles.card3Btn}
-        onPress={() => navigation.navigate("Articles")}
-        containerStyle={styles.card3Btn1}
-        buttonStyle={styles.card3Btn2}
-      />
+      
+      <View style={styles.section1Container}>
       <ScrollView
-        style={styles.cardParent}
-        horizontal={true}
+        vertical
         showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
+        style={[styles.scrollVertical, { zIndex: 3 , height: "80%"}]}
       >
-        <Button
-          title="Mauna Loa"
-          radius={10}
-          iconPosition="left"
-          type="solid"
-          color="linear-gradient(-84.81deg, #e187f5, #fff)"
-          titleStyle={styles.card4Btn}
-          onPress={() => navigation.navigate("Articles")}
-          containerStyle={styles.card4Btn1}
-          buttonStyle={styles.card4Btn2}
-        />
-        <Button
-          title="The Ozone"
-          radius={10}
-          iconPosition="left"
-          type="solid"
-          color="linear-gradient(-84.81deg, #6b4f5b, #fff)"
-          titleStyle={styles.card5Btn}
-          onPress={() => navigation.navigate("Articles")}
-          containerStyle={styles.card5Btn1}
-          buttonStyle={styles.card5Btn2}
-        />
-        <Button
-          title="Green Learning"
-          radius={10}
-          iconPosition="left"
-          type="solid"
-          color="linear-gradient(-84.81deg, #f9d4d4, #283df7)"
-          titleStyle={styles.card6Btn}
-          onPress={() => navigation.navigate("Articles")}
-          containerStyle={styles.card6Btn1}
-          buttonStyle={styles.card6Btn2}
-        />
+        <View style={styles.scrollContainer1}>
+          <View style={styles.section1TitleCont}>
+            <Text style={styles.subitle1}>New Arrivals</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={[styles.scrollContainer, { zIndex: 3 }]}
+          >
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              {/* Replace this with your TransportCard component */}
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card1.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Transport</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+              {/* Replace this with your EnergyCard component */}
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card2.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Energy</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
+              {/* Replace this with your FoodCard component */}
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card3.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Food</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+          </ScrollView>
+        </View>
+
+        <View style={styles.scrollContainer2}>
+          <View style={styles.section1}>
+          <View style={styles.section1TitleCont}>
+            <Text style={styles.subitle1}>New Arrivals</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={[styles.scrollContainer, { zIndex: 3 }]}
+          >
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              {/* Replace this with your TransportCard component */}
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card4.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Transport</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+              {/* Replace this with your EnergyCard component */}
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card5.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Energy</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
+              {/* Replace this with your FoodCard component */}
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card9.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Food</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+          </ScrollView>
+          </View>
+
+          <View style={styles.section2}>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={[styles.scrollContainer, { zIndex: 3 }]}
+          >
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              {/* Replace this with your TransportCard component */}
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card6.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Transport</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+              {/* Replace this with your EnergyCard component */}
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card7.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Energy</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
+              {/* Replace this with your FoodCard component */}
+              <LinearGradient
+                colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
+                style={styles.communityCard1}
+              >
+              <View style={styles.communityCard1Child} />
+              <Image
+                style={styles.communityCard1Item}
+                resizeMode="cover"
+                source={require("../assets/trans_card8.png")}
+              />
+              {/* <View style={styles.foodWrapper}>
+                <Text style={styles.food}>Food</Text>
+              </View> */}
+              </LinearGradient>
+            </Pressable>
+          </ScrollView>
+          </View>
+        </View>
       </ScrollView>
-      <LinearGradient
-        style={styles.gradientLayer}
-        locations={[0, 1]}
-        colors={["#01427a", "rgba(44, 44, 46, 0)"]}
-      />
-      <Button
-        radius="5"
-        iconPosition="left"
-        type="clear"
-        color="#fff"
-        icon={{ name: "chevron-left", type: "material-community" }}
-        onPress={() => navigation.navigate("CalcTrack")}
-        containerStyle={styles.materialSymbolsarrowBackIoIconBtn}
-        buttonStyle={styles.materialSymbolsarrowBackIoIconBtn1}
-      />
+      </View>
+
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-person-outline.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-book-saved3.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-discussion.png")} />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image style={styles.bottomNavIcon} source={require("../assets/-icon-game-controller-outline6.png")} />
+        </Pressable>
+      </View>
+
+      {/* Surface Icon */}
+      <Image style={styles.surfaceIcon} resizeMode="cover" source={require("../assets/navigation-barr2.png")} />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image style={styles.iconCalculator} resizeMode="cover" source={require("../assets/-icon-calculator.png")} />
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  cardBtn: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
+  selectDatePickerPlaceHolder: {
+    fontFamily: "FiraSans-Regular",
+    color: "#131414",
+    fontSize: 14,
   },
-  cardBtn1: {
-    left: 198,
-    top: 202,
+  selectDatePickerValue: {
     position: "absolute",
+    left: 29,
+    top: 173,
   },
-  cardBtn2: {
-    borderRadius: 10,
-    width: 151,
-    height: 161,
+  iconLayout2: {
     overflow: "hidden",
+    width: "100%",
   },
-  viewAllBtn: {
-    color: "#01427a",
-    fontSize: 15,
-    fontFamily: "Roboto-Regular",
-  },
-  viewAllBtn1: {
-    left: 35,
-    top: 586,
-    position: "absolute",
-  },
-  viewAllBtn2: {},
-  vectorIconBtn: {
-    left: "25.95%",
-    right: "71.25%",
-    top: "69.13%",
-    bottom: "29.34%",
-    position: "absolute",
-  },
-  vectorIconBtn1: {
-    height: "1.53%",
-    width: "2.8%",
-  },
-  card1Btn: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card1Btn1: {
-    left: 32,
-    top: 202,
-    position: "absolute",
-  },
-  card1Btn2: {
-    borderRadius: 10,
-    width: 150,
-    height: 161,
-    overflow: "hidden",
-  },
-  card2Btn: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card2Btn1: {
-    left: 198,
-    top: 387,
-    position: "absolute",
-  },
-  card2Btn2: {
-    borderRadius: 10,
-    width: 151,
-    height: 161,
-    overflow: "hidden",
-  },
-  iconCalculatorBtn: {
-    position: "relative",
-  },
-  iconCalculatorBtn1: {
-    width: 41,
-    height: 45,
-  },
-  card3Btn: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card3Btn1: {
-    left: 32,
-    top: 384,
-    position: "absolute",
-  },
-  card3Btn2: {
-    borderRadius: 10,
-    width: 150,
-    height: 161,
-    overflow: "hidden",
-  },
-  card4Btn: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card4Btn1: {
-    left: 146,
-    top: 0,
-    position: "absolute",
-  },
-  card4Btn2: {
-    borderRadius: 10,
-    width: 122,
-    height: 111,
-    overflow: "hidden",
-  },
-  card5Btn: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card5Btn1: {
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
-  card5Btn2: {
-    borderRadius: 10,
-    width: 126,
-    height: 111,
-    overflow: "hidden",
-  },
-  card6Btn: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "Nunito-Bold",
-  },
-  card6Btn1: {
-    left: 288,
-    top: 0,
-    position: "absolute",
-  },
-  card6Btn2: {
-    borderRadius: 10,
-    width: 126,
-    height: 111,
-    overflow: "hidden",
-  },
-  materialSymbolsarrowBackIoIconBtn: {
-    left: 27,
-    top: 83,
-    position: "absolute",
-  },
-  materialSymbolsarrowBackIoIconBtn1: {
-    width: 15,
-    height: 17,
-    overflow: "hidden",
-  },
-  libraryPosition: {
+  calcLayout: {
+    height: 330,
     width: 400,
     left: 0,
-    position: "absolute",
-  },
-  nameFlexBox: {
-    flexDirection: "row",
     position: "absolute",
   },
   iconLayout: {
     width: 33,
     marginLeft: 72,
   },
-  iconLayout1: {
-    height: 30,
-    width: 30,
-  },
-  libraryOfResourcesQuizzesChild: {
-    top: 0,
-    height: 336,
-  },
-  libraryOfResourcesQuizzesItem: {
-    top: 435,
-    height: 417,
-  },
-  subitle: {
-    top: 176,
-    left: 35,
-    fontSize: FontSize.size_smi,
-    lineHeight: 18,
-    textTransform: "uppercase",
-    fontWeight: "700",
-    fontFamily: FontFamily.robotoBold,
-    color: Color.colorDarkslateblue_100,
+  selectDateRange: {
+    top: 120,
+    fontSize: 22,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
     textAlign: "left",
     position: "absolute",
+    marginLeft: 30,
+    marginRight: 30,
+    // width: 310
   },
-  icon: {
-    height: "100%",
+  line1Border: {
+    // borderColor: "#131414",
+    borderStyle: "solid"
+  },
+  option: {
+    fontSize: 14,
+    letterSpacing: -0.2,
+    lineHeight: 18,
+    fontFamily: "FiraSans-Regular",
+    // color: "#131414",
+    textAlign: "left"
+  },
+  line1: {
+    borderRightWidth: 1,
+    width: 1,
+    height: 13,
+    marginLeft: 8
+  },
+  iconChevrondown: {
+    width: 16,
+    height: 16,
+    overflow: "hidden",
+    marginLeft: 8
+  },
+  stateactive: {
+    borderRadius: 5,
+    borderWidth: 1,
+    flex: 1,
     width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 12,
+    paddingTop: 6,
+    paddingRight: 8,
+    paddingBottom: 6
   },
-  iconBookSaved: {
-    height: 31,
-    marginLeft: 72,
+  backButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 54,
+    left: 16,
   },
-  iconDiscussion: {
-    marginLeft: 72,
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 10,
   },
-  iconGameControllerOutline: {
-    height: 24,
-    marginLeft: 72,
+  rectangleView: {
+    alignSelf: "center",
+    left: 5,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowRadius: 10,
+    elevation: 10,
+    shadowOpacity: 1,
+    flex: 1,
+    width: "90%",
+    height: 436,
+    top: 260,
   },
-  iconPersonOutlineParent: {
-    top: 807,
-    left: 24,
-    width: 385,
-    alignItems: "flex-end",
+  primaryText1: {
+    fontSize: 20,
+    fontWeight: "500",
+    fontFamily: "Inter-Medium",
+    color: "#000",
+    textAlign: "center",
+    marginTop: 30,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  vectorIcon: {
+    height: 2,
+    top: 30,
+  },
+  donutIcon: {
+    width: 250,
+    height: 250,
+    top: 50,
+    alignSelf: "center",
+  },
+  foodParent: {
+    top: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-around', // or 'space-between' for equal space
+    alignItems: 'center',
+  },
+  groupContainer: {
+    alignItems: 'center',
+    marginHorizontal: 10, // Adjust the spacing between elements
+  },
+  groupLayout: {
+    width: 13, // Adjust the width as needed
+    height: 13, // Adjust the height as needed
+  },
+  food: {
+    // Your food text styles
+  },
+  energy: {
+    // Your energy text styles
+  },
+  travel: {
+    // Your travel text styles
+  },
+  foodTypo: {
+    fontSize: 15,
+    fontFamily: "Inter-Regular",
+    color: "#000",
+  },  
+  calcTrack2Child: {
+    top: 0,
+  },
+  calcTrack2Item: {
+    top: 545,
+  },
+  iconCalculator: {
+    width: 41,
+    height: 45,
   },
   iconCalculatorWrapper: {
-    top: 746,
-    left: 170,
+    top: 745,
+    left: 165,
     padding: Padding.p_3xs,
     position: "absolute",
   },
-  quizzes: {
-    fontSize: FontSize.size_8xl,
-    fontWeight: "600",
-    fontFamily: FontFamily.nunitoSemiBold,
-    width: 310,
-    textAlign: "left",
+  select: {
+    top: 15,
   },
-  name: {
-    top: 70,
-    left: 41,
-    width: 363,
-    height: 42,
-    alignItems: "center",
-  },
-  cardParent: {
-    top: 619,
-    left: 30,
-    height: 111,
-    maxHeight: 111,
-    position: "absolute",
-    width: "100%",
-  },
-  gradientLayer: {
-    top: 730,
-    left: 329,
-    width: 111,
-    height: 89,
-    transform: [
-      {
-        rotate: "-90.01deg",
-      },
-    ],
-    backgroundColor: "transparent",
-    position: "absolute",
-  },
-  libraryOfResourcesQuizzes: {
+  calcTrack2: {
     backgroundColor: Color.labelDarkPrimary,
     flex: 1,
     height: 852,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  // Add elevation to the bottomNavBar style
+bottomNavBar: {
+  flex: 1,
+  flexDirection: "row",
+  height: 70,
+  justifyContent: "space-between",
+  alignItems: "center",
+  paddingHorizontal: 16,
+  paddingBottom: 10,
+  position: "relative",
+  zIndex: 3,
+},
+
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    top: 365,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 3,
+  },
+  searchContainer: {
+    top: 160,
+    left: 30,
+    position: "absolute",
+    width: "80%",
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(1, 66, 122, 0.7)",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+  },
+  search: {
+    borderRadius: 20,
+    flex: 1,
+    width: "100%",
+    height: 40,
+    fontFamily: "Nunito-Regular",
+    fontSize: 16,
+  },
+  searchIcon1: {
+    flex: 1,
+    width: 20,
+    height: 20,
+    // overflow: "hidden"
+    position: "absolute",
+    right: 20
+  },
+  scrollContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 16,
+    top: 210,
+    height: 154,
+    position: "absolute",
+    width: "100%",
+  },
+
+  communityCard1: {
+    width: 143,
+    height: 154,
+    marginRight: 10,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  communityCard1Child: {
+    borderRadius: 16,
+    width: "100%",
+    position: "absolute",
+    height: 154,
+  },
+  communityCard1Item: {
+    // top: 10,
+    borderRadius: 12,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
+  food: {
+    fontSize: 15,
+    lineHeight: 20,
+    fontFamily: "Nunito-Regular",
+    color: "#fff",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 90,
+  },
+  foodWrapper: {
+    top: 65,
     overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 21,
+    paddingVertical: 0,
+    position: "absolute",
+  },
+  subTitleContainer: {  
+    top: 360,
+    // left: 30,
+    position: "absolute",
+    width: "100%",
+    height: 40,
+    flexDirection: "row",
+    alignItems: "left",
+    justifyContent: "left",
+    paddingHorizontal: 20,
+  },
+  subitle1: {
+    fontSize: 13,
+    lineHeight: 18,
+    textTransform: "uppercase",
+    fontWeight: "700",
+    fontFamily: "Roboto-Bold",
+    color: "#01427a",
+    textAlign: "left"
+  },
+  scrollView2: {
+    top: 390,
+    // overflow: "scroll",
+    // position: "relative",
+  },
+  scrollViewContent: {
+    marginRight: 10,
+    marginLeft: 10,
+    // overflow: "scroll",
+  },
+  card1Container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: "100%",
+    // position: "relative",
+  },
+  card2Container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: "100%",
+    // position: "relative",
+  },
+  card: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 10,
+    // marginBottom: 16,
+    padding: 10,
+  },
+  cardImage: {
+    width: "100%",
+    height: 236,
+    borderRadius: 10,
+  },
+  section1Container: {
+    flex: 1,
+    zIndex: 20,
+    top: 40,
+    position: "absolute",
+    width: "100%",
+    height: "79%",
+  },
+  section1TitleCont: {
+    top: 190,
+    left: 30,
+    position: "absolute",
+    width: "100%",
+    height: 40,
+    flexDirection: "row",
+    alignItems: "left",
+    justifyContent: "left",
+    paddingHorizontal: 20,
+  },
+  section1: {
+    top: 200,
+    position: "absolute",
+    width: "100%",
+  },
+  section2: {
+    top: 370,
+    position: "absolute",
+    width: "100%",
+  },
+  scrollContainer1: {
+    // top: 210,
+    position: "absolute",
+    width: "100%",
+  },
+  scrollContainer2: {
+    // top: 390,
+    position: "absolute",
+    width: "100%",
+  },
+  scrollVertical: {
     width: "100%",
   },
 });
 
-export default LibraryOfResourcesQuizzes;
+export default LibraryofResourcesQuizzes;
