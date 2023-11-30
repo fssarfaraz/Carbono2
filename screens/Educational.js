@@ -43,21 +43,18 @@ const Educational = () => {
       REDUCING YOUR FOOTPRINT
       </Text>
 
+      <Pressable 
+          onPress={() => handleNavigation("SearchQuery")}
+          // style={styles.searchIcon1}
+          >
       <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.search}
-            value={search}
-            onChangeText={setSearch}
-            placeholder="Search"
-            placeholderTextColor="#fff"
-            fontSize={18}
-            zIndex={20}
-            />
-        
-        <Image style={styles.searchIcon1} 
-          resizeMode="cover" 
-          source={require("../assets/search.png")} />
+          <Text style={styles.search}>Search</Text>
+          <Image style={styles.searchIcon1} 
+            resizeMode="cover" 
+            source={require("../assets/search.png")} />
       </View>
+      </Pressable>
+
       
       <ScrollView
         horizontal
@@ -429,8 +426,10 @@ bottomNavBar: {
     flex: 1,
     width: "100%",
     height: 40,
-    fontFamily: "Nunito-Regular",
+    fontFamily: "Nunito-semibold",
     fontSize: 16,
+    color: "#fff",
+    top: 10,
   },
   searchIcon1: {
     flex: 1,
