@@ -10,7 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 
-const GameSelectedScreen = () => {
+const GameSelectedScreen = ({gameId}) => {
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
@@ -44,15 +44,15 @@ const GameSelectedScreen = () => {
         <Image
           style={[styles.stChild]}
           contentFit="cover"
-          source={require("../assets/FlappyCupSplash.png")}
+          source={gameId == 1 ? require("../assets/FlappyCupSplash.png") : require("../assets/ecotactoesplash.png")}
         />
        
       </View>
 
       <View style={[styles.textContainer]}>
-        <View style={[styles.titleContainer]}>
-          <Text style={[styles.title]}>Flappy Cup</Text>
-        </View>
+      <View style={[styles.titleContainer]}>
+        {gameId === 1 ? <Text style={[styles.title]}>Flappy Cup</Text> : <Text style={[styles.title]}>Eco Tac Toe</Text>}
+      </View>
 
         <View style={[styles.informationContainer]}>
           <Text style={[styles.information]}>Information</Text>
@@ -68,21 +68,21 @@ const GameSelectedScreen = () => {
 
           <View style={[styles.createdContainer]}>
             <Text style={[styles.created]}>Created</Text>
-            <Text style={[styles.date]}>12 Nov 2023</Text>
+            {gameId === 1 ? <Text style={[styles.date]}>12 Nov 2023</Text> : <Text style={[styles.date]}>20 Nov 2023</Text>}
           </View>
 
           <View style={styles.separator2} />
 
           <View style={[styles.updatedContainer]}>
             <Text style={[styles.updated]}>Updated</Text>
-            <Text style={[styles.date1]}>19 Nov 2023</Text>
+            {gameId === 1 ? <Text style={[styles.date1]}>19 Nov 2023</Text> : <Text style={[styles.date1]}>21 Nov 2023</Text>}
           </View>
         </View>
       </View>
 
       <Pressable
             style={styles.nextButton1}
-            onPress={() => handleNavigation("GameScreen")}
+            onPress={() => (gameId == 1) ? handleNavigation("GameScreen") : handleNavigation("TicTacToe")}
           >
             <LinearGradient
               style={styles.gradientButton}
