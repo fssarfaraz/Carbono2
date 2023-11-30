@@ -1,7 +1,11 @@
-import React, { useMemo } from "react";
-import { StyleSheet, View, Text, ImageSourcePropType } from "react-native";
+import React, { useMemo, useState, useCallback } from "react";
+import { StyleSheet, View, Text, ImageSourcePropType, TextInput, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
+import {getDatabase, onValue, ref, update} from "firebase/database";
+import { getAuth} from 'firebase/auth';
+import { app } from "../App";
 
 const getStyleValue = (key, value) => {
   if (value === undefined) return;
@@ -22,8 +26,37 @@ const Search = ({
   frameViewRight,
   frameViewLeft,
   searchFontFamily,
-  onSearchPress,
+  //onSearchPress,
+  //posts,
 }) => {
+
+  const navigation = useNavigation();
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const database = getDatabase();
+
+  const handleSearch = () => {
+    const postsRef = ref(database, 'posts/');
+
+    onValue(postsRef, (snapshot) => {
+      // Find matching user  
+      const allPosts = snapshot.val();
+      console.log(searchQuery);
+      const matchingPost = Object.values(allPosts).find((u) => u.title.toLowerCase() === searchQuery.toLowerCase());
+
+      if (matchingPost) 
+      {
+        navigation.navigate('ForumView', {post: matchingPost});
+      } 
+      else 
+      {
+        console.log('post not found in the database');
+        alert('Post not found. Please enter the post title');
+      }
+    })
+  };
+
   const searchStyle = useMemo(() => {
     return {
       ...getStyleValue("position", searchPosition),
@@ -64,7 +97,7 @@ const Search = ({
   }, [searchFontFamily]);
 
   return (
-    <View style={[styles.search, searchStyle]} onPress={onSearchPress}>
+    <View style={[styles.search, searchStyle]}>
       <View style={[styles.searchChild, rectangleViewStyle]} />
       <View style={[styles.searchParent, frameViewStyle]}>
         <Image
@@ -72,7 +105,20 @@ const Search = ({
           contentFit="cover"
           source={searchInputValue}
         />
-        <Text style={[styles.search1, search1Style]}>{searchPlaceholder}</Text>
+        <TextInput
+          style={{left: 20, color: "#ffffff"}}
+          placeholder={searchPlaceholder}
+          placeholderTextColor="#ffffff"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <TouchableOpacity
+          style={{left: 300, top: -20}}
+          activeOpacity={0.2}
+          onPress={handleSearch}
+        >
+          <Text style={{color: "#ffffff"}}>Done</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
