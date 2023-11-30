@@ -3,6 +3,7 @@ import CommentForm from "../components/CommentForm";
 import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import {useRoute} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const ForumView = () => {
   const navigation = useNavigation();

@@ -22,7 +22,7 @@ const CardContainer = ({post}) => {
 
     onValue(commentRef, (snapshot) => {
       const data = snapshot.val();
-      //filtering data to only those of the current user and then storing id, date and result in array
+      //filtering data to only those of the current post and then storing them all in an array
       const commentsss = Object.entries(data).filter(([key, value]) => value.postID === post.id)
       .map(([id, entry]) => ({
         id: entry.id,

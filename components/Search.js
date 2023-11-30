@@ -40,7 +40,7 @@ const Search = ({
     const postsRef = ref(database, 'posts/');
 
     onValue(postsRef, (snapshot) => {
-      // Find matching user  
+      // Find matching post  
       const allPosts = snapshot.val();
       console.log(searchQuery);
       const matchingPost = Object.values(allPosts).find((u) => u.title.toLowerCase() === searchQuery.toLowerCase());

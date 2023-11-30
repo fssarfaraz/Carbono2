@@ -83,6 +83,7 @@ const CommentForm = ({post}) => {
     // Get first part (before "@")
     const emailName = emailParts[0];
     const key = `${post.date}-${emailName}-${post.title}`;
+    //update no of comments
     let newComments = post.comments + 1;
     await update(ref(database, 'posts/' + key), 
     {

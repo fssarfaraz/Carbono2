@@ -73,7 +73,7 @@ const ForumCreate = () => {
       name: name,
     };
     console.log('Defined entry')
-    // Set the user data in the database
+    // Set the post in the database
     set(ref(database, 'posts/' + key), entry).then(() => 
     {
     }).catch((error) => 
