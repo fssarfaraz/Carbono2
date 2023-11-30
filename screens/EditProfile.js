@@ -1,383 +1,3 @@
-// import React, { useState } from "react";
-// import { Image } from "expo-image";
-// import {
-//   StyleSheet,
-//   Pressable,
-//   View,
-//   Text,
-//   StatusBar,
-//   TextInput,
-// } from "react-native";
-// import { Button } from "@rneui/themed";
-// import DropDownPicker from "react-native-dropdown-picker";
-// import Property1HomeImage from "../components/Property1HomeImage";
-// import { useNavigation } from "@react-navigation/native";
-// import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-// import { Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
-
-// const EditProfile = () => {
-//   const [groupDropdownOpen, setGroupDropdownOpen] = useState(false);
-//   const [groupDropdownValue, setGroupDropdownValue] = useState();
-//   const [groupDropdownItems, setGroupDropdownItems] = useState([
-//     { value: "Male", label: "Male" },
-//     { value: "Female", label: "Female" },
-//     { value: "Prefer Not To Say", label: "Prefer Not To Say" },
-//   ]);
-//   const navigation = useNavigation();
-
-//   return (
-//     <View style={styles.editProfile}>
-//       <Image
-//         style={styles.editProfileChild}
-//         contentFit="cover"
-//         source={require("../assets/ellipse-12.png")}
-//       />
-//       <Image
-//         style={styles.editProfileItem}
-//         contentFit="cover"
-//         source={require("../assets/ellipse-23.png")}
-//       />
-//       <Property1HomeImage
-//         imageDimensions={require("../assets/navigation-barr7.png")}
-//         property1HomeIconPosition="absolute"
-//         property1HomeIconWidth={394}
-//         property1HomeIconHeight={106}
-//         property1HomeIconTop={746}
-//         property1HomeIconLeft={0}
-//       />
-//       <View style={styles.iconPersonOutlineParent}>
-//         <Pressable
-//           style={styles.iconLayout1}
-//           onPress={() =>
-//             navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-//           }
-//         >
-//           <Image
-//             style={styles.icon}
-//             contentFit="cover"
-//             source={require("../assets/-icon-person-outline.png")}
-//           />
-//         </Pressable>
-//         <Pressable
-//           style={[styles.iconBookSaved, styles.iconLayout]}
-//           onPress={() =>
-//             navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-//           }
-//         >
-//           <Image
-//             style={styles.icon}
-//             contentFit="cover"
-//             source={require("../assets/-icon-book-saved3.png")}
-//           />
-//         </Pressable>
-//         <Pressable
-//           style={[styles.iconDiscussion, styles.iconLayout1]}
-//           onPress={() =>
-//             navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-//           }
-//         >
-//           <Image
-//             style={styles.icon}
-//             contentFit="cover"
-//             source={require("../assets/-icon-discussion.png")}
-//           />
-//         </Pressable>
-//         <Pressable
-//           style={[styles.iconGameControllerOutline, styles.iconLayout]}
-//           onPress={() =>
-//             navigation.navigate("BottomTabsRoot", { screen: "Games" })
-//           }
-//         >
-//           <Image
-//             style={styles.icon}
-//             contentFit="cover"
-//             source={require("../assets/-icon-game-controller-outline5.png")}
-//           />
-//         </Pressable>
-//       </View>
-//       <Pressable
-//         style={styles.iconCalculatorWrapper}
-//         onPress={() => navigation.navigate("Calculator")}
-//       >
-//         <Button
-//           radius="5"
-//           iconPosition="left"
-//           type="clear"
-//           icon={{ name: "calculator", type: "material-community" }}
-//           onPress={() => navigation.navigate("Calculator")}
-//           containerStyle={styles.iconCalculatorBtn}
-//           buttonStyle={styles.iconCalculatorBtn1}
-//         />
-//       </Pressable>
-      // <Text style={[styles.editProfile1, styles.nameFlexBox]}>
-      //   Edit Profile
-      // </Text>
-//       <StyleDefaultDarkModeTrue
-//         styleDefaultDarkModeTrueAlignSelf="unset"
-//         styleDefaultDarkModeTruePosition="absolute"
-//         styleDefaultDarkModeTrueTop={10}
-//         styleDefaultDarkModeTrueLeft={9}
-//         styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-//         styleDefaultDarkModeTrueWidth={375}
-//         styleDefaultDarkModeTrueMarginLeft="unset"
-//         styleDefaultDarkModeTrueMarginTop="unset"
-//       />
-      // <View style={[styles.groupParent, styles.groupPosition]}>
-      //   <Image
-      //     style={[styles.groupChild, styles.groupPosition]}
-      //     contentFit="cover"
-      //     source={require("../assets/group-2.png")}
-      //   />
-      //   <Button
-      //     radius="5"
-      //     iconPosition="left"
-      //     type="clear"
-      //     color="#fff"
-      //     icon={{ name: "camera-outline", type: "material-community" }}
-      //     containerStyle={styles.solarcameraMinimalisticBoldIconBtn}
-      //     buttonStyle={styles.solarcameraMinimalisticBoldIconBtn1}
-      //   />
-      // </View>
-//       <Button
-//         title="Save Changes"
-//         radius={10}
-//         iconPosition="left"
-//         type="solid"
-//         titleStyle={styles.buttonContinueBtn}
-//         onPress={() => navigation.navigate("SettingsPage")}
-//         containerStyle={styles.buttonContinueBtn1}
-//         buttonStyle={styles.buttonContinueBtn2}
-//       />
-//       <View style={[styles.nameParent, styles.parentLayout]}>
-//         <Text style={[styles.name, styles.nameFlexBox]}>Name</Text>
-//         <TextInput
-//           style={[styles.groupItem, styles.groupTypo]}
-//           placeholder="Melissa Peters"
-//           placeholderTextColor="#544c4c"
-//         />
-//       </View>
-//       <View style={[styles.emailParent, styles.parentLayout]}>
-//         <Text style={[styles.name, styles.nameFlexBox]}>Email</Text>
-//         <TextInput
-//           style={[styles.groupItem, styles.groupTypo]}
-//           placeholder="melpeters@gmail.com"
-//           placeholderTextColor="#544c4c"
-//         />
-//       </View>
-//       <View style={[styles.addressParent, styles.parentLayout1]}>
-//         <Text style={[styles.name, styles.nameFlexBox]}>Address</Text>
-//         <TextInput
-//           style={[styles.groupTextinput, styles.groupTypo]}
-//           placeholder={`Peters, 1234 NW Bobcat Lane, St. Robert, MO 
-// 65584-5678`}
-//           multiline={true}
-//           placeholderTextColor="#544c4c"
-//         />
-//       </View>
-//       <View style={[styles.sexParent, styles.parentLayout1]}>
-//         <Text style={[styles.name, styles.nameFlexBox]}>Sex</Text>
-//         <View style={[styles.wrapper, styles.parentLayout1]}>
-//           <DropDownPicker
-//             open={groupDropdownOpen}
-//             setOpen={setGroupDropdownOpen}
-//             value={groupDropdownValue}
-//             setValue={setGroupDropdownValue}
-//             placeholder="Female"
-//             items={groupDropdownItems}
-//             labelStyle={styles.groupDropdownValue}
-//           />
-//         </View>
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   iconCalculatorBtn: {
-//     position: "relative",
-//   },
-//   iconCalculatorBtn1: {
-//     width: 41,
-//     height: 45,
-//   },
-//   solarcameraMinimalisticBoldIconBtn: {
-//     left: 111,
-//     top: 120,
-//     position: "absolute",
-//   },
-//   solarcameraMinimalisticBoldIconBtn1: {
-//     width: 28,
-//     height: 27,
-//     overflow: "hidden",
-//   },
-//   buttonContinueBtn: {
-//     color: "#fdfdfd",
-//     fontSize: 22,
-//     fontWeight: "600",
-//     fontFamily: "Nunito-SemiBold",
-//   },
-//   buttonContinueBtn1: {
-//     left: 36,
-//     top: 667,
-//     position: "absolute",
-//   },
-//   buttonContinueBtn2: {
-//     width: 343,
-//     height: 60,
-//   },
-//   groupDropdownValue: {
-//     color: "#544c4c",
-//     fontSize: 14,
-//     fontWeight: "500",
-//     fontFamily: "Nunito-Medium",
-//   },
-//   iconLayout: {
-//     width: 33,
-//     marginLeft: 72,
-//   },
-//   iconLayout1: {
-//     height: 30,
-//     width: 30,
-//   },
-//   nameFlexBox: {
-//     textAlign: "left",
-//     color: Color.colorDarkslateblue_100,
-//     position: "absolute",
-//   },
-//   groupPosition: {
-//     height: 150,
-//     width: 148,
-//     left: "50%",
-//     top: "50%",
-//     position: "absolute",
-//   },
-//   parentLayout: {
-//     height: 69,
-//     width: 342,
-//     left: 36,
-//     position: "absolute",
-//   },
-//   groupTypo: {
-//     fontSize: FontSize.size_sm,
-//     fontFamily: FontFamily.nunitoMedium,
-//     fontWeight: "500",
-//     top: 25,
-//     width: 342,
-//     left: 0,
-//     position: "absolute",
-//   },
-//   parentLayout1: {
-//     width: 342,
-//     position: "absolute",
-//   },
-//   editProfileChild: {
-//     left: 27,
-//     width: 366,
-//     height: 390,
-//     top: 0,
-//     position: "absolute",
-//   },
-//   editProfileItem: {
-//     top: 504,
-//     width: 393,
-//     height: 348,
-//     left: 0,
-//     position: "absolute",
-//   },
-//   icon: {
-//     height: "100%",
-//     width: "100%",
-//   },
-//   iconBookSaved: {
-//     height: 31,
-//     marginLeft: 72,
-//   },
-//   iconDiscussion: {
-//     marginLeft: 72,
-//   },
-//   iconGameControllerOutline: {
-//     height: 24,
-//     marginLeft: 72,
-//   },
-//   iconPersonOutlineParent: {
-//     top: 807,
-//     left: 24,
-//     width: 385,
-//     flexDirection: "row",
-//     alignItems: "flex-end",
-//     position: "absolute",
-//   },
-//   iconCalculatorWrapper: {
-//     top: 745,
-//     left: 165,
-//     padding: Padding.p_3xs,
-//     position: "absolute",
-//   },
-//   editProfile1: {
-//     top: 78,
-//     left: 133,
-//     fontSize: FontSize.size_7xl,
-//     // lineHeight: 23,
-
-//     fontWeight: "600",
-//     fontFamily: FontFamily.nunitoSemiBold,
-//   },
-//   groupChild: {
-//     marginTop: -75,
-//     marginLeft: -74,
-//   },
-//   groupParent: {
-//     marginTop: -301,
-//     marginLeft: -71.5,
-//   },
-//   name: {
-//     fontSize: FontSize.bodyBody1_size,
-//     // lineHeight: 14,
-//     fontWeight: "700",
-//     fontFamily: FontFamily.nunitoBold,
-//     left: 0,
-//     top: 0,
-//   },
-//   groupItem: {
-//     height: 44,
-//   },
-//   nameParent: {
-//     top: 299,
-//   },
-//   emailParent: {
-//     top: 391,
-//   },
-//   groupTextinput: {
-//     height: 47,
-//   },
-//   addressParent: {
-//     top: 483,
-//     left: 37,
-//     height: 72,
-//   },
-//   wrapper: {
-//     top: 27,
-//     height: 44,
-//     left: 0,
-//   },
-//   sexParent: {
-//     top: 578,
-//     height: 71,
-//     left: 36,
-//     width: 342,
-//   },
-//   editProfile: {
-//     backgroundColor: Color.labelDarkPrimary,
-//     flex: 1,
-//     height: 852,
-//     overflow: "hidden",
-//     width: "100%",
-//   },
-// });
-
-// export default EditProfile;
-
-
 import React, { useState } from "react";
 import { Image } from "expo-image";
 import {
@@ -385,17 +5,21 @@ import {
   Pressable,
   View,
   Text,
-  StatusBar,
   TextInput,
 } from "react-native";
 import { Button } from "@rneui/themed";
 import DropDownPicker from "react-native-dropdown-picker";
-import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
+import { app } from "../App";
+import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import {getDatabase, ref, onValue, update} from 'firebase/database';
+import { ScrollView } from "react-native";
+import { add } from "react-native-reanimated";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Vi } from "react-flags-select";
+
 
 const EditProfile = () => {
   const [groupDropdownOpen, setGroupDropdownOpen] = useState(false);
@@ -411,7 +35,106 @@ const EditProfile = () => {
     navigation.navigate(screen);
   };
 
+  const [currentUser, setCurrentUser] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [userName, setUserName] = useState('');
+
+  const auth = getAuth(app);
+  const database = getDatabase();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if(user) 
+      {
+        setCurrentUser(user);
+      }
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  useEffect(() => {
+    if (currentUser) 
+    {
+      const user = auth.currentUser;
+      console.log('Current user:', user);
+
+      // Get email from current user
+      const email = user.email;
+      console.log('Current user email:', email);
+
+      const userRef = ref(database, 'users/');
+      console.log('User reference:', userRef);
+      console.log('User UID:', user.uid);
+
+      onValue(userRef, (snapshot) => {
+        // Find matching user
+        const users = snapshot.val();
+        const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+        if(matchingUser)
+        {
+          //setName(matchingUser.name);
+          //setEmail(matchingUser.email);
+          //setAddress(matchingUser.address);
+          //setGender(matchingUser.gender);
+          setUserName(matchingUser.username);
+        }
+        else
+        {
+          console.log('User not found in the database');
+        }
+      });
+    }
+  }, [currentUser, database]);
+
+  const handleChanges = () => {
+    // Update the user's information in the database
+    const userRef = ref(database, 'users/' + userName);
+    console.log('User reference:', userRef);
+    /*
+    const updates = 
+    {
+      //optional chaining so that null values are ignored
+      name: name,
+      email: email,
+      address: address,
+      gender: gender,
+    };*/
+    const updates = {};
+    if(name != null) 
+    {
+      updates.name = name;
+    }
+
+    if(email != null) 
+    {
+      updates.email = email; 
+    }
+
+    if(address != null)
+    {
+      updates.address = address;
+    }
+
+    if(gender != null)
+    {
+      updates.gender = gender;
+    }
+
+    update(userRef, updates).then(() => {
+      // User's information updated successfully
+      alert("Your information has been updated successfully.");
+    }).catch((error) => 
+    {
+      // An error occurred while updating the user's information
+      alert("An error occurred while updating your information. Please try again later.", error.message);
+    });
+  };
+
   return (
+    <ScrollView>
     <View style={styles.editProfile}>
       <Image
         style={styles.editProfileChild}
@@ -458,7 +181,7 @@ const EditProfile = () => {
           iconPosition="left"
           type="solid"
           titleStyle={styles.buttonContinueBtn}
-          onPress={() => navigation.navigate("SettingsPage")}
+          onPress={handleChanges}
           containerStyle={styles.buttonContinueBtn1}
           buttonStyle={styles.buttonContinueBtn2}
         />
@@ -466,26 +189,31 @@ const EditProfile = () => {
           <Text style={[styles.name, styles.nameFlexBox]}>Name</Text>
           <TextInput
             style={[styles.groupItem, styles.groupTypo]}
-            placeholder="Melissa Peters"
+            placeholder="Update Name"
             placeholderTextColor="#544c4c"
+            value={name}
+            onChangeText={setName}
           />
         </View>
         <View style={[styles.emailParent, styles.parentLayout]}>
           <Text style={[styles.name, styles.nameFlexBox]}>Email</Text>
           <TextInput
             style={[styles.groupItem, styles.groupTypo]}
-            placeholder="melpeters@gmail.com"
+            placeholder="Update Email"
             placeholderTextColor="#544c4c"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={[styles.addressParent, styles.parentLayout1]}>
           <Text style={[styles.name, styles.nameFlexBox]}>Address</Text>
           <TextInput
             style={[styles.groupTextinput, styles.groupTypo]}
-            placeholder={`Peters, 1234 NW Bobcat Lane, St. Robert, MO 
-  65584-5678`}
+            placeholder="Update Address"
             multiline={true}
             placeholderTextColor="#544c4c"
+            value={address}
+            onChangeText={setAddress}
           />
         </View>
         <View style={[styles.sexParent, styles.parentLayout1]}>
@@ -528,6 +256,7 @@ const EditProfile = () => {
         <Image style={styles.iconCalculator} resizeMode="cover" source={require("../assets/-icon-calculator.png")} />
       </Pressable>
     </View>
+    </ScrollView>
   );
 };
 
