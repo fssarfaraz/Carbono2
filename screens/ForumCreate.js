@@ -28,7 +28,6 @@ const ForumCreate = () => {
   const emailParts = email.split('@');
   // Get first part (before "@")
   const emailName = emailParts[0];
-  console.log(emailName);
 
   const getName = () => {
     const userRef = ref(database, 'users/');

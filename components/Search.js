@@ -26,8 +26,6 @@ const Search = ({
   frameViewRight,
   frameViewLeft,
   searchFontFamily,
-  //onSearchPress,
-  //posts,
 }) => {
 
   const navigation = useNavigation();

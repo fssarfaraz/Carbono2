@@ -82,6 +82,7 @@ const CommentForm = ({post}) => {
     const emailParts = email.split('@');
     // Get first part (before "@")
     const emailName = emailParts[0];
+    //key of comment
     const key = `${post.date}-${emailName}-${post.title}`;
     //update no of comments
     let newComments = post.comments + 1;

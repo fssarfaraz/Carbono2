@@ -42,9 +42,11 @@ const ForumView = () => {
           </Pressable>
         </View>
       </View>
-
+      {/*Post details*/}
       <FilteredCardForm post={post} />
+      {/*Comments on post */}
       <CardContainer post={post} />
+      {/*Add a comment*/}
       <CommentForm post={post}/>
     </View>
   );
@@ -160,7 +162,6 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     padding: 10,
-    // paddingBottom: 18,
   },
 });
 

@@ -49,6 +49,7 @@ const CardContainer = ({post}) => {
   const updateCommentLikes = async (item) => {
     const key = item.id;
     let newLikes = item.likes + 1;
+    //update in the database
     await update(ref(database, 'Comments/' + key), 
     {
       likes: newLikes,
