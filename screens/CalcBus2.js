@@ -1,30 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Color, FontSize, FontFamily } from "../GlobalStyles";
-import { calcPublicTransport } from "../components/API";
-import { useRoute } from '@react-navigation/native';
-import {getDatabase, ref, set} from "firebase/database";
-import { getAuth} from 'firebase/auth';
-import { app } from "../App";
+/*
+Date: 19/11/2023
+Screen:  Public Transport Calculator Screen
+Purpose: This screen allows the user to calculate the environmental impact of using public transport based on the distance traveled.
+Users enter the travel distance in kilometers, and the app calculates the impact and stores it in the Firebase Realtime Database.
+The screen also provides navigation options and a user-friendly interface.
+*/
 
+// Import statements for necessary libraries and components
+
+import React, { useState, useEffect } from "react";
+ // React and related hooks
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// React Native components
+import { LinearGradient } from "expo-linear-gradient";
+// Linear gradient for styling
+import { useNavigation } from "@react-navigation/native";
+// Navigation hook
+import { FontAwesome5 } from "@expo/vector-icons";
+// FontAwesome icons
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Global styles
+import { calcPublicTransport } from "../components/API";
+// Public transport calculation function
+import { useRoute } from '@react-navigation/native';
+// Route hook for navigation
+import {getDatabase, ref, set} from "firebase/database";
+// Firebase Realtime Database functions
+import { getAuth} from 'firebase/auth';
+// Firebase Authentication functions
+import { app } from "../App";
+// Firebase app configuration
+
+// Define the CalcBus2 component
 
 const CalcBus2 = () => {
+  // Initialize state variables
   const [distance, setDistanceKM] = useState("");
   const navigation = useNavigation();
 
+  // Function to handle navigation
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // Access route parameters
   const route = useRoute();
 
   const {type} = route.params;
   console.log("Type: ", type);
 
-  // Create a reference to the database
+  // Create a reference to the Firebase Realtime Database
   const database = getDatabase();
   const auth = getAuth(app);
   const user = auth.currentUser; 
@@ -35,6 +60,7 @@ const CalcBus2 = () => {
   // Get first part (before "@")
   const emailName = emailParts[0];
 
+  // Function to add calculation result to the database
   const addToDatabase = async (result) => {
       // Get the current date
       const date = new Date();
@@ -58,6 +84,7 @@ const CalcBus2 = () => {
       });
   }
 
+  // Function to handle form submission
   const handleSubmit = async () => {
     if(!distance) 
     {
@@ -72,7 +99,7 @@ const CalcBus2 = () => {
       return;
     }
 
-    // convert to number
+    // convert distance to a number
     const distanceNum = parseInt(distance);
     try 
     {
@@ -97,6 +124,7 @@ const CalcBus2 = () => {
     }
   }
 
+  // Render the component
   return (
     <View style={styles.container}>
       {/* Background Image */}
@@ -117,6 +145,7 @@ const CalcBus2 = () => {
           </Pressable>
         </View>
 
+        {/* Header Title */}
         <Text style={styles.headerTitle}>ENTER TRAVEL DISTANCE</Text>
 
         {/* Saly6 Image */}
@@ -208,7 +237,9 @@ const CalcBus2 = () => {
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
+  // Styling definitions for container, backgroundImage, content area, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

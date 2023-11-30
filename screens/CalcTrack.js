@@ -1,19 +1,43 @@
+/*
+Date: 19/11/2023
+Screen: Component for Tracking and Displaying Energy and Travel Data
+Purpose: This component is responsible for displaying and managing the tracking and visualization of energy and travel data for the user.
+  It includes a chart for displaying the data, options to load the chart, and navigation to view reports.
+*/
+
+// Import necessary libraries and components
 import * as React from "react";
+// Import React library
 import { Image, View, Pressable, Text, TouchableHighlight, StyleSheet, Dimensions, Button } from "react-native";
+// Import components and utilities from React Native
 import { LinearGradient } from "expo-linear-gradient";
+// Import LinearGradient component from Expo
 import { useNavigation } from "@react-navigation/native";
+// Import useNavigation hook from React Navigation
 import { FontAwesome5 } from "@expo/vector-icons";
+// Import FontAwesome5 icons from Expo
 import FormContainer from "../components/FormContainer";
+// Import the FormContainer component from a local file
 import { Color, FontSize, Padding, Border, FontFamily } from "../GlobalStyles";
+// Import style constants from a local file
 import { LineChart } from "react-native-chart-kit";
+// Import LineChart component from react-native-chart-kit
 import {getDatabase, onValue, ref, set} from "firebase/database";
+// Import Firebase database functions
 import { getAuth} from 'firebase/auth';
+// Import Firebase authentication functions
 import { app } from "../App";
+// Import Firebase app instance
 import { useState, useEffect } from "react";
+// Import useState and useEffect hooks from React
+
+// Define a React Native component named CalcTrack
 
 const CalcTrack = () => {
+  // Get the navigation object for screen transitions
   const navigation = useNavigation();
 
+  
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
@@ -62,6 +86,7 @@ const CalcTrack = () => {
       setIsLoading(false);
     });
   
+    // Fetching travel data
     const travelRef = ref(database, "footprint-travel/");
     onValue(travelRef, (snapshot) => {
       const data = snapshot.val();
@@ -85,6 +110,7 @@ const CalcTrack = () => {
       }
       setIsLoading(false);
     });
+    // Check if both energy and travel data are available to display the chart
       if (energyData.length > 0 && travelData.length > 0) {
         setShowChart(true);
         console.log('Displaying chart');
@@ -95,6 +121,7 @@ const CalcTrack = () => {
       }
   };
 
+  // Function to determine the label length based on the data arrays
   const labelLength = (mappedEnergyData, mappedTravelData) => {
     if(mappedEnergyData.length > mappedTravelData.length)
     {
@@ -108,6 +135,7 @@ const CalcTrack = () => {
     }
   }
 
+  // Function to render the chart
   const renderChart = () => {
     console.log('in render chart');
     if (energyData.length > 0 && travelData.length > 0 && !isLoading) 
@@ -123,6 +151,7 @@ const CalcTrack = () => {
       console.log(mappedEnergyData);
       console.log(mappedTravelData);
         
+      // Configuration for the chart
       const chartConfig = {
         backgroundGradientFrom: "#ffffff",
         backgroundGradientFromOpacity: 1,
@@ -166,6 +195,7 @@ const CalcTrack = () => {
     }
   };
 
+  // Return the JSX for the component's UI
   return (
     <View style={styles.calcTrack}>
       {/* Background Images */}
@@ -306,6 +336,7 @@ const CalcTrack = () => {
   );
 };
 
+// StyleSheet to style the component
 const styles = StyleSheet.create({
   iconLayout: {
     width: 33,

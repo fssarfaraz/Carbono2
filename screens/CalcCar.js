@@ -1,5 +1,15 @@
+/*
+Date: 19/11/2023
+Screen: Calculate Car Details
+Purpose: This screen allows the user to enter their vehicle make and model.
+*/
+
 import React, { useState } from "react";
+// Importing React and useState from React library
+
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// Importing various components and modules from React Native library
+
 import { LinearGradient } from "expo-linear-gradient";  // Importing LinearGradient for gradient styles
 import { useNavigation } from "@react-navigation/native";  // To navigate between screens
 import { FontAwesome5 } from "@expo/vector-icons";   // Importing FontAwesome icons
