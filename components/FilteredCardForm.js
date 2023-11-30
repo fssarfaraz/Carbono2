@@ -3,22 +3,26 @@ import { Image } from "expo-image";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
 import { useState, useEffect, useCallback } from "react";
-import {getDatabase, onValue, ref, update} from "firebase/database";
+import {getDatabase, onValue, ref, update, set} from "firebase/database";
 import { getAuth} from 'firebase/auth';
 import { app } from "../App";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-const FilteredCardForm = ({post}) => {
+const FilteredCardForm = ({post, role}) => {
 
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
   const [likes, setLikes] = useState(post.likes);
+  const [shouldShowMenu, setShouldShowMenu] = useState(false);
 
    // Create a reference to the database
-   const database = getDatabase();
-   const auth = getAuth(app);
+  const database = getDatabase();
+  const auth = getAuth(app);
+  console.log('Post Filtered: ', post);
+  console.log('Role Filtered: ', role);
 
   const getName = () => {
     const userRef = ref(database, 'users/');
@@ -79,6 +83,32 @@ const FilteredCardForm = ({post}) => {
     setLikes(post.likes + 1);
   }, [post]);
   
+  const toggleMenu = () => {
+    setShouldShowMenu(!shouldShowMenu);
+    console.log(shouldShowMenu);
+  };
+
+  const deletePost = async () =>  {
+    const postsRef = ref(database, "posts/");
+    let postId;
+    console.log('delete');
+    onValue(postsRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log("Post data:", data);
+      // console.log("Current user:", auth.currentUser.email);
+      console.log("Post title:", post.title);
+      postId = Object.keys(data).find(
+            (key) => data[key].title.toLowerCase() === post.title.toLowerCase()
+          );
+      console.log("Post ID:", postId);
+    });
+
+    // await database().ref(`posts/${postId}`).remove();
+    await set(ref(database, `posts/${postId}`), null);
+    navigation.goBack();
+
+
+  }
 
   return (
     <View style={[styles.posts, styles.postsFlexBox]}>
@@ -92,17 +122,28 @@ const FilteredCardForm = ({post}) => {
                 source={require("../assets/profile-photo.png")}
               />
               <View style={styles.jacobWashingtonParent}>
-                <Text style={[styles.jacobWashington, styles.ifYouThinkTypo]}>
-                  {name}
-                </Text>
+                
                 <Text style={[styles.mAgo, styles.mAgoTypo]}>{post.date}</Text>
               </View>
+
             </View>
-            <Image
-              style={styles.iconDotsVertical}
-              contentFit="cover"
-              source={require("../assets/icon--dots-vertical.png")}
-            />
+            <View>
+              <Pressable onPress={toggleMenu}>
+                  <Image
+                    style={styles.iconDotsVertical}
+                    resizeMode="cover"
+                    source={require('../assets/icon--dots-vertical.png')}
+                  />
+                </Pressable>
+            </View>
+
+            {shouldShowMenu ? (
+              <View>
+                <Pressable onPress={deletePost}>
+                  <Text>Delete</Text>
+                </Pressable>
+              </View>
+            ) : null}
           </View>
           <Text
             style={[styles.ifYouThink, styles.ifYouThinkTypo]}
@@ -133,6 +174,8 @@ const FilteredCardForm = ({post}) => {
         <View style={styles.divider} />
       </View>
     </View>
+
+    
   );
 };
 
@@ -235,6 +278,29 @@ const styles = StyleSheet.create({
     left: 8,
     width: 375,
     justifyContent: "center",
+  },
+  menuText: {
+    fontSize: 28,
+    // lineHeight: 28,
+    fontWeight: "600",
+    fontFamily: "Nunito-SemiBold",
+    color: "#000",
+    textAlign: "center",
+    bottom: 30,
+    position: "absolute",
+  },
+  deleteMenu: {
+    flex: 1, 
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    bottom: 110,
+    zIndex: 2,
+    width: 200,
+    height: 200,
+    padding: 20,
+    position: "absolute",
+    borderRadius: 20,
   },
 });
 

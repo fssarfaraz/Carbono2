@@ -8,9 +8,9 @@ import { getAuth} from 'firebase/auth';
 import { app } from "../App";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-
-const SectionCardForm1 = ({post}) => {
+const SectionCardForm1 = ({post, role}) => {
 
   const navigation = useNavigation();
 
@@ -19,6 +19,8 @@ const SectionCardForm1 = ({post}) => {
    // Create a reference to the database
    const database = getDatabase();
    const auth = getAuth(app);
+  console.log('Post SECTION: ', post);
+  console.log('Role SECTION: ', role);
 
   const getName = () => {
     const userRef = ref(database, 'users/');
@@ -45,9 +47,9 @@ const SectionCardForm1 = ({post}) => {
     getName();
   }, [database]);
 
-
+  
   return (
-    <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
+    <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
     <View style={[styles.rectangleParent, styles.groupChildLayout]}>
       <View style={[styles.groupChild, styles.groupChildLayout]} />
       <Image
@@ -55,7 +57,7 @@ const SectionCardForm1 = ({post}) => {
         contentFit="cover"
         source={require("../assets/ellipse-13.png")}
       />
-      <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
+      <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
         <Text style={[styles.kristonWatshon, styles.amFlexBox]}>
           {name}
         </Text>
@@ -64,13 +66,13 @@ const SectionCardForm1 = ({post}) => {
         <Text style={styles.text}>{post.date}</Text>
       </Text>
 
-      <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
+      <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
         <Text style={[styles.loremIpsumDolor, styles.text1Typo]}>
           {post.title}
         </Text>
       </Pressable>
 
-      <Pressable onPress={() => navigation.navigate("ForumView", {post})} 
+      <Pressable onPress={() => navigation.navigate("ForumView", {post, role: role})} 
         style={{top: 150, left: 270}}>
         <Text style={{fontSize: 16, fontFamily: FontFamily.nunitoLight}}> View Post</Text>
       </Pressable>
