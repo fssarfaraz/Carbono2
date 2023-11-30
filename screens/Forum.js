@@ -25,6 +25,7 @@ const Forum = () => {
   const [post, setPost] = useState("");
   const [posts, setPosts] = useState([]);
   const [gotPosts, setGotPosts] = useState(false);
+  const [role, setRole] = useState("");
 
   // Create a reference to the database
   const database = getDatabase();
@@ -33,6 +34,7 @@ const Forum = () => {
   const fetchPosts = () => {
     //fetching energy data
     const postsRef = ref(database, "posts/");
+    const userRef = ref(database, "users/");
 
     onValue(postsRef, (snapshot) => {
       const data = snapshot.val();
@@ -58,6 +60,18 @@ const Forum = () => {
         console.log("No energy data found for current user");
         setEnergyData([]);
       }
+    });
+
+    onValue(userRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log("User data:", data);
+      console.log("Current user:", auth.currentUser.email);
+      const userId = Object.keys(data).find(
+            (key) => data[key].email.toLowerCase() === auth.currentUser.email.toLowerCase()
+          );
+      console.log("User ID:", userId);
+      setRole(data[userId].role);
+      console.log("Roles:", role);
     });
   }
 
@@ -87,8 +101,8 @@ const Forum = () => {
           {posts.length > 0 ? (
             posts.map((post, index) => (
               <View key={index}>
-                <Pressable onPress={() => navigation.navigate("ForumView", { post: post })}>
-                  <SectionCardForm1 post={post} />
+                <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
+                  <SectionCardForm1 post={post} role={role} />
                 </Pressable>
               </View>
             ))

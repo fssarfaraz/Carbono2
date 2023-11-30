@@ -18,6 +18,11 @@ const ForumView = () => {
   const {post} = route.params;
   console.log('View: ', post);
 
+  
+  
+  let role = route.params.role;
+  console.log('Role VIEW: ', role);
+
   return (
     <ScrollView>
     <View style={styles.forumView}>
@@ -49,7 +54,7 @@ const ForumView = () => {
         </View>
       </View>
 
-      <FilteredCardForm post={post} />
+      <FilteredCardForm post={post} role={role} />
       <CardContainer post={post} />
       <CommentForm post={post}/>
     </View>
