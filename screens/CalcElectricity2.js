@@ -1,24 +1,63 @@
+/*
+Date: 19/11/2023
+Screen: Enter Energy Source Location
+Purpose: This screen allows the user to enter the country or continent
+ from where the energy is sourced. It is part of the carbon footprint
+ calculation process and collects information about the location of
+ electricity consumption for carbon emissions calculation.
+*/
+
+// Importing necessary modules and components
+
 import React, { useState } from "react";
+// Importing React and useState from React library
+
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+// Importing various components and styles from React Native
+
 import { LinearGradient } from "expo-linear-gradient";
+// Importing LinearGradient for gradient styles
+
 import { useNavigation } from "@react-navigation/native";
+// To navigate between screens
+
 import { FontAwesome5 } from "@expo/vector-icons";
+// Importing FontAwesome icons
+
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Importing global style constants
+
 import { useRoute } from '@react-navigation/native';
+// To access route parameters
+
 import {getDatabase, ref, set} from "firebase/database";
+// Importing Firebase database functions
+
 import { getAuth} from 'firebase/auth';
+// Importing Firebase authentication functions
+
 import { app } from "../App";
+// Importing Firebase app instance
+
 import { CalcElec } from "../components/API";
+// Importing a custom function
+
 import { SelectList } from 'react-native-dropdown-select-list'
  
+// Importing a custom component
+
 const CalcElectricity2 = () => {
   const [location, setLocation] = useState("");
+  // Define a state variable for location input
   const navigation = useNavigation();
+  // Initialize the navigation hook
  
   const handleNavigation = (screen) => {
+    // Function to handle navigation to other screens
     navigation.navigate(screen);
   };
  
+    // Data for the location selection dropdown
   const data = [
     {key:'1', value: "USA", label: "USA"},
     {key:'2', value: "Canada", label: "Canada" },
@@ -32,8 +71,11 @@ const CalcElectricity2 = () => {
  
   const route = useRoute();
  
+  // Extracting parameter from the route
   const {ConsumptionKwh} = route.params;
+  // Extract ConsumptionKwh parameter from route
   console.log("Consumption: ", ConsumptionKwh);
+  // Log ConsumptionKwh for debugging purposes
  
   // Create a reference to the database
   const database = getDatabase();
@@ -46,6 +88,7 @@ const CalcElectricity2 = () => {
   // Get first part (before "@")
   const emailName = emailParts[0];
  
+  // Function to add the calculated result to the Firebase database
   const addToDatabase = async (result) => {
     // Get the current date
     const date = new Date();
@@ -69,6 +112,7 @@ const CalcElectricity2 = () => {
     });
   }
  
+  // Function to handle form submission
   const handleSubmit = async () => {
     if(!location)
     {
@@ -101,6 +145,7 @@ const CalcElectricity2 = () => {
   }
  
 
+  // Render the UI components
   return (
     <View style={styles.container}>
       {/* Background Image */}
@@ -127,6 +172,7 @@ const CalcElectricity2 = () => {
           </Pressable>
         </View>
  
+        {/* Header Title */}
         <Text style={styles.headerTitle}>ENTER THE COUNTRY OR CONTINENT PROVIDING THE ENERGY</Text>
  
         {/* Saly6 Image */}
@@ -138,9 +184,11 @@ const CalcElectricity2 = () => {
         </View>
  
         {/* Vehicle Type Input */}
+        {/* Location Selection Dropdown */}
         <View style={styles.selectListContainer}>
             <SelectList
               setSelected={(val) => setLocation(val)}
+              // Set the selected location in state
               data={data}
               save="value"
               placeholder={"Select Location"}
@@ -151,6 +199,7 @@ const CalcElectricity2 = () => {
         <Pressable
           style={styles.nextButton}
           onPress={handleSubmit}
+          // Call handleSubmit function on button press
         >
           <LinearGradient
             style={styles.gradientButton}
@@ -210,10 +259,14 @@ const CalcElectricity2 = () => {
   );
 };
  
+// StyleSheet to style the component
 const styles = StyleSheet.create({
+    // Styling definitions for container, backgroundImage, content area, etc.
+
   container: {
     flex: 1,
     backgroundColor: "#FFF",
+    // Background color of the container
   },
   backgroundImage: {
     position: "absolute",
@@ -226,6 +279,7 @@ const styles = StyleSheet.create({
     width: 530,
     left: -210,
     position: "absolute",
+    // Styling for the first ellipse background image
   },
   ellipse2: {
     top: 545,
@@ -233,11 +287,13 @@ const styles = StyleSheet.create({
     width: 550,
     left: 10,
     position: "absolute",
+    // Styling for the second ellipse background image
   },
   contentContainer: {
     flex: 1,
     justifyContent: "flex-end",
     padding: 16,
+    // Styling for the main content container
   },
   header: {
     flexDirection: "row",

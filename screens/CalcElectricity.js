@@ -1,15 +1,34 @@
+/*
+Date: 19/11/2023
+Screen: Calculate Electricity Carbon Footprint
+Purpose: Display a screen for users to enter their electricity usage in kWh and proceed to the next step.
+*/
 import React, { useState } from "react";
+// Importing React and useState from React library
+
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// Importing various components and modules from React Native library
+
 import { LinearGradient } from "expo-linear-gradient";
+// Importing LinearGradient for gradient styles
+
 import { useNavigation } from "@react-navigation/native";
+// To navigate between screens
+
 import { FontAwesome5 } from "@expo/vector-icons";
+// Importing FontAwesome icons
+
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Importing global style constants
+
 import { ScrollView } from "react-native";
  
 const CalcElectricity = () => {
   const [ConsumptionKwh, setConsumptionKwh] = useState("");
   const navigation = useNavigation();
  
+  // Function to handle navigation to different screens
+
   //test comment
  
   const handleNavigation = (screen) => {
@@ -37,6 +56,7 @@ const CalcElectricity = () => {
           </Pressable>
         </View>
  
+        {/* Title */}
         <Text style={styles.headerTitle}>ENTER YOUR ELECTRICITY USAGE BELOW</Text>
  
         {/* Saly6 Image */}
@@ -83,6 +103,7 @@ const CalcElectricity = () => {
  
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
+        {/* Pressable icons for navigating to UserProfile, Educational, Forum, and Games */}
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
             style={styles.bottomNavIcon}
@@ -129,7 +150,9 @@ const CalcElectricity = () => {
   );
 };
  
+// StyleSheet to style the component
 const styles = StyleSheet.create({
+    // Styling definitions for container, backgroundImage, content area, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

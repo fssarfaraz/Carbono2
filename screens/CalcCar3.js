@@ -1,14 +1,36 @@
+/*
+Date: 19/11/2023
+Screen: Calculate Car Carbon Footprint
+Purpose: Display the calculated carbon footprint of the user's car.
+*/
+
 import React, { useState, useEffect } from "react";
+// Importing React and useState from React library
+
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// Importing various components and modules from React Native library
+
 import { LinearGradient } from "expo-linear-gradient";
+// Importing LinearGradient for gradient styles
+
 import { useNavigation } from "@react-navigation/native";
+// To navigate between screens
+
 import { FontAwesome5 } from "@expo/vector-icons";
+// Importing FontAwesome icons
+
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Importing global style constants
+
 import { useRoute } from '@react-navigation/native';
+// To access route parameters
+
 
 const CalcCar3 = () => {
   const navigation = useNavigation();
+  // Navigation hook
 
+  // Function to handle navigation to different screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
@@ -36,6 +58,7 @@ const CalcCar3 = () => {
           </Pressable>
         </View>
 
+        {/* Title */}
         <Text style={styles.headerTitle}>YOUR CARBON FOOTPRINT</Text>
 
         {/* Saly6 Image */}
@@ -65,6 +88,7 @@ const CalcCar3 = () => {
 
       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
+        {/* Pressable icons for navigating to UserProfile, Educational, Forum, and Games */}
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image
             style={styles.bottomNavIcon}
@@ -110,7 +134,9 @@ const CalcCar3 = () => {
   );
 };
 
+// StyleSheet to style the component
 const styles = StyleSheet.create({
+    // Styling definitions for container, backgroundImage, content area, etc.
   container: {
     flex: 1,
     backgroundColor: "#FFF",

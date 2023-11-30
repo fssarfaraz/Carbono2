@@ -1,27 +1,49 @@
+/*
+Date: 19/11/2023
+Screen: Component for Tracking and Displaying Energy and Travel Data
+Purpose: This component is responsible for displaying and managing the tracking and visualization of energy and travel data for the user.
+  It includes a chart for displaying the data, options to load the chart, and navigation to view reports.
+*/
+
+// Import necessary libraries and components
+
 import React, { useState } from "react";
+// Import React and useState hook
 import { Image } from "expo-image";
+// Import Image component from Expo
 import { StyleSheet, View, Pressable, Text, Dimensions } from "react-native";
+// Import styling components from React Native
 import { Datepicker as RNKDatepicker } from "@ui-kitten/components";
+// Import Datepicker component from UI Kitten
 import { useNavigation } from "@react-navigation/native";
+// Import useNavigation hook for navigation
 import { FontAwesome5 } from "@expo/vector-icons";
+// Import FontAwesome5 icons from Expo
 import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
+// Import global styles
 import { useRoute } from '@react-navigation/native';
+// Import useRoute hook for route information
 import { LineChart } from "react-native-chart-kit";
+// Import LineChart component for chart visualization
 
 const CalcTrack2 = () => {
+  // State for selected date
   const [selectDatePicker, setSelectDatePicker] = useState(undefined);
   const navigation = useNavigation();
 
+  // Function to handle navigation
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   const route = useRoute();
 
+  // Extract energyData and travelData from route params
   const {energyData, travelData} = route.params;
   console.log("Energy: ", energyData);
   console.log("Travel: ", travelData);
 
+ // Function to determine label length based on data
   const labelLength = (mappedEnergyData, mappedTravelData) => {
     if(mappedEnergyData.length > mappedTravelData.length)
     {
@@ -35,11 +57,13 @@ const CalcTrack2 = () => {
     }
   }
 
+  // Function to format date
   const formatDate = (date) => {
     const formattedDate = date.toISOString().split('T')[0];
     return formattedDate;
   }
 
+  // Function to render the chart based on data
   const renderChart = () => {
     const chartConfig = {
       backgroundGradientFrom: "#ffffff",
@@ -52,6 +76,7 @@ const CalcTrack2 = () => {
       color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     };
 
+    // Render chart for energyData when travelData is empty
     if(energyData.length > 0 && travelData.length === 0)
     {
       if (selectDatePicker)
@@ -140,6 +165,7 @@ const CalcTrack2 = () => {
       }
     }
 
+    // Render chart for travelData when energyData is empty
     if(energyData.length == 0 && travelData.length > 0)
     {
       if (selectDatePicker)
@@ -205,6 +231,7 @@ const CalcTrack2 = () => {
           sumT += mappedTravelData[i];
         }
 
+        // Create an array of labels for the LineChart based on data length
         const labels = Array(mappedTravelData.length).fill(0).map((_,i) => i);
         const screenWidth = Dimensions.get("window").width;
         return (
@@ -229,6 +256,7 @@ const CalcTrack2 = () => {
       }
     }
     
+    // Render chart for both energyData and travelData when both have data
     if(energyData.length > 0 && travelData.length > 0)
     {
       if (selectDatePicker)
@@ -243,6 +271,7 @@ const CalcTrack2 = () => {
           y: entry.y
         }));
 
+        // Select energyData entries for the selected date
         const selectedEnergyData = Object.entries(energyData).filter(([key, value]) => value.x === formattedDate)
         .map(([id, entry]) => ({
           id,
@@ -250,6 +279,7 @@ const CalcTrack2 = () => {
           y: entry.y
         }));
         
+        // Check if both energyData and travelData have entries for the selected date
         if (selectedTravelData.length === 0 && selectedEnergyData.length === 0) 
         {
           alert("No entries found for the selected date.");
@@ -275,6 +305,7 @@ const CalcTrack2 = () => {
             sumT += mappedTravelData[i];
           }
 
+           // Determine label length based on data
           const labels = labelLength(mappedEnergyData, mappedTravelData);
           const screenWidth = Dimensions.get("window").width;
           return (
@@ -392,6 +423,7 @@ const CalcTrack2 = () => {
           sumT += mappedTravelData[i];
         }
 
+        // Determine label length based on data
         const labels = labelLength(mappedEnergyData, mappedTravelData);
         const screenWidth = Dimensions.get("window").width;
         return (
@@ -421,6 +453,7 @@ const CalcTrack2 = () => {
       }
     }
 
+    // Handle case when both energyData and travelData are empty
     if(energyData.length == 0 && travelData.length == 0)
     {
       console.error('No Data');
@@ -428,6 +461,7 @@ const CalcTrack2 = () => {
     }
   }
 
+  // Check if a date is selected and format it
   if (selectDatePicker)
   {
     const formattedDate = selectDatePicker.toISOString().split('T')[0];
@@ -435,6 +469,7 @@ const CalcTrack2 = () => {
   }
 
   return (
+    // Render the main view
     <View style={[styles.calcTrack2, styles.iconLayout2]}>
       <Image
         style={[styles.ellipse1]}
@@ -454,10 +489,12 @@ const CalcTrack2 = () => {
         </Pressable>
       </View>
       
+      {/* Select Date Range Text */}
       <Text style={[styles.selectDateRange, styles.selectPosition]}>
         SELECT DATE RANGE
       </Text>
       
+      {/* Rectangle View */}
       <View style={styles.rectangleView}>
         <Text style={styles.primaryText1}>Your Footprint for {selectDatePicker ? formatDate(selectDatePicker) : "-"}</Text>
         <Image style={styles.vectorIcon} resizeMode="cover" source={require("../assets/vector16.png")} />
@@ -479,6 +516,7 @@ const CalcTrack2 = () => {
         controlStyle={styles.selectDatePickerValue}
       />
 
+      {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image style={styles.bottomNavIcon} source={require("../assets/-icon-person-outline.png")} />
@@ -506,6 +544,7 @@ const CalcTrack2 = () => {
 };
 
 const styles = StyleSheet.create({
+  // Styles for various components and elements go here
   selectDatePickerPlaceHolder: {
     fontFamily: "FiraSans-Regular",
     color: "#131414",
