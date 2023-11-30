@@ -24,7 +24,6 @@ const ForumView = () => {
   console.log('Role VIEW: ', role);
 
   return (
-    <ScrollView>
     <View style={styles.forumView}>
       <Image
         style={[styles.ellipse1]}
@@ -58,7 +57,6 @@ const ForumView = () => {
       <CardContainer post={post} />
       <CommentForm post={post}/>
     </View>
-    </ScrollView>
   );
 };
 
