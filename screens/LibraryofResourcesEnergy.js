@@ -41,7 +41,7 @@ const LibraryofResourcesSocial = () => {
       </View>
       
       <Text style={[styles.selectDateRange]}>
-      Library of Resources Transport
+      Library of Resources Energy
       </Text>
 
       <View style={styles.searchContainer}>

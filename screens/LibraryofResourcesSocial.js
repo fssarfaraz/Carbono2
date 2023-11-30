@@ -11,7 +11,7 @@ import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Vi } from "react-flags-select";
 
-const LibraryofResourcesTranspor = () => {
+const LibraryofResourcesSocial = () => {
   const [selectDatePicker, setSelectDatePicker] = useState(undefined);
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
@@ -41,7 +41,7 @@ const LibraryofResourcesTranspor = () => {
       </View>
       
       <Text style={[styles.selectDateRange]}>
-      Library of Resources Transport
+      Library of Resources Social
       </Text>
 
       <View style={styles.searchContainer}>
@@ -692,4 +692,4 @@ bottomNavBar: {
   },
 });
 
-export default LibraryofResourcesTranspor;
+export default LibraryofResourcesSocial;
