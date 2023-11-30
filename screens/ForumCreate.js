@@ -83,6 +83,7 @@ const ForumCreate = () => {
   }
 
   const handleSubmit = async () => {
+    //if title and post are empty, do not publish
     if(!title)
     {
       alert("Please enter a title for the post");

@@ -42,6 +42,7 @@ const ForumView = () => {
           </Pressable>
         </View>
       </View>
+      {/** Components are called*/}
       {/*Post details*/}
       <FilteredCardForm post={post} />
       {/*Comments on post */}

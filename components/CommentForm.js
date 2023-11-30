@@ -54,6 +54,7 @@ const CommentForm = ({post}) => {
     console.log(formattedDate);
     const timeString = date.toLocaleTimeString();
     console.log(timeString);
+    //key for comments
     const key = `${formattedDate}-${emailName}-${timeString}`;
     console.log('Defined key', key);
     const entry = 

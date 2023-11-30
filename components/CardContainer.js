@@ -69,6 +69,7 @@ const CardContainer = ({post}) => {
       <View style={[styles.sectionTitle, styles.comment3FlexBox]}>
       <Text style={styles.comments45}>Comments {allComments.length > 0 ? `(${allComments.length})` : '(0)'}</Text>
         <View style={{top: 20, left: -105}}>
+        {/*If comments exist*/}
         {allComments.length > 0 && (
           <FlatList
           data={allComments}
