@@ -3,8 +3,8 @@ import { Image } from "expo-image";
 import { StyleSheet, View, StatusBar, Pressable, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Padding, Color } from "../GlobalStyles";
-import { useState } from "react";
-import {getDatabase, ref, set} from "firebase/database";
+import { useState, useEffect } from "react";
+import {getDatabase, ref, set, onValue} from "firebase/database";
 import { getAuth} from 'firebase/auth';
 import { app } from "../App";
 
@@ -13,17 +13,46 @@ const ForumCreate = () => {
 
   const [title, setTitle] = useState("");
   const [post, setPost] = useState("");
+  const [name, setName] = useState("");
 
   // Create a reference to the database
   const database = getDatabase();
+  console.log('connected to database');
   const auth = getAuth(app);
+  console.log('got auth');
   const user = auth.currentUser; 
+  console.log('got current user');
   const email = user.email; 
+  console.log('User email: ', email);
   // Split email on "@" 
   const emailParts = email.split('@');
   // Get first part (before "@")
   const emailName = emailParts[0];
   console.log(emailName);
+
+  const getName = () => {
+    const userRef = ref(database, 'users/');
+
+    onValue(userRef, (snapshot) => {
+      // Find matching user  
+      const users = snapshot.val();
+      const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+
+      if (matchingUser) 
+      {
+        setName(matchingUser.name);
+      } 
+      else 
+      {
+        console.log('User not found in the database');
+      }
+    })
+  }
+
+  useEffect(() => {
+    // Fetch poster name
+    getName();
+  }, [post]);
 
   const addToDatabase = async (title, post) => {
     // Get the current date
@@ -34,12 +63,14 @@ const ForumCreate = () => {
     console.log('Defined key', key);
     const entry = 
     {
+      id: key,
       email: email,
       title: title,
       post: post,
       likes: 0,
       comments: 0,
       date: formattedDate,
+      name: name,
     };
     console.log('Defined entry')
     // Set the user data in the database
@@ -261,3 +292,4 @@ const styles = StyleSheet.create({
 });
 
 export default ForumCreate;
+

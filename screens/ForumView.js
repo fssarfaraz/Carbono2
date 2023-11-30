@@ -1,9 +1,3 @@
-import * as React from "react";
-import { Image } from "expo-image";
-import { StyleSheet, Pressable, View, Text, ScrollView } from "react-native";
-import { Button } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
-import FilteredCardForm from "../components/FilteredCardForm";
 import CardContainer from "../components/CardContainer";
 import CommentForm from "../components/CommentForm";
 import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
@@ -19,7 +13,6 @@ const ForumView = () => {
   console.log('View: ', post);
 
   return (
-    <ScrollView>
     <View style={styles.forumView}>
       <Image
         style={[styles.ellipse1]}
@@ -53,7 +46,6 @@ const ForumView = () => {
       <CardContainer post={post} />
       <CommentForm post={post}/>
     </View>
-    </ScrollView>
   );
 };
 

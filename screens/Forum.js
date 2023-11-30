@@ -3,6 +3,11 @@ import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, Text, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SectionCardForm1 from "../components/SectionCardForm1";
+import * as React from "react";
+import { Image } from "expo-image";
+import { StyleSheet, View, Pressable, Text, FlatList , TextInput, TouchableOpacity} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import SectionCardForm1 from "../components/SectionCardForm1";
 import SectionForm1 from "../components/SectionForm1";
 import Search from "../components/Search";
 import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
@@ -15,7 +20,11 @@ import { app } from "../App";
 const Forum = () => {
   const navigation = useNavigation();
 
-  const [title, setTitle] = useState("");
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
+
+  const [searchQuery, setSearch] = useState("");
   const [post, setPost] = useState("");
   const [posts, setPosts] = useState([]);
   const [gotPosts, setGotPosts] = useState(false);
@@ -23,6 +32,7 @@ const Forum = () => {
   // Create a reference to the database
   const database = getDatabase();
   const auth = getAuth(app);
+
 
   const fetchPosts = () => {
     //fetching energy data
@@ -38,6 +48,8 @@ const Forum = () => {
         post: entry.post,
         likes: entry.likes,
         title: entry.title,
+        id: entry.id,
+        name: entry.name,
       }));
 
       //if data is not empty
@@ -83,6 +95,23 @@ const Forum = () => {
             <Text>No posts to show</Text>
           )}
         </View>
+      
+      {/*
+      <View style={{ top: 40, left: 0 }}>
+      {posts.length > 0 && (
+          <FlatList
+          data={posts}
+          renderItem={({item}) => (<View style={{top: 0, left: 0, height: 140, width: 400, marginBottom: -40}}>
+            <Text style={{fontSize: 15, fontFamily: FontFamily.nunitoLight}}> {item.name} </Text>
+            <Text style={{fontFamily: FontFamily.nunitoRegular, fontSize: 15, top: 3}}> {item.date} </Text>
+            <Text style={{fontFamily: FontFamily.nunitoLight, fontSize: 12, top: 10, left: 2, color: "#727477"}}> {item.title} </Text>
+            <Text style={{fontFamily: FontFamily.nunitoLight, fontSize: 12, left: 100, top: -6, color: "#727477"}}> {item.like} likes </Text>
+          </View>
+           )}
+          keyExtractor={(item) => item.id}
+          />
+          )}
+      </View>*/}
 
       <Search
         searchInputValue={require("../assets/search2.png")}
@@ -99,8 +128,10 @@ const Forum = () => {
         frameViewRight="73.91%"
         frameViewLeft="2.91%"
         searchFontFamily="Nunito-Regular"
-        onSearchPress={() => navigation.navigate("SearchQuery")}
+        //onSearchPress={() => navigation.navigate("SearchQuery")}
+        //posts={posts}
       />
+
       <Text style={styles.trendingTopics}>TRENDING TOPICS</Text>
 
       {/* Bottom Navigation Bar */}

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { StyleSheet, View, TextInput, Pressable, ScrollView } from "react-native";
+import { StyleSheet, View, TextInput, Pressable, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {getDatabase, ref, set, onValue, update} from "firebase/database";
 import { getAuth} from 'firebase/auth';
 import { app } from "../App";
@@ -11,6 +11,8 @@ import { app } from "../App";
 const CommentForm = ({post}) => {
 
   const [comment, setComment] = useState("");
+  const [name, setName] = useState("");
+  const [noComments, setNoComments] = useState(post.comments);
 
   // Create a reference to the database
   const database = getDatabase();
@@ -21,6 +23,29 @@ const CommentForm = ({post}) => {
   const emailParts = email.split('@');
   // Get first part (before "@")
   const emailName = emailParts[0];
+
+  const getName = () => {
+    const userRef = ref(database, 'users/');
+
+    onValue(userRef, (snapshot) => {
+      // Find matching user  
+      const users = snapshot.val();
+      const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
+
+      if (matchingUser) 
+      {
+        setName(matchingUser.name);
+      } 
+      else 
+      {
+        console.log('User not found in the database');
+      }
+    })
+  }
+
+  useEffect(() => {
+    getName();
+  }, [database]);
 
   const addToDatabase = async (comment) => {
     // Get the current date
@@ -37,48 +62,34 @@ const CommentForm = ({post}) => {
       comment: comment || [],
       likes: 0,
       date: formattedDate,
+      id: key,
+      postID: post.id,
+      name: name,
     };
     console.log('Defined entry')
 
-    const postsRef = ref(database, 'posts/');
-    onValue(postsRef, (snapshot) => {
-      // Find matching user  
-      const posts = snapshot.val();
-      const emailP = post.email;
-      const matchingPost = Object.values(posts).find((u) => u.email.toLowerCase() === emailP);
-
-      if (matchingPost) 
-      {
-        const emailParts = emailP.split('@');
-        // Get first part (before "@")
-        const emailName = emailParts[0];
-        const key2 = `${matchingPost.date}-${emailName}-${matchingPost.title}`;
-        const commentsRef = ref(database, 'posts/' + key2 + '/CommentsPosted/' + key)
-
-        set(ref(database, 'posts/' + key2 + '/CommentsPosted/' + key), entry).then(() => 
-        {
-          update(ref(database, 'posts/' + key2), 
-          {
-            likes: post.likes,
-            comments: post.comments + 1,
-            date: post.date,
-            email: post.email,
-            post: post.post,
-            title: post.title
-          });
-        console.log('comment added');
-        }).catch((error) => 
-        {
-          // An error occurred
-          alert("Error adding to database: " + error.message);
-        });
-      } 
-      else 
-      {
-        console.log('Post not found in the database');
-      }
+    set(ref(database, 'Comments/' + key), entry).then(() => 
+    {
+    }).catch((error) => 
+    {
+      // An error occurred
+      alert("Error adding to database: " + error.message);
     });
   }
+
+  const updatePostComments = async () => {
+    const email = post.email;
+    const emailParts = email.split('@');
+    // Get first part (before "@")
+    const emailName = emailParts[0];
+    const key = `${post.date}-${emailName}-${post.title}`;
+    let newComments = post.comments + 1;
+    await update(ref(database, 'posts/' + key), 
+    {
+      comments: newComments,
+    });
+    console.log('Comment added');
+  };
 
   const handleSubmit = async () => {
     if(!comment)
@@ -87,7 +98,8 @@ const CommentForm = ({post}) => {
     }
     else
     {
-      addToDatabase(comment);
+      await addToDatabase(comment);
+      updatePostComments();
       alert("Comment created.");
     }
   }
@@ -193,3 +205,4 @@ const styles = StyleSheet.create({
 });
 
 export default CommentForm;
+

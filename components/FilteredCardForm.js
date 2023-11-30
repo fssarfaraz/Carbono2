@@ -45,40 +45,20 @@ const FilteredCardForm = ({post}) => {
     getName();
   }, [database]);
 
-  const updatePostLikes = useCallback((post, setLikes) => {
-    const postsRef = ref(database, 'posts/');
-
-    onValue(postsRef, (snapshot) => {
-      // Find matching user  
-      const posts = snapshot.val();
-      const email = post.email;
-      const matchingPost = Object.values(posts).find((u) => u.email.toLowerCase() === email);
-
-      if (matchingPost) 
-      {
-        const emailParts = email.split('@');
-        // Get first part (before "@")
-        const emailName = emailParts[0];
-        const key = `${matchingPost.date}-${emailName}-${matchingPost.title}`;
-        update(ref(database, 'posts/' + key), 
-        {
-          likes: post.likes + 1,
-          comments: post.comments,
-          date: post.date,
-          email: post.email,
-          post: post.post,
-          title: post.title
-        });
-        console.log('Like added');
-      } 
-      else 
-      {
-        console.log('Post not found in the database');
-      }
+  const updatePostLikes = async () => {
+    const email = post.email;
+    const emailParts = email.split('@');
+    // Get first part (before "@")
+    const emailName = emailParts[0];
+    const key = `${post.date}-${emailName}-${post.title}`;
+    let newLikes = post.likes + 1;
+    await update(ref(database, 'posts/' + key), 
+    {
+      likes: newLikes,
     });
+    console.log('Like added');
     setLikes(post.likes + 1);
-  }, [post]);
-  
+  };
 
   return (
     <View style={[styles.posts, styles.postsFlexBox]}>
@@ -110,7 +90,7 @@ const FilteredCardForm = ({post}) => {
 
           <View style={[styles.postActions, styles.profileInfoFlexBox]}>
             <View style={styles.infoFlexBox}>
-            <Pressable onPress={() => updatePostLikes(post, setLikes)}>
+            <Pressable onPress={() => updatePostLikes()}>
                 <Image
                   style={styles.iconLike}
                   contentFit="cover"
