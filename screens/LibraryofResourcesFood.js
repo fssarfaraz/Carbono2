@@ -41,7 +41,7 @@ const LibraryofResourcesFood = () => {
       </View>
       
       <Text style={[styles.selectDateRange]}>
-      Library of Resources Transport
+      Library of Resources Food
       </Text>
 
       <View style={styles.searchContainer}>

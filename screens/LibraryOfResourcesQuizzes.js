@@ -41,7 +41,7 @@ const LibraryofResourcesQuizzes = () => {
       </View>
       
       <Text style={[styles.selectDateRange]}>
-      Library of Resources Transport
+      Library of Resources Quiz
       </Text>
 
       <View style={styles.searchContainer}>
