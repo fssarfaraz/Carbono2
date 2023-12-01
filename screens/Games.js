@@ -1,3 +1,9 @@
+/*
+Date: 20/11/2023
+Screen: Games.js
+Purpose: Forms the games homepage allowing users to select their game
+*/
+
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, Pressable, View, Text, StatusBar, ScrollView } from "react-native";
@@ -16,7 +22,7 @@ const Games = () => {
     navigation.navigate(screen);
   };
   
-  //  This is a demo comment to test the git commit
+  //Games for the scrollview. Name and image
   const gamesData = [
     { id: 1, name: "Flappy Cup", image: require("../assets/FlappyCupSplash.png") },
     { id: 2, name: "Eco Tac Toe", image: require("../assets/ecotactoesplash.png") },
@@ -27,6 +33,7 @@ const Games = () => {
   ];
 
   return (
+    {/*Background*/}
     <View style={styles.games}>
       <Image
         style={styles.gamesChild}
@@ -40,7 +47,7 @@ const Games = () => {
         source={require("../assets/ellipse-3.png")}
       />
 
-      {/* Header */}
+      {/* Header and back button*/}
       <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -55,6 +62,7 @@ const Games = () => {
           READY TO PLAY?
         </Text>
 
+        {/*Search Input*/}
         <Pressable
           style={styles.vector}
           onPress={() => navigation.navigate("SearchQuery")}
@@ -67,7 +75,7 @@ const Games = () => {
         </Pressable>
       </View>
 
-      {/* Horizontal Pressables */}
+      {/* Horizontal Pressables for game selection*/}
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {gamesData.map((game) => (
           <View key={game.id} style={styles.gameContainer}>
