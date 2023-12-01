@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Component: Search.js
+Purpose: This component creates the search bar and search for post functionality. Used in Forum.js
+*/
+
 import React, { useMemo, useState, useCallback } from "react";
 import { StyleSheet, View, Text, ImageSourcePropType, TextInput, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
@@ -7,10 +13,13 @@ import {getDatabase, onValue, ref, update} from "firebase/database";
 import { getAuth} from 'firebase/auth';
 import { app } from "../App";
 
+//dynamically generate search bar based on prop values
 const getStyleValue = (key, value) => {
   if (value === undefined) return;
   return { [key]: value === "unset" ? undefined : value };
 };
+
+//search object parameters
 const Search = ({
   searchInputValue,
   searchPlaceholder,
@@ -36,17 +45,21 @@ const Search = ({
 
   const database = getDatabase();
 
+  //function to search for and display posts
   const handleSearch = () => {
     const postsRef = ref(database, 'posts/');
 
+    //snapshot of all posts in the database
     onValue(postsRef, (snapshot) => {
       // Find matching user  
       const allPosts = snapshot.val();
       console.log(searchQuery);
+      //find matching post by comparing post titles. Not case sensitive
       const matchingPost = Object.values(allPosts).find((u) => u.title.toLowerCase() === searchQuery.toLowerCase());
 
       if (matchingPost) 
       {
+        //navigate to display the post if found
         navigation.navigate('ForumView', {post: matchingPost});
       } 
       else 
@@ -57,6 +70,7 @@ const Search = ({
     })
   };
 
+  //memoizing style to ensure it doesnt re-render unnecessarily
   const searchStyle = useMemo(() => {
     return {
       ...getStyleValue("position", searchPosition),
@@ -75,6 +89,7 @@ const Search = ({
     searchMarginLeft,
   ]);
 
+  //memoizing style to ensure it doesnt re-render unnecessarily
   const rectangleViewStyle = useMemo(() => {
     return {
       ...getStyleValue("borderRadius", rectangleViewBorderRadius),
@@ -82,6 +97,7 @@ const Search = ({
     };
   }, [rectangleViewBorderRadius, rectangleViewBackgroundColor]);
 
+  //memoizing style to ensure it doesnt re-render unnecessarily
   const frameViewStyle = useMemo(() => {
     return {
       ...getStyleValue("width", frameViewWidth),
@@ -90,6 +106,7 @@ const Search = ({
     };
   }, [frameViewWidth, frameViewRight, frameViewLeft]);
 
+  //memoizing style to ensure it doesnt re-render unnecessarily
   const search1Style = useMemo(() => {
     return {
       ...getStyleValue("fontFamily", searchFontFamily),
@@ -105,6 +122,7 @@ const Search = ({
           contentFit="cover"
           source={searchInputValue}
         />
+        {/*Hold search query*/}
         <TextInput
           style={{left: 20, color: "#ffffff"}}
           placeholder={searchPlaceholder}
@@ -112,6 +130,7 @@ const Search = ({
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
+        {/*Click done to search by calling handleSearch*/}
         <TouchableOpacity
           style={{left: 300, top: -20}}
           activeOpacity={0.2}
