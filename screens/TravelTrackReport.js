@@ -390,7 +390,7 @@ const TravelTrackReport = () => {
         <Pressable
           style={styles.ReportButton}
           onPress={() => {
-            if (showMonthlyReport)
+            if (travelData.length > 0)
             {
               navigation.navigate("MonthlyReport", {monthlyLabels, monthlyValues})
             }
