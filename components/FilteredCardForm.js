@@ -129,7 +129,7 @@ const FilteredCardForm = ({post, role}) => {
 
           <View style={[styles.postActions, styles.profileInfoFlexBox]}>
             <View style={styles.infoFlexBox}>
-              <Pressable onPress={() => updatePostLikes(post, setLikes)}>
+              <Pressable onPress={() => updatePostLikes()}>
                 <Image
                   style={styles.iconLike}
                   contentFit="cover"
