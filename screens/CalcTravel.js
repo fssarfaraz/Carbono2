@@ -401,6 +401,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     top: 60,
     left: 20,
+    zIndex: 3,
   },
   backButton: {
     flex: 1,

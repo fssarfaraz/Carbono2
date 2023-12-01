@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     bottom: 25,
     left: 4,
+    zIndex: 3,
   },
   backButton: {
     flex: 1,
