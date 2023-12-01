@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Screen: FoodArticle
+Purpose: Contains the display of articles for category Food
+*/
+
 import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,7 +36,7 @@ const FoodArticle = () => {
 
       {/* Content Container */}
       <View style={styles.contentContainer}>
-       {/* Header */}
+       {/* Header and back button*/}
        <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -48,6 +54,7 @@ const FoodArticle = () => {
           />
         </View>
 
+        {/*Article text*/}
         <View style={styles.textContainer}>
           <Text style={[styles.title]}>Good nutrition is the bedrock of child survival and development.</Text>
           <ScrollView><Text style={[styles.text]}>
