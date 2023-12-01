@@ -50,7 +50,7 @@ const CalcCar3 = () => {
         {/* Footprint Result */}
         <Pressable
           style={styles.nextButton}
-          onPress={() => handleNavigation("TravelTrackReport")}
+          // onPress={() => handleNavigation("TravelTrackReport")}
         >
           <LinearGradient
             style={styles.gradientButton}
