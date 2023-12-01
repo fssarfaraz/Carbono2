@@ -1,7 +1,7 @@
 /*
 Date: 19/11/2023
 Screen: Air Travel Carbon Footprint Calculation Screen 2
-Purpose: This screen allows users to enter the distance travelled via Air Transport. It calls the API to perform the calculation 
+Purpose: This screen allows users to enter the number of passengers that went via Air Transport. It calls the API to perform the calculation 
         and then stores the result in the database.
 */
 
@@ -77,6 +77,7 @@ const CalcAir2 = () => {
     const formattedDate = date.toISOString().split('T')[0];
     console.log(formattedDate);
     const type = 'air';
+        // define the key and entry to add to database
     const key = `${formattedDate}-${emailName}-${type}`;
     console.log('Defined key', key);
     const entry = 
@@ -87,7 +88,7 @@ const CalcAir2 = () => {
       result: result
     };
     console.log('Defined entry')
-    // Set the user data in the database
+    // Set the data in the database
     set(ref(database, 'footprint-travel/' + key), entry).then(() => 
     {
     }).catch((error) => 
@@ -120,10 +121,12 @@ const CalcAir2 = () => {
       console.log('Calling calcAirTravel with:', departure, arrival, numberP);
       console.log(typeof departure, typeof arrival, typeof numberP);
       console.log('calcAirTravel called');
+        //call the API to perform the calculation
       const result = await calcAirTravel(departure, arrival, numberP);
       try
       {
         console.log('calling database');
+        //add result to database
         await addToDatabase(result);
         console.log('Added to database');
       }
@@ -132,6 +135,7 @@ const CalcAir2 = () => {
         console.error(error);
         alert('Error adding to the database');
       }
+        //move to next page to display the result
       navigation.navigate('CalcCar3', {result});
     } 
     catch (error) 
