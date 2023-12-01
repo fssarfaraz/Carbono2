@@ -686,7 +686,9 @@ import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import GameScreen from "./screens/WebGame";
 import TicTac from "./screens/TicTacToe";
-
+import FoodArticle from "./screens/FoodArticle";
+import Articles from "./screens/TransportArticle";
+import EnergyArticle from "./screens/EnergyArticle";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   View,
@@ -1002,6 +1004,21 @@ const App = () => {
               <Stack.Screen
                 name="Articles"
                 component={Articles}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="EnergyArticle"
+                component={EnergyArticle}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="TransportArticle"
+                component={TransportArticle}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="FoodArticle"
+                component={FoodArticle}
                 options={{ headerShown: false }}
               />
               <Stack.Screen

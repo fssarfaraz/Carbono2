@@ -124,6 +124,7 @@ class TicTacToe extends Component {
           Eco Tac Toe
         </Text>
         <Button
+        
           title={this.state.mode === 'vsComp' ? 'Play vs Computer' : 'Play vs Player'}
           onPress={() => this.toggleMode()}
           style={{backgroundColor:'#223824', borderRadius: 8}}

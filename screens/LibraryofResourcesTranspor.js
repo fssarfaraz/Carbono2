@@ -62,7 +62,7 @@ const LibraryofResourcesTranspor = () => {
             showsHorizontalScrollIndicator={false}
             style={[styles.scrollContainer, { zIndex: 3 }]}
           >
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("TransportArticle")}>
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -80,7 +80,7 @@ const LibraryofResourcesTranspor = () => {
               </LinearGradient>
             </Pressable>
 
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("FoodArticle")}>
               {/* Replace this with your EnergyCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -98,7 +98,7 @@ const LibraryofResourcesTranspor = () => {
               </LinearGradient>
             </Pressable>
 
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("TransportArticle")}>
               {/* Replace this with your FoodCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -126,7 +126,7 @@ const LibraryofResourcesTranspor = () => {
             showsHorizontalScrollIndicator={false}
             style={[styles.scrollContainer, { zIndex: 3 }]}
           >
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("EnergyArticle")}>
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -144,7 +144,7 @@ const LibraryofResourcesTranspor = () => {
               </LinearGradient>
             </Pressable>
 
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("EnergyArticle")}>
               {/* Replace this with your EnergyCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -162,7 +162,7 @@ const LibraryofResourcesTranspor = () => {
               </LinearGradient>
             </Pressable>
 
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("EnergyArticle")}>
               {/* Replace this with your FoodCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -186,7 +186,7 @@ const LibraryofResourcesTranspor = () => {
             showsHorizontalScrollIndicator={false}
             style={[styles.scrollContainer, { zIndex: 3 }]}
           >
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("TransportArticle")}>
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -204,7 +204,7 @@ const LibraryofResourcesTranspor = () => {
               </LinearGradient>
             </Pressable>
 
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("TransportArticle")}>
               {/* Replace this with your EnergyCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -222,7 +222,7 @@ const LibraryofResourcesTranspor = () => {
               </LinearGradient>
             </Pressable>
 
-            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
+            <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("FoodArticle")}>
               {/* Replace this with your FoodCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
