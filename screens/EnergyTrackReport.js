@@ -399,7 +399,7 @@ const EnergyTrackReport = () => {
         <Pressable
           style={styles.ReportButton}
           onPress={() => {
-            if (showMonthlyReport)
+            if (energyData.length > 0)
             {
               navigation.navigate("MonthlyReport", {monthlyLabels, monthlyValues})
             }
