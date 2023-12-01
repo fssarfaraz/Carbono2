@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Component: CardView.js
+Purpose: This component displays the user name and address for the current user. Used in the UserProfile hompage.
+*/
+
 import * as React from "react";
 import {View, StyleSheet, Text} from "react-native";
 import {Image} from "expo-image";
@@ -5,6 +11,7 @@ import {Border, FontSize, FontFamily, Color} from "../GlobalStyles";
 import { app } from "../App";
 import {useState} from "react";
 import { useEffect } from "react";
+//database imports
 import { getAuth } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import {getDatabase, ref, onValue} from 'firebase/database';
@@ -17,6 +24,7 @@ const CardView = () => {
   const auth = getAuth(app);
   const database = getDatabase();
 
+  //verify the current user and then set. Auth is dependency so current user changes accordingly
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if(user) 
@@ -27,6 +35,7 @@ const CardView = () => {
     return () => unsubscribe();
   }, [auth]);
 
+  //useeffect so that it renders as soon as the page loads
   useEffect(() => {
     if (currentUser) 
     {
@@ -41,11 +50,13 @@ const CardView = () => {
       console.log('User reference:', userRef);
       console.log('User UID:', user.uid);
 
+      //snapshot of the database users table
       onValue(userRef, (snapshot) => {
-        // Find matching user
+        // Find matching user by comparing emails
         const users = snapshot.val();
         const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
 
+        //matching user found
         if (matchingUser) 
         {
           setName(matchingUser.name);
@@ -60,6 +71,7 @@ const CardView = () => {
   }, [currentUser, database]);
 
   return (
+    {/*Image*/}
     <View style={styles.card}>
       <View style={[styles.subtract, styles.subtractLayout]}>
         <Image
@@ -76,6 +88,7 @@ const CardView = () => {
                 source={require("../assets/avatar.png")}
               />
             </View>
+            {/*Component holds the user's name and address to display*/}
             <View style={styles.mediaContent}>
               <Text style={styles.userName}>{name}</Text>
               {address ? <Text style={styles.userLocation}>{address}</Text> : null}
