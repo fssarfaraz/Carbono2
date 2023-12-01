@@ -4,11 +4,15 @@ import { StyleSheet, View, Pressable, Text, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import Property1HomeImage from "../components/Property1HomeImage";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
 import { Color, Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const VideoResource = () => {
   const navigation = useNavigation();
+
+  const handleNavigation = (screen) => {
+    navigation.navigate(screen);
+  };
 
   return (
     <View style={styles.videoResource}>
@@ -27,195 +31,73 @@ const VideoResource = () => {
         locations={[0, 1]}
         colors={["rgba(1, 66, 122, 0.53)", "rgba(44, 44, 46, 0)"]}
       />
-      <Pressable style={styles.wrapper} onPress={() => {}}>
-        <Image
-          style={[styles.icon, styles.iconGroupLayout]}
-          contentFit="cover"
-          source={require("../assets/ellipse-20.png")}
-        />
-      </Pressable>
-      <View style={[styles.videoResourceInner, styles.rectangleViewLayout]} />
-      <View style={[styles.rectangleView, styles.rectangleViewLayout]} />
-      <Image
-        style={[styles.groupIcon, styles.iconGroupLayout]}
-        contentFit="cover"
-        source={require("../assets/group-47.png")}
-      />
-      <View style={[styles.ellipseParent, styles.ellipseLayout]}>
-        <Pressable
-          style={[styles.container, styles.framePosition]}
-          onPress={() => {}}
-        >
-          <Image
-            style={[styles.icon, styles.iconGroupLayout]}
-            contentFit="cover"
-            source={require("../assets/ellipse-24.png")}
-          />
-        </Pressable>
-        <Image
-          style={[styles.back1Icon, styles.iconLayout3]}
-          contentFit="cover"
-          source={require("../assets/back-1.png")}
-        />
-        <Image
-          style={[styles.back2Icon, styles.iconLayout3]}
-          contentFit="cover"
-          source={require("../assets/back-1.png")}
-        />
-        <Pressable
-          style={[styles.frame, styles.framePosition]}
-          onPress={() => {}}
-        >
-          <Image
-            style={[styles.icon, styles.iconGroupLayout]}
-            contentFit="cover"
-            source={require("../assets/ellipse-24.png")}
-          />
-        </Pressable>
-        <Image
-          style={[styles.groupIcon1, styles.iconGroupLayout]}
-          contentFit="cover"
-          source={require("../assets/group4.png")}
-        />
+
+      <View style={styles.header}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+          </Pressable>
       </View>
-      <View style={[styles.ellipseGroup, styles.ellipseLayout]}>
-        <Pressable
-          style={[styles.ellipsePressable, styles.wrapper1Position]}
-          onPress={() => {}}
-        >
-          <Image
-            style={[styles.icon, styles.iconGroupLayout]}
-            contentFit="cover"
-            source={require("../assets/ellipse-24.png")}
-          />
-        </Pressable>
-        <Image
-          style={[styles.back1Icon1, styles.iconLayout2]}
-          contentFit="cover"
-          source={require("../assets/back-11.png")}
-        />
-        <Image
-          style={[styles.back2Icon1, styles.iconLayout2]}
-          contentFit="cover"
-          source={require("../assets/back-11.png")}
-        />
-        <Pressable
-          style={[styles.wrapper1, styles.wrapper1Position]}
-          onPress={() => {}}
-        >
-          <Image
-            style={[styles.icon, styles.iconGroupLayout]}
-            contentFit="cover"
-            source={require("../assets/ellipse-24.png")}
-          />
-        </Pressable>
-        <Image
-          style={[styles.return1Icon, styles.iconGroupLayout]}
-          contentFit="cover"
-          source={require("../assets/return-1.png")}
-        />
+
+      <View style={[styles.name, styles.backFlexBox]}>
+        <Text style={styles.howJapanIs}>
+          How Japan Is Curbing Its Footprint
+        </Text>
       </View>
-      <Pressable
-        style={[styles.modal, styles.backLayout]}
-        onPress={() => navigation.goBack()}
-      >
-        <Pressable
-          style={[styles.back, styles.backFlexBox]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
+      
+      
+      <View style={[styles.playerButtonContainer]}>
+
+        <Pressable style={[styles.playerButton]} onPress={() => handleNavigation("")}>
           <Image
-            style={styles.backChild}
+            style={[styles.playIcon]}
             contentFit="cover"
-            source={require("../assets/group-8.png")}
-          />
-          <Text style={styles.close}>Close</Text>
-        </Pressable>
-      </Pressable>
-      <Property1HomeImage
-        imageDimensions={require("../assets/navigation-barr21.png")}
-        property1HomeIconPosition="absolute"
-        property1HomeIconWidth={394}
-        property1HomeIconHeight={106}
-        property1HomeIconTop={746}
-        property1HomeIconLeft={0}
-      />
-      <View style={[styles.iconPersonOutlineParent, styles.backFlexBox]}>
-        <Pressable
-          style={styles.iconLayout1}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "UserProfile" })
-          }
-        >
-          <Image
-            style={styles.iconLayout4}
-            contentFit="cover"
-            source={require("../assets/-icon-person-outline.png")}
+            source={require("../assets/playerButton1.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconBookSaved, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Educational" })
-          }
-        >
+
+        <Pressable style={[styles.playerButton]} onPress={() => handleNavigation("")}>
           <Image
-            style={styles.iconLayout4}
+            style={[styles.playIcon]}
             contentFit="cover"
-            source={require("../assets/-icon-book-saved3.png")}
+            source={require("../assets/playerButton2.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconDiscussion, styles.iconLayout1]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Forum" })
-          }
-        >
+
+        <Pressable style={[styles.playerButton]} onPress={() => handleNavigation("Educational")}>
           <Image
-            style={styles.iconLayout4}
+            style={[styles.playIcon2]}
             contentFit="cover"
-            source={require("../assets/-icon-discussion.png")}
+            source={require("../assets/playerButton3.png")}
           />
         </Pressable>
-        <Pressable
-          style={[styles.iconGameControllerOutline, styles.iconLayout]}
-          onPress={() =>
-            navigation.navigate("BottomTabsRoot", { screen: "Games" })
-          }
-        >
+
+        <Pressable style={[styles.playerButton]} onPress={() => handleNavigation("")}>
           <Image
-            style={styles.iconLayout4}
+            style={[styles.playIcon]}
             contentFit="cover"
-            source={require("../assets/-icon-game-controller-outline16.png")}
+            source={require("../assets/playerButton4.png")}
           />
         </Pressable>
+
+        <Pressable style={[styles.playerButton]} onPress={() => handleNavigation("")}>
+          <Image
+            style={[styles.playIcon]}
+            contentFit="cover"
+            source={require("../assets/playerButton5.png")}
+          />
+        </Pressable>
+      
       </View>
+
       <Image
         style={[styles.rectangleIcon, styles.iconGroupLayout]}
         contentFit="cover"
         source={require("../assets/rectangle-39.png")}
       />
-      <Pressable
-        style={styles.iconCalculatorWrapper}
-        onPress={() => navigation.navigate("Calculator")}
-      >
-        <Image
-          style={styles.iconCalculator}
-          contentFit="cover"
-          source={require("../assets/-icon-calculator7.png")}
-        />
-      </Pressable>
-      <StyleDefaultDarkModeTrue
-        styleDefaultDarkModeTrueAlignSelf="unset"
-        styleDefaultDarkModeTruePosition="absolute"
-        styleDefaultDarkModeTrueTop={10}
-        styleDefaultDarkModeTrueLeft={9}
-        styleDefaultDarkModeTrueBackgroundColor="rgba(255, 255, 255, 0)"
-        styleDefaultDarkModeTrueWidth={375}
-        styleDefaultDarkModeTrueMarginLeft="unset"
-        styleDefaultDarkModeTrueMarginTop="unset"
-      />
+      
       <Pressable style={styles.iconExpand} onPress={() => {}}>
         <Image
           style={[styles.icon, styles.iconGroupLayout]}
@@ -223,11 +105,51 @@ const VideoResource = () => {
           source={require("../assets/-icon-expand.png")}
         />
       </Pressable>
-      <View style={[styles.name, styles.backFlexBox]}>
-        <Text style={styles.howJapanIs}>
-          How Japan Is Curbing Its Footprint
-        </Text>
+
+      {/* Bottom Navigation Bar */}
+      <View style={styles.bottomNavBar}>
+        <Pressable onPress={() => handleNavigation("UserProfile")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-person-outline.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Educational")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-book-saved3.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Forum")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-discussion.png")}
+          />
+        </Pressable>
+        <Pressable onPress={() => handleNavigation("Games")}>
+          <Image
+            style={styles.bottomNavIcon}
+            source={require("../assets/-icon-game-controller-outline6.png")}
+          />
+        </Pressable>
       </View>
+
+      {/* Surface Icon */}
+      <Image
+        style={styles.surfaceIcon}
+        resizeMode="cover"
+        source={require("../assets/navigation-barr2.png")}
+      />
+
+      {/* Calculator Icon */}
+      <Pressable onPress={() => handleNavigation("Calculator")} style={styles.iconCalculatorParent}>
+        <Image
+          style={styles.iconCalculator}
+          resizeMode="cover"
+          source={require("../assets/-icon-calculator.png")}
+        />
+      </Pressable>
+
     </View>
   );
 };
@@ -528,6 +450,97 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    zIndex: 3,
+    position: "absolute",
+    top: 38,
+  },
+  backButton: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    padding: 25,
+  },
+  bottomNavBar: {
+    flexDirection: "row",
+    height: 70,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingBottom: 10,
+    position: "relative",
+    zIndex: 2,
+  },
+  surfaceIcon: {
+    flex: 1,
+    width: "100%",
+    height: 135,
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+  },
+  bottomNavIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 50,
+    top: 780,
+  },
+  iconCalculator: {
+    top: 728,
+    width: 40,
+    height: 45,
+    alignSelf: "center",
+    position: "absolute",
+    zIndex: 2,
+  },
+  iconCalculatorParent: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    padding: 10,
+    zIndex: 2,
+  },
+  playerButtonContainer: {
+    // keep this in straight line
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    selfAlign: "center",
+    left: 18,
+    alignItems: "center",
+    zIndex: 2,
+    position: "absolute",
+    top: 600,
+    width: "100%",
+    // padding: 10,
+
+  },
+  playerButton: {
+    width: 72,
+    height: 72,
+    // overflow: "hidden",
+  },
+  playIcon: {
+    width: 36,
+    height: 36,
+    position: "absolute",
+    zIndex: 2,
+    top: 10,
+  },
+  playIcon2: {
+    width: 72,
+    height: 72,
+    zIndex: 2,
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    right: 18,
+    top: -10,
+  },
+  
 });
 
 export default VideoResource;
