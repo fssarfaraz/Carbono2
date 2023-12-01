@@ -157,10 +157,13 @@ class TicTacToe extends Component {
           onPress={() => this.restartGame()}
           style={styles.restartButton}
         />
+        <Text>
+          
+        </Text>
         <Button
           title={this.state.mode === 'vsComp' ? 'Switch to 2 player mode' : 'Switch to 1 player mode'}
           onPress={() => this.toggleMode()}
-          style={{backgroundColor:'#223824', borderRadius: 8}}
+          style={{backgroundColor:'#223824', borderRadius: 8, marginTop: 10}}
         />
       </View>
     );
@@ -206,6 +209,14 @@ const styles = StyleSheet.create({
   squareImage: {
     width: 55,
     height: 55,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    padding: 10,
+    backgroundColor: 'gray',
+    borderRadius: 5,
   },
 });
 
