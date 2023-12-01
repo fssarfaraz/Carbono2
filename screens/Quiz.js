@@ -460,38 +460,68 @@
 // });
 
 // export default Quiz;
+
+/*
+Date: 20/11/2023
+Screen: Environmental Quiz Challenge
+Purpose: Engage users in an educational quiz to test and improve their 
+environmental knowledge while promoting sustainability awareness.
+*/
+
+// Import necessary modules and components
+
 import * as React from "react";
+// Import the entire React module
 import { useState, useEffect } from 'react';
+// Import specific hooks from React
 import { Image } from "expo-image";
+// Import the Image component from Expo
 import { StyleSheet, View, Text, Pressable, StatusBar } from "react-native";
+// Import various components from React Native
 import { ProgressBar } from "react-native-paper";
+// Import the ProgressBar component from react-native-paper
 import { Button } from "@rneui/themed";
+// Import the Button component from "@rneui/themed"
 import { LinearGradient } from "expo-linear-gradient";
+// Import the LinearGradient component from Expo
 import { useNavigation } from "@react-navigation/native";
+// Import the useNavigation hook from react-navigation/native
 import Property1HomeImage from "../components/Property1HomeImage";
+ // Import a custom component
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
+// Import a custom component
 import { FontFamily, Color, FontSize, Padding } from "../GlobalStyles";
+// Import various style-related constants
 import { FontAwesome5 } from "@expo/vector-icons";
+ // Import icons from FontAwesome5
 import { Pr, Vi } from "react-flags-select";
+// Import components from react-flags-select
 import { useFocusEffect } from '@react-navigation/native';
+// Import the useFocusEffect hook from react-navigation/native
 import {getDatabase, ref, set, get} from "firebase/database";
+// Import Firebase database functions
 import { getAuth} from 'firebase/auth';
+// Import Firebase auth functions
 
 // Firebase app configuratio
 import { app } from "../App";
 
+// Define the Quiz component
 const Quiz = ({ route }) => {
   const navigation = useNavigation();
 
+  // Function to handle navigation to other screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   
+  // Initialize Firebase database
   const database = getDatabase();
   const dataRef = ref(database, '/Quiz/Quiz1');
   let question = null;
 
+  // Function to fetch data from Firebase
   const fetchData = async () => {
     get(dataRef)
     .then((snapshot) => {
@@ -513,12 +543,14 @@ const Quiz = ({ route }) => {
     });
   };
 
+  // State variables
   const [qnumber, setQnumber] = useState(route.params.qno);
   const [quizData, setQuizData] = useState(null);
   const [shouldShowCorrect, setShouldShowCorrect] = useState(route.params.correct);
   const [shouldShowWrong, setShouldShowWrong] = useState(route.params.wrong);
   const [score, setScore] = useState(0);
 
+  // Use focus effect to fetch data when screen is in focus
   useFocusEffect(
   React.useCallback(() => {
     const fetchDataAndSetState = () => {
@@ -536,6 +568,7 @@ const Quiz = ({ route }) => {
   }, [route.params.qno]) // Add route.params.qno as a dependency  
 );
 
+// Function to handle correct answer
   const showCorr = () => {
     setShouldShowCorrect(true);
     setShouldShowWrong(false);
@@ -543,11 +576,13 @@ const Quiz = ({ route }) => {
     console.log("Score:", score);
   };
 
+  // Function to handle wrong answer
   const showWro = () => {
     setShouldShowCorrect(false);
     setShouldShowWrong(true);
   };  
 
+  // Define quiz questions
   const questions = [
   {
     qnumber: 1,
@@ -639,6 +674,7 @@ const Quiz = ({ route }) => {
     choice4: "Construction",
     correct: "Manufacturing"
   }
+  // ... (other questions)
 ];
 
 
@@ -826,7 +862,9 @@ const Quiz = ({ route }) => {
   );
 };
 
+// Define styles for the Quiz component
 const styles = StyleSheet.create({
+  // ... (styles for various components and elements)
   quizChild: {
     flex: 1,
     height: 852,

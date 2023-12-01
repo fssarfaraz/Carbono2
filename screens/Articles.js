@@ -1,22 +1,46 @@
+/*
+Date: 19/11/2023
+Screen: Edit Profile
+Purpose: The Edit Profile screen allows users to modify their profile information, including their name, email, address, and gender. 
+Users can update their details, and the changes will be saved to their profile in the app. 
+This screen provides a user-friendly interface for editing and managing personal information within the application.
+*/
+
+// Import necessary dependencies for the Articles screen
 import React, { useState, useEffect } from "react";
+// Import React and useState, useEffect from React library for functional components
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// Import various components and styles from React Native for UI
 import { LinearGradient } from "expo-linear-gradient";
+// Import the LinearGradient component from Expo for gradient backgrounds
 import { useNavigation } from "@react-navigation/native";
+// Import the useNavigation hook for navigating between screens
 import { FontAwesome5 } from "@expo/vector-icons";
+// Import icons from FontAwesome5
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Import global styles for color, font size, and font family
 import { calcCar } from "../components/API";
+// Import a custom API function for calculating car emissions
 import { useRoute } from '@react-navigation/native';
+// Import the useRoute hook for accessing route parameters
 import {getDatabase, ref, set} from "firebase/database";
+// Import Firebase Realtime Database functions
 import { getAuth} from 'firebase/auth';
+// Import Firebase Authentication functions
 import { app } from "../App";
+// Import the Firebase app configuration
+
 
 
 const Articles = () => {
   const [distance, setDistanceKM] = useState("");
+  // State variable for storing the distance in kilometers
   const navigation = useNavigation();
+  // Initialize the navigation object
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
+    // Function to navigate to a different screen
   };
 
   return (
@@ -103,6 +127,7 @@ const Articles = () => {
   );
 };
 
+// Styles for the Articles screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -214,3 +239,5 @@ const styles = StyleSheet.create({
 });
 
 export default Articles;
+// Export the Educational component
+

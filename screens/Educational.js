@@ -1,26 +1,51 @@
-import React, { useState } from "react";
-import { Image } from "expo-image";
-import { StyleSheet, View, Pressable, StatusBar, Text, TextInput, ScrollView, Button } from "react-native";
-import { Datepicker as RNKDatepicker } from "@ui-kitten/components";
-import Property1HomeImage from "../components/Property1HomeImage";
-import { useNavigation } from "@react-navigation/native";
-import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
-import DateRangeContainer from "../components/DateRangeContainer";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
-import { LinearGradient } from 'expo-linear-gradient';
+/*
+Date: 19/11/2023
+Screen: Environmental Education Hub
+Purpose: Provide a user-friendly interface for accessing environmental resources, quizzes, and educational content, 
+while promoting sustainability and awareness.
+*/
 
+// Import necessary dependencies for Educational screen
+
+import React, { useState } from "react";
+// Import React and useState from React library for functional components
+import { Image } from "expo-image";
+// Import the Image component from Expo for displaying images
+import { StyleSheet, View, Pressable, StatusBar, Text, TextInput, ScrollView, Button } from "react-native";
+// Import various components and styles from React Native for UI
+import { Datepicker as RNKDatepicker } from "@ui-kitten/components";
+// Import the Datepicker component from UI Kitten library
+import Property1HomeImage from "../components/Property1HomeImage";
+// Import a custom component for a home image
+import { useNavigation } from "@react-navigation/native";
+// Import the useNavigation hook for navigating between screens
+import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
+// Import a custom component for setting dark mode styles
+import DateRangeContainer from "../components/DateRangeContainer";
+// Import a custom component for date range selection
+import { FontAwesome5 } from "@expo/vector-icons";
+// Import icons from FontAwesome5
+import { Padding, FontSize, FontFamily, Color } from "../GlobalStyles";
+// Import global styles for padding, font size, font family, and colors
+import { LinearGradient } from 'expo-linear-gradient';
+// Import the LinearGradient component from Expo for gradient backgrounds
+
+// Define the functional component 'Educational'
 const Educational = () => {
+  // Initialize state variables
   const [selectDatePicker, setSelectDatePicker] = useState(undefined);
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
 
+  // Define a function for navigating to other screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   return (
+    // Main container view
     <View style={[styles.calcTrack2, styles.iconLayout2]}>
+      {/* Background images */}
       <Image
         style={[styles.calcTrack2Child, styles.calcLayout]}
         contentFit="cover"
@@ -39,10 +64,12 @@ const Educational = () => {
         </Pressable>
       </View>
       
+      {/* Title */}
       <Text style={[styles.selectDateRange]}>
       REDUCING YOUR FOOTPRINT
       </Text>
 
+      {/* Search Bar */}
       <Pressable 
           onPress={() => handleNavigation("SearchQuery")}
           // style={styles.searchIcon1}
@@ -56,11 +83,13 @@ const Educational = () => {
       </Pressable>
 
       
+      {/* Horizontal Scroll View for Categories */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         style={[styles.scrollContainer, { zIndex: 3 }]}
       >
+        {/* Category Cards */}
         <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesTranspor")}>
           <LinearGradient
             colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
@@ -132,17 +161,21 @@ const Educational = () => {
           </View>
           </LinearGradient>
         </Pressable>
+        {/* Repeat similar category cards for Energy, Food, and Social */}
       </ScrollView>
 
+      {/* Subtitle */}
       <View style={styles.subTitleContainer}>
         <Text style={styles.subitle1}>Top picks</Text>
       </View>
 
+      {/* Scroll View for Top Picks */}
       <ScrollView 
           style={styles.scrollView2} 
           contentContainerStyle={styles.scrollViewContent}
           >
         <View style={styles.card1Container}>
+          {/* Cards for Articles and Quiz */}
           <Pressable style={styles.card} onPress={() => handleNavigation('Articles')}>
             <Image style={styles.cardImage} source={require("../assets/card1.png")} />
             </Pressable>
@@ -153,6 +186,7 @@ const Educational = () => {
           </View>
           
           <View style={styles.card2Container}>
+            {/* Cards for Quiz and Video Resource */}
       
           <Pressable style={styles.card} onPress={() => handleNavigation('Quiz')}>
             <Image style={styles.cardImage} source={require("../assets/card3.png")} />
@@ -164,7 +198,9 @@ const Educational = () => {
         </View>
       </ScrollView>
 
+       {/* Bottom Navigation Bar */}
       <View style={styles.bottomNavBar}>
+        {/* Icons for User Profile, Educational, Forum, and Games */}
         <Pressable onPress={() => handleNavigation("UserProfile")}>
           <Image style={styles.bottomNavIcon} source={require("../assets/-icon-person-outline.png")} />
         </Pressable>
@@ -190,7 +226,9 @@ const Educational = () => {
   );
 };
 
+// Define styles for the component
 const styles = StyleSheet.create({
+  // ... (styles omitted for brevity)
   selectDatePickerPlaceHolder: {
     fontFamily: "FiraSans-Regular",
     color: "#131414",
@@ -551,4 +589,5 @@ bottomNavBar: {
   },
 });
 
+// Export the Educational component
 export default Educational;
