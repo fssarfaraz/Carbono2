@@ -604,6 +604,14 @@
 //   );
 // };
 // export default App;
+
+/*
+Date: 19/11/2023
+Component: APP.js
+Purpose: Launches the app
+*/
+
+//import screens and dependencies
 const Stack = createNativeStackNavigator();
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -702,6 +710,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {initializeApp, getAuth} from "firebase/app";
 import {getDatabase} from "firebase/database";
 
+//firebase database configuration
 const firebaseConfig = {
   apiKey: "AIzaSyANC83ccuZFwUKGBAgpwRXZoDPEehiiBTs",
   authDomain: "carbono-6409e.firebaseapp.com",
@@ -716,8 +725,8 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-//firebase code ends here
 
+//bottom tab navigator v 1.0
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({ navigation }) {
   const [bottomTabItemsNormal] = React.useState([
@@ -812,6 +821,7 @@ const App = () => {
     "OpenSans-SemiBold": require("./assets/fonts/OpenSans-SemiBold.ttf"),
   });
 
+  //set splash screen
   React.useEffect(() => {
     setTimeout(() => {
       setHideSplashScreen(true);
@@ -848,6 +858,7 @@ const App = () => {
     return null;
   }
 
+  //stack navigation contains all screens in app
   return (
     <>
       <IconRegistry icons={[MaterialIconsPack]} />
