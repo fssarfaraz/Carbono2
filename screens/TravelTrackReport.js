@@ -1,27 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Color, FontSize, FontFamily } from "../GlobalStyles";
-import { useRoute } from '@react-navigation/native';
-import { getAuth } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import {getDatabase, ref, onValue} from 'firebase/database';
-import { app } from "../App";
+/*
+Date: 19/11/2023
+Screen: Travel Track Report
+Purpose: This  screen is designed to display travel-related information and reports to the user. 
+It provides insights into their travel history, including monthly and weekly summaries of their carbon footprint and consumption. 
+The screen also offers navigation options to other sections of the mobile application.
+*/
 
+// Import necessary modules and components
+
+import React, { useState, useEffect } from "react";
+// Import React and its hooks
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+// Import various components from React Native
+import { LinearGradient } from "expo-linear-gradient";
+// Import LinearGradient component
+import { useNavigation } from "@react-navigation/native";
+// Import useNavigation hook for navigation
+import { FontAwesome5 } from "@expo/vector-icons";
+// Import FontAwesome5 icons
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Import custom global styles
+import { useRoute } from '@react-navigation/native';
+// Import useRoute hook for route parameters
+import { getAuth } from "firebase/auth";
+// Import getAuth function from Firebase auth
+import { onAuthStateChanged } from "firebase/auth";
+// Import onAuthStateChanged function from Firebase auth
+import {getDatabase, ref, onValue} from 'firebase/database';
+// Import Firebase Realtime Database functions
+import { app } from "../App";
+// Import the Firebase app configuration
+
+// Define the TravelTrackReport functional component
 const TravelTrackReport = () => {
   const navigation = useNavigation();
+  // Get the navigation object
 
+  // Function to handle navigation to other screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   const route = useRoute();
+  // Get the current route
 
   const {travelData} = route.params;
+  // Extract travelData parameter from route
   console.log("Travel: ", travelData);
 
+  // State for current user, username, travel, monthly report, weekly report
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
   const [sum, setSum] = useState('');
@@ -33,13 +60,16 @@ const TravelTrackReport = () => {
   const [showWeeklyReport, setShowWeeklyReport] = useState(false);
 
   const auth = getAuth(app);
+  // Get the Firebase authentication instance
   const database = getDatabase();
+  // Get the Firebase Realtime Database instance
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if(user) 
       {
         setCurrentUser(user); 
+        // Set the current user in state
       }
     });
     return () => unsubscribe();
@@ -67,6 +97,7 @@ const TravelTrackReport = () => {
         if (matchingUser) 
         {
           setName(matchingUser.name);
+          // Set the user's name in state
         } 
         else 
         {
@@ -78,6 +109,7 @@ const TravelTrackReport = () => {
 
   useEffect(() => {
     monthlySum();
+    // Calculate monthly sum when component mounts
   }, []);
 
   function monthlySum()
@@ -105,6 +137,7 @@ const TravelTrackReport = () => {
       if(selectedTravelData.length > 0)
       {
         setShowMonthlyReport(true);
+        // Set monthly report visibility to true
         let mappedTravelData;
         mappedTravelData = selectedTravelData.map(data => data.y);
         console.log(mappedTravelData);
@@ -117,20 +150,24 @@ const TravelTrackReport = () => {
         console.log('Sum of T', sumT);
         const clippedSumT = sumT.toFixed(2);
         setSum(clippedSumT);
+        // Set the sum in state
       }
       else
       {
         setSum(0);
+        // Set the sum to 0 if no data
       }
     }
     else
     {
       setSum(0);
+      //  Set the sum to 0 if no data
     }
   }
 
   useEffect(() => {
     monthlyReport();
+    // Generate monthly report when component mounts
   }, []); 
 
   function monthlyReport()
@@ -174,6 +211,7 @@ const TravelTrackReport = () => {
 
   useEffect(() => {
     weeklyReport();
+    // Generate weekly report when component mounts
   }, []); 
 
   function weeklyReport()
@@ -249,7 +287,9 @@ const TravelTrackReport = () => {
 
         // Set the weekly labels and values
         setWeeklyLabels(labels);
+        // Set weekly report labels in state
         setWeeklyValues(roundedWeeklyValues);
+        // Set weekly report values in state
       }
     }
   }
@@ -421,7 +461,9 @@ const TravelTrackReport = () => {
   );
 };
 
+// Stylesheet for defining the appearance of UI components
 const styles = StyleSheet.create({
+    // Styles for various components and elements go here
   container: {
     flex: 1,
     backgroundColor: "#FFF",
