@@ -13,40 +13,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 const SectionCardForm1 = ({post, role}) => {
 
   const navigation = useNavigation();
-
-  const [name, setName] = useState("");
-
-   // Create a reference to the database
-   const database = getDatabase();
-   const auth = getAuth(app);
-  console.log('Post SECTION: ', post);
-  console.log('Role SECTION: ', role);
-
-  const getName = () => {
-    const userRef = ref(database, 'users/');
-    const user = auth.currentUser; 
-    const email = user.email; 
-
-    onValue(userRef, (snapshot) => {
-      // Find matching user  
-      const users = snapshot.val();
-      const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
-
-      if (matchingUser) 
-      {
-        setName(matchingUser.name);
-      } 
-      else 
-      {
-        console.log('User not found in the database');
-      }
-    })
-  }
-
-  useEffect(() => {
-    getName();
-  }, [database]);
-
   
   return (
     <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
@@ -59,7 +25,7 @@ const SectionCardForm1 = ({post, role}) => {
       />
       <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
         <Text style={[styles.kristonWatshon, styles.amFlexBox]}>
-          {name}
+          {post.name}
         </Text>
       </Pressable>
       <Text style={[styles.am, styles.amTypo]}>

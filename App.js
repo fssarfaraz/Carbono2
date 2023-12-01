@@ -685,6 +685,7 @@ import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import GameScreen from "./screens/WebGame";
+import TicTac from "./screens/TicTacToe";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -966,6 +967,11 @@ const App = () => {
               <Stack.Screen
                 name="GameScreen"
                 component={GameScreen}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="TicTacToe"
+                component={TicTac}
                 options={{headerShown: false}}
               />
               <Stack.Screen

@@ -21,8 +21,6 @@ const FilteredCardForm = ({post, role}) => {
    // Create a reference to the database
   const database = getDatabase();
   const auth = getAuth(app);
-  console.log('Post Filtered: ', post);
-  console.log('Role Filtered: ', role);
 
   const getName = () => {
     const userRef = ref(database, 'users/');
@@ -49,39 +47,20 @@ const FilteredCardForm = ({post, role}) => {
     getName();
   }, [database]);
 
-  const updatePostLikes = useCallback((post, setLikes) => {
-    const postsRef = ref(database, 'posts/');
-
-    onValue(postsRef, (snapshot) => {
-      // Find matching user  
-      const posts = snapshot.val();
-      const email = post.email;
-      const matchingPost = Object.values(posts).find((u) => u.email.toLowerCase() === email);
-
-      if (matchingPost) 
-      {
-        const emailParts = email.split('@');
-        // Get first part (before "@")
-        const emailName = emailParts[0];
-        const key = `${matchingPost.date}-${emailName}-${matchingPost.title}`;
-        update(ref(database, 'posts/' + key), 
-        {
-          likes: post.likes + 1,
-          comments: post.comments,
-          date: post.date,
-          email: post.email,
-          post: post.post,
-          title: post.title
-        });
-        console.log('Like added');
-      } 
-      else 
-      {
-        console.log('Post not found in the database');
-      }
+  const updatePostLikes = async () => {
+    const email = post.email;
+    const emailParts = email.split('@');
+    // Get first part (before "@")
+    const emailName = emailParts[0];
+    const key = `${post.date}-${emailName}-${post.title}`;
+    let newLikes = post.likes + 1;
+    await update(ref(database, 'posts/' + key), 
+    {
+      likes: newLikes,
     });
+    console.log('Like added');
     setLikes(post.likes + 1);
-  }, [post]);
+  };
   
   const toggleMenu = () => {
     setShouldShowMenu(!shouldShowMenu);
@@ -106,8 +85,6 @@ const FilteredCardForm = ({post, role}) => {
     // await database().ref(`posts/${postId}`).remove();
     await set(ref(database, `posts/${postId}`), null);
     navigation.goBack();
-
-
   }
 
   return (
@@ -122,19 +99,20 @@ const FilteredCardForm = ({post, role}) => {
                 source={require("../assets/profile-photo.png")}
               />
               <View style={styles.jacobWashingtonParent}>
-                
+                <Text style={[styles.jacobWashington, styles.ifYouThinkTypo]}>
+                  {name}
+                </Text>
                 <Text style={[styles.mAgo, styles.mAgoTypo]}>{post.date}</Text>
               </View>
-
             </View>
             <View>
               <Pressable onPress={toggleMenu}>
-                  <Image
-                    style={styles.iconDotsVertical}
-                    resizeMode="cover"
-                    source={require('../assets/icon--dots-vertical.png')}
-                  />
-                </Pressable>
+                <Image
+                  style={styles.iconDotsVertical}
+                  resizeMode="cover"
+                  source={require('../assets/icon--dots-vertical.png')}
+                />
+              </Pressable>
             </View>
 
             {shouldShowMenu ? (
@@ -151,7 +129,7 @@ const FilteredCardForm = ({post, role}) => {
 
           <View style={[styles.postActions, styles.profileInfoFlexBox]}>
             <View style={styles.infoFlexBox}>
-            <Pressable onPress={() => updatePostLikes(post, setLikes)}>
+              <Pressable onPress={() => updatePostLikes(post, setLikes)}>
                 <Image
                   style={styles.iconLike}
                   contentFit="cover"
@@ -173,9 +151,7 @@ const FilteredCardForm = ({post, role}) => {
         </View>
         <View style={styles.divider} />
       </View>
-    </View>
-
-    
+    </View>    
   );
 };
 
