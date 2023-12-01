@@ -1,3 +1,9 @@
+/*
+Date: 20/11/2023
+Screen: ForumView.js
+Purpose: View post details. Called from Forum.js
+*/
+
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, Pressable, View, Text, ScrollView } from "react-native";
@@ -15,10 +21,9 @@ const ForumView = () => {
 
   const route = useRoute();
 
+  //bring in post and role from previous screen
   const {post} = route.params;
   console.log('View: ', post);
-
-  
   
   let role = route.params.role;
   console.log('Role VIEW: ', role);
@@ -53,6 +58,7 @@ const ForumView = () => {
         </View>
       </View>
 
+      {/*Components to view post details, comments and to create new comments*/}
       <FilteredCardForm post={post} role={role} />
       <CardContainer post={post} />
       <CommentForm post={post}/>
