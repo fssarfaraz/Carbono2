@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Screen: TransportArticle
+Purpose: Contains the display of articles for category Transport
+*/
+
 import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,7 +36,7 @@ const Articles = () => {
 
       {/* Content Container */}
       <View style={styles.contentContainer}>
-       {/* Header */}
+       {/* Header and back button */}
        <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -47,7 +53,7 @@ const Articles = () => {
             source={require("../assets/header.png")}
           />
         </View>
-
+        {/*Article text*/}
         <View style={styles.textContainer}>
           <Text style={[styles.title]}>Towards a safe journey, every time: improving passenger ship safety in the Philippines</Text>
           <ScrollView><Text style={[styles.text]}>In the vast archipelago of the Philippines, where water is an integral part of daily life, the safety of domestic passenger ships is a pressing concern. Risks to passengers and crew – including drowning – must be addressed.{'\n'}{'\n'}
