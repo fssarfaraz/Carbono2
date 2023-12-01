@@ -1,5 +1,17 @@
+/*
+Date: 19/11/2023
+Screen: Edit Profile
+Purpose: The Edit Profile screen allows users to modify their profile information, including their name, email, address, and gender. 
+Users can update their details, and the changes will be saved to their profile in the app. 
+This screen provides a user-friendly interface for editing and managing personal information within the application.
+*/
+
+// Import necessary modules and components
+
 import React, { useState } from "react";
+// React and its hooks
 import { Image } from "expo-image";
+// Image component from Expo
 import {
   StyleSheet,
   Pressable,
@@ -7,21 +19,33 @@ import {
   Text,
   TextInput,
 } from "react-native";
+// Components and styles from React Native
 import { Button } from "@rneui/themed";
+// Button component from rneui/themed
 import DropDownPicker from "react-native-dropdown-picker";
+// Dropdown picker component
 import { useNavigation } from "@react-navigation/native";
+// Navigation hook from React Navigation
 import { Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
+// Custom global styles
 import { app } from "../App";
+// Firebase app configuration
 import { useEffect } from "react";
+// Firebase authentication functions
 import { getAuth } from "firebase/auth";
+// Firebase authentication state change listener
 import { onAuthStateChanged } from "firebase/auth";
 import {getDatabase, ref, onValue, update} from 'firebase/database';
+// Firebase Realtime Database functions
 import { ScrollView } from "react-native";
 import { add } from "react-native-reanimated";
 import { FontAwesome5 } from "@expo/vector-icons";
+// FontAwesome5 icons
 
 
+// Define a functional component named EditProfile
 const EditProfile = () => {
+  // State variables for managing dropdown
   const [groupDropdownOpen, setGroupDropdownOpen] = useState(false);
   const [groupDropdownValue, setGroupDropdownValue] = useState();
   const [groupDropdownItems, setGroupDropdownItems] = useState([
@@ -29,12 +53,15 @@ const EditProfile = () => {
     { value: "Female", label: "Female" },
     { value: "Prefer Not To Say", label: "Prefer Not To Say" },
   ]);
+  // Navigation hook
   const navigation = useNavigation();
 
+  // Function to handle navigation to other screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
+  // State variables to store user information
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
@@ -42,9 +69,11 @@ const EditProfile = () => {
   const [gender, setGender] = useState(null);
   const [userName, setUserName] = useState('');
 
+  // Firebase authentication and database setup
   const auth = getAuth(app);
   const database = getDatabase();
 
+  // UseEffect to listen for changes in user authentication
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if(user) 
@@ -65,10 +94,12 @@ const EditProfile = () => {
       const email = user.email;
       console.log('Current user email:', email);
 
+      // Create a reference to the user in the database
       const userRef = ref(database, 'users/');
       console.log('User reference:', userRef);
       console.log('User UID:', user.uid);
 
+      // Listen for changes to the user's data in the database
       onValue(userRef, (snapshot) => {
         // Find matching user
         const users = snapshot.val();
@@ -89,6 +120,7 @@ const EditProfile = () => {
     }
   }, [currentUser, database]);
 
+  // Function to handle saving changes to user information
   const handleChanges = () => {
     // Update the user's information in the database
     const userRef = ref(database, 'users/' + userName);
@@ -102,6 +134,8 @@ const EditProfile = () => {
       address: address,
       gender: gender,
     };*/
+
+    // Create an object with the updated user information
     const updates = {};
     if(name != null) 
     {
@@ -123,6 +157,7 @@ const EditProfile = () => {
       updates.gender = gender;
     }
 
+    // Update the user's information in the database
     update(userRef, updates).then(() => {
       // User's information updated successfully
       alert("Your information has been updated successfully.");
@@ -133,9 +168,11 @@ const EditProfile = () => {
     });
   };
 
+  // Return the JSX for the EditProfile screen
   return (
     <ScrollView>
     <View style={styles.editProfile}>
+      {/* Background Images */}
       <Image
         style={styles.editProfileChild}
         contentFit="cover"
@@ -147,12 +184,14 @@ const EditProfile = () => {
         source={require("../assets/ellipse-23.png")}
       />
 
+      {/* Back Button */}
       <View style={styles.backButtonContainer}>
         <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
           <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
         </Pressable>
       </View>
       
+      {/* User Profile Picture */}
       <View style={[styles.groupParent, styles.groupPosition]}>
         <Image
           style={[styles.groupChild, styles.groupPosition]}
@@ -170,11 +209,13 @@ const EditProfile = () => {
         />
       </View>
 
+      {/* Title */}
       <Text style={[styles.editProfile1, styles.nameFlexBox]}>
         Edit Profile
       </Text>
 
       <View style={[styles.inputContainer]}>
+         {/* Save Changes Button */}
         <Button
           title="Save Changes"
           radius={10}
@@ -195,6 +236,7 @@ const EditProfile = () => {
             onChangeText={setName}
           />
         </View>
+        {/* Email Input */}
         <View style={[styles.emailParent, styles.parentLayout]}>
           <Text style={[styles.name, styles.nameFlexBox]}>Email</Text>
           <TextInput
@@ -205,6 +247,7 @@ const EditProfile = () => {
             onChangeText={setEmail}
           />
         </View>
+        {/* Address Input */}
         <View style={[styles.addressParent, styles.parentLayout1]}>
           <Text style={[styles.name, styles.nameFlexBox]}>Address</Text>
           <TextInput
@@ -216,6 +259,7 @@ const EditProfile = () => {
             onChangeText={setAddress}
           />
         </View>
+        {/* Gender Dropdown */}
         <View style={[styles.sexParent, styles.parentLayout1]}>
           <Text style={[styles.name, styles.nameFlexBox]}>Sex</Text>
           <View style={[styles.wrapper, styles.parentLayout1]}>
@@ -260,7 +304,10 @@ const EditProfile = () => {
   );
 };
 
+// StyleSheet for defining the styles of UI components
+
 const styles = StyleSheet.create({
+    // Styling rules for different UI elements like background, buttons, images, etc
   iconCalculatorBtn: {
     position: "relative",
   },
