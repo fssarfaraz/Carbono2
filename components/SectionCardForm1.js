@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Component: SectionCardForm1.js
+Purpose: This component holds and displays posts to be displayed on the forum homepage
+*/
+
 import * as React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Image } from "expo-image";
@@ -24,20 +30,24 @@ const SectionCardForm1 = ({post, role}) => {
         source={require("../assets/ellipse-13.png")}
       />
       <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
+        {/*Display poster name*/}
         <Text style={[styles.kristonWatshon, styles.amFlexBox]}>
           {post.name}
         </Text>
       </Pressable>
       <Text style={[styles.am, styles.amTypo]}>
+           {/*Display post date*/}
         <Text style={styles.text}>{post.date}</Text>
       </Text>
 
       <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
+           {/*Display post title*/}
         <Text style={[styles.loremIpsumDolor, styles.text1Typo]}>
           {post.title}
         </Text>
       </Pressable>
 
+       {/*Button to view full post*/}
       <Pressable onPress={() => navigation.navigate("ForumView", {post, role: role})} 
         style={{top: 150, left: 270}}>
         <Text style={{fontSize: 16, fontFamily: FontFamily.nunitoLight}}> View Post</Text>
@@ -49,6 +59,7 @@ const SectionCardForm1 = ({post, role}) => {
           contentFit="cover"
           source={require("../assets/like-1.png")}
         />
+         {/*Display number of post likes*/}
         <Text style={[styles.text1, styles.likesSize]}>{post.likes}</Text>
       </View>
       <View style={[styles.vectorParent, styles.parentFlexBox]}>
@@ -57,6 +68,7 @@ const SectionCardForm1 = ({post, role}) => {
           contentFit="cover"
           source={require("../assets/vector2.png")}
         />
+         {/*Display number of post comments*/}
         <Text style={[styles.text1, styles.likesSize]}>{post.comments}</Text>
       </View>
       <Image
