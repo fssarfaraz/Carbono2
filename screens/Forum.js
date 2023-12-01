@@ -121,7 +121,7 @@ const Forum = () => {
         frameViewRight="73.91%"
         frameViewLeft="2.91%"
         searchFontFamily="Nunito-Regular"
-        onSearchPress={() => navigation.navigate("SearchQuery")}
+        //onSearchPress={() => navigation.navigate("SearchQuery")}
       />
 
       <Text style={styles.trendingTopics}>TRENDING TOPICS</Text>
