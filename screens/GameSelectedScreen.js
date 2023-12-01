@@ -1,3 +1,9 @@
+/*
+Date: 20/11/2023
+Screen: Game Selected Screen
+Purpose: Displays which game was selected and allows users to play that game
+*/
+
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, StatusBar, Text } from "react-native";
@@ -18,6 +24,7 @@ const GameSelectedScreen = ({gameId}) => {
   };
 
   return (
+    {/*Background*/}
     <View style={[styles.gameSelectedScreen, styles.stChildLayout]}>
       <Image
         style={[styles.gameSelectedScreenChild, styles.gamePosition]}
@@ -30,7 +37,7 @@ const GameSelectedScreen = ({gameId}) => {
         source={require("../assets/ellipse-3.png")}
       />
 
-      {/* Header */}
+      {/* Header and back button */}
       <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -40,6 +47,7 @@ const GameSelectedScreen = ({gameId}) => {
           </Pressable>
       </View>
 
+      {/*Display game image based on gameID*/}
       <View style={[styles.st]}>
         <Image
           style={[styles.stChild]}
@@ -49,6 +57,8 @@ const GameSelectedScreen = ({gameId}) => {
        
       </View>
 
+      {/*Display game name based on ID*/}
+      {/*Display game information*/}
       <View style={[styles.textContainer]}>
       <View style={[styles.titleContainer]}>
         {gameId === 1 ? <Text style={[styles.title]}>Flappy Cup</Text> : <Text style={[styles.title]}>Eco Tac Toe</Text>}
@@ -80,6 +90,7 @@ const GameSelectedScreen = ({gameId}) => {
         </View>
       </View>
 
+      {/*Play game*/}
       <Pressable
             style={styles.nextButton1}
             onPress={() => (gameId == 1) ? handleNavigation("GameScreen") : handleNavigation("TicTacToe")}
