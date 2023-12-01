@@ -105,13 +105,13 @@ const WeeklyReport = () => {
         </View>
 
         {/* Labels for the X-axis (weeklyLabels) */}
-        <View style={{top: 200, left: 50}}>
+        <View>
           {weeklyLabels.map((label, i) => (
             <Text  
               key={i}
               x={-10}
               y={220 - i*(maxValue/weeklyLabels.length)*scale}
-              style={{fontFamily: "Nunito-Bold", fontSize: 9}}
+              style={{fontFamily: "Nunito-Bold", fontSize: 9, top: 200 + i*-10, left: i*50 + 50}}
             >
               {label}
           </Text>
@@ -134,7 +134,7 @@ const WeeklyReport = () => {
               x={i * (barWidth + 5) + 60 + barWidth / 2}
               y={220 - value * scale - 10}
               textAnchor="middle"
-              style={{fontFamily: "Nunito-Bold", fontSize: 10, top: 100, left: 65, color: "#ffffff"}}
+              style={{fontFamily: "Nunito-Bold", fontSize: 10, top: 100, left: i*65 + 65, color: "#ffffff"}}
             >
               {value}
             </Text>
