@@ -1,5 +1,17 @@
+/*
+Date: 19/11/2023
+Screen: Passsword Reset Page
+Purpose: This screen allows users to reset their account password. 
+Users can enter a new password and confirm it to update their password. The screen also provides the option to cancel the password reset process. 
+It ensures that the new password meets security requirements and updates it in the Firebase authentication and Realtime Database, providing a seamless and secure password reset experience for the user.
+*/
+
+// Import necessary dependencies for the PasswordResetInApp screen
+
 import * as React from "react";
+// Import React
 import { Image } from "expo-image";
+// Import the Image component from Expo for images
 import {
   StyleSheet,
   View,
@@ -7,30 +19,47 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+// Import the Image component from Expo for images
 import { useNavigation } from "@react-navigation/native";
+// Import various components and styles from React Native for UI
 import { Color, FontSize, FontFamily, Padding, Border } from "../GlobalStyles";
+// Import global styles for color, font size, padding, and border
 import { FontAwesome5 } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import {useState} from "react";
-import { useEffect } from "react";
-import { getAuth } from "firebase/auth";
-import { onAuthStateChanged, updatePassword } from "firebase/auth";
-import {getDatabase, ref, onValue, update} from 'firebase/database';
-import { app } from "../App";
-import {ScrollView} from 'react-native';
+// Import icons from FontAwesome5
 
+import { LinearGradient } from "expo-linear-gradient";
+// Import the LinearGradient component from Expo for gradient backgrounds
+import {useState} from "react";
+// Import useState hook from React for state management
+import { useEffect } from "react";
+// Import useEffect hook from React for side effects
+import { getAuth } from "firebase/auth";
+// Import Firebase Authentication functions
+import { onAuthStateChanged, updatePassword } from "firebase/auth";
+// Import Firebase Authentication functions
+import {getDatabase, ref, onValue, update} from 'firebase/database';
+// Import Firebase Realtime Database functions
+import { app } from "../App";
+// Import the Firebase app configuration
+import {ScrollView} from 'react-native';
+// Import the ScrollView component from React Native for scrolling
+
+// Initialize the navigation object
 const PasswordResetInApp = () => {
   const navigation = useNavigation();
 
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
+    // Function to navigate to a different screen
   };
 
+  // State for storing new password, confirming nd storing current user
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
   const auth = getAuth(app);
+  // Initialize Firebase Authentication
   const database = getDatabase();
 
   useEffect(() => {
@@ -238,7 +267,9 @@ const PasswordResetInApp = () => {
   );
 };
 
+// StyleSheet for defining the styles of UI components
 const styles = StyleSheet.create({
+  // ... (styles for various components and elements)
   iconCalculatorBtn: {
     position: "relative",
   },
