@@ -471,12 +471,38 @@
 // });
 
 // export default QuizFinal;
+
+/*
+Date: 19/11/2023
+Screen: Quiz Result Page
+Purpose: This screen displays the user's performance after completing a quiz. 
+It provides feedback on their score, offers the option to play the quiz again, and 
+allows them to return to the resources library. This screen encourages user engagement with quizzes and helps them track their progress.
+
+
+
+
+
+
+
+*/
+
+// React and related modules
+
 import * as React from "react";
 import { useState, useEffect } from "react";
+
+// Components and elements from Expo
 import { Image } from "expo-image";
+
+// Components and elements from React Native
 import { StyleSheet, Pressable, View, Text, StatusBar } from "react-native";
+
+// External libraries and components
 import { Button } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
+
+// Custom components and styles
 import Property1HomeImage from "../components/Property1HomeImage";
 import { useNavigation } from "@react-navigation/native";
 import StyleDefaultDarkModeTrue from "../components/StyleDefaultDarkModeTrue";
@@ -485,6 +511,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 const QuizFinal = ({route}) => {
   const navigation = useNavigation();
+  
   // const { result } = route.params;
   const [score, setScore] = useState(route.params.score);
 
@@ -607,7 +634,9 @@ const QuizFinal = ({route}) => {
   );
 };
 
+// StyleSheet for defining the styles of UI components
 const styles = StyleSheet.create({
+    // ... (styles for various components and elements)
   iconCalculatorBtn: {
     position: "relative",
   },
