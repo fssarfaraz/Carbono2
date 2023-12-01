@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Screen: EnergyArticle
+Purpose: Contains the display of articles for category Energy
+*/
+
 import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,7 +36,7 @@ const EnergyArticle = () => {
 
       {/* Content Container */}
       <View style={styles.contentContainer}>
-       {/* Header */}
+       {/* Header and back button */}
        <View style={styles.header}>
           <Pressable
             style={styles.backButton}
@@ -48,6 +54,7 @@ const EnergyArticle = () => {
           />
         </View>
 
+        {/*Article text*/}
         <View style={styles.textContainer}>
           <Text style={[styles.title]}>Building climate resilient health services with sustainable energy</Text>
           <ScrollView><Text style={[styles.text]}>Today, the World Health Organization (WHO) and over 20 leaders from governments and international organizations agreed and called for action to increase climate resilience of health-care facilities and increase indoor air quality through sustainable energy.{'\n'}{'\n'} 
