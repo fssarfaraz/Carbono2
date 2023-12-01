@@ -1,18 +1,39 @@
+/*
+Date: 20/11/2023
+Screen: Monthly Carbon Footprint Report
+Purpose: This screen shows your monthly carbon footprint emissions and highlights changes compared to the previous month.
+*/
+
+// Import necessary modules and components
+
 import * as React from "react";
+// Import React and required hooks
 import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, StatusBar, Text, Dimensions } from "react-native";
+// Import UI components from React Native
 import { LinearGradient } from "expo-linear-gradient";
+// Import LinearGradient for gradient background
 import { useNavigation } from "@react-navigation/native";
+ // Import useNavigation hook for navigation
 import { FontFamily, Border, Color, FontSize, Padding } from "../GlobalStyles";
+// Import global styles
 import { useState } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { useRoute } from '@react-navigation/native';
-import { BarChart } from "react-native-chart-kit";
-import { Svg, Rect, Line, Path } from "react-native-svg";
 
+import { FontAwesome5 } from "@expo/vector-icons";
+// Import FontAwesome5 icons
+import { useRoute } from '@react-navigation/native';
+// Import useRoute hook for route parameters
+import { BarChart } from "react-native-chart-kit";
+// Import BarChart hook for route parameters
+import { Svg, Rect, Line, Path } from "react-native-svg";
+// Import components from react-native-svg
+
+// Define a functional component named WeeklyReport
 const WeeklyReport = () => {
+  // Initialize navigation using the useNavigation hook
   const navigation = useNavigation();
 
+  // Define a function to handle navigation to other screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
@@ -23,6 +44,7 @@ const WeeklyReport = () => {
   console.log("Weekly Labels: ", weeklyLabels);
   console.log("Weekly Values: ", weeklyValues);
 
+  // Configure chart settings
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
     backgroundGradientFromOpacity: 1,
@@ -40,6 +62,7 @@ const WeeklyReport = () => {
     },
   };
 
+  // Get the screen width using Dimensions from React Native
   const screenWidth = Dimensions.get("window").width;
 
   // Bar chart component 
@@ -54,6 +77,7 @@ const WeeklyReport = () => {
 
     return (
       <Svg height="220" width={screenWidth}>
+        {/* Lines for the chart */}
         <Line 
           x1="35" 
           y1="220"
@@ -70,6 +94,7 @@ const WeeklyReport = () => {
           stroke="#000000" 
         />
 
+        {/* Label for the Y-axis */}
         <View style={{transform: [{ rotate: '90deg' }], top: 240, left: -190}} >
           <Text 
             textAnchor="middle"
@@ -79,6 +104,7 @@ const WeeklyReport = () => {
           </Text>
         </View>
 
+        {/* Labels for the X-axis (weeklyLabels) */}
         <View style={{top: 200, left: 50}}>
           {weeklyLabels.map((label, i) => (
             <Text  
@@ -92,6 +118,7 @@ const WeeklyReport = () => {
         ))}
         </View>
 
+        {/* Bars for the chart */}
         {weeklyValues.map((value, i) => (
           <React.Fragment key={i}>
             <Rect
@@ -117,6 +144,7 @@ const WeeklyReport = () => {
     )
   }
 
+  // Return JSX for the MonthlyReport screen
   return (
     <View style={styles.container}>
       {/* Background Image */}
@@ -208,8 +236,10 @@ const WeeklyReport = () => {
   );
 };
 
+// StyleSheet for defining the styles of UI components
 
 const styles = StyleSheet.create({
+    // Styling rules for different UI elements like background, buttons, images, etc
   container: {
     flex: 1,
     backgroundColor: "#FFF",

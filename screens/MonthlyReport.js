@@ -1,25 +1,52 @@
-import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View, Dimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Color, FontSize, FontFamily } from "../GlobalStyles";
-import { useRoute } from '@react-navigation/native';
-import { Svg, Rect, Line, Path } from "react-native-svg";
+/*
+Date: 20/11/2023
+Screen: Monthly Carbon Footprint Report
+Purpose: This screen shows your monthly carbon footprint emissions and highlights changes compared to the previous month.
+*/
 
+// Import necessary dependencies and components
+
+import React, { useState } from "react";
+// React for component structure and state management
+
+import { Image, Pressable, StyleSheet, Text, TextInput, View, Dimensions } from "react-native";
+// React Native components for building UI
+
+import { LinearGradient } from "expo-linear-gradient";
+// LinearGradient for visually appealing gradient effects
+
+import { useNavigation } from "@react-navigation/native";
+// Navigation hooks for screen transitions
+
+import { FontAwesome5 } from "@expo/vector-icons";
+// Icon library for enhanced UI elements
+
+import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Global styles for consistent theming and layout
+
+import { useRoute } from '@react-navigation/native';
+// Import useRoute hook for route information
+
+import { Svg, Rect, Line, Path } from "react-native-svg";
+// Import components from react-native-svg
+
+// Define the MonthlyReport component
 const MonthlyReport = () => {
   const navigation = useNavigation();
 
+  // Function to navigate to another screen
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
 
   const route = useRoute();
 
+  // Retrieve monthlyLabels and monthlyValues from route params
   const {monthlyLabels, monthlyValues} = route.params;
   console.log("Monthly Labels: ", monthlyLabels);
   console.log("Monthly Values: ", monthlyValues);
 
+  // Configuration for the chart
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
     backgroundGradientFromOpacity: 1,
@@ -52,6 +79,7 @@ const MonthlyReport = () => {
 
     return (
       <Svg height="220" width={screenWidth}>
+        {/* Lines for the chart */}
         <Line 
           x1="35" 
           y1="220"
@@ -68,6 +96,7 @@ const MonthlyReport = () => {
           stroke="#000000" 
         />
 
+         {/* Label for the Y-axis */}
         <View style={{transform: [{ rotate: '90deg' }], top: 240, left: -190}} >
           <Text 
             textAnchor="middle"
@@ -77,6 +106,7 @@ const MonthlyReport = () => {
           </Text>
         </View>
 
+        {/* Labels for the X-axis (monthlyLabels) */}
         <View style={{top: 200, left: 57}}>
           {monthlyLabels.map((label, i) => (
             <Text  
@@ -90,6 +120,7 @@ const MonthlyReport = () => {
         ))}
         </View>
 
+        {/* Bars for the chart */}
         {monthlyValues.map((value, i) => (
           <React.Fragment key={i}>
             <Rect
@@ -100,6 +131,8 @@ const MonthlyReport = () => {
               width={barWidth}
               fill={barColor}
             />
+            
+            {/* Labels for the values above the bars */}
             <Text
               key={`value-${i}`}
               x={i * (barWidth + 5) + 60 + barWidth / 2}
@@ -115,6 +148,7 @@ const MonthlyReport = () => {
     )
   }
 
+  // Return JSX for the MonthlyReport screen
   return (
     <View style={styles.container}>
       {/* Background Image */}
@@ -207,7 +241,9 @@ const MonthlyReport = () => {
 };
 
 
+// StyleSheet for defining the styles of UI components
 const styles = StyleSheet.create({
+    // Styling rules for different UI elements like background, buttons, images, etc
   container: {
     flex: 1,
     backgroundColor: "#FFF",

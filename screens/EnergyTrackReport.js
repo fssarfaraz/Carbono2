@@ -1,18 +1,45 @@
+/*
+Date: 20/11/2023
+Screen: Energy Consumption Report
+Purpose: The Energy Consumption Report screen displays monthly and weekly energy consumption data and reports for the current user. 
+It helps users track their energy usage and make informed decisions to reduce their carbon footprint.
+*/
+
+// React and React Native imports
 import React, { useState, useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+
 import { LinearGradient } from "expo-linear-gradient";
+// Expo-related imports
+
 import { useNavigation } from "@react-navigation/native";
+// Navigation imports
+
 import { FontAwesome5 } from "@expo/vector-icons";
+// Icons imports
+
 import { Color, FontSize, FontFamily } from "../GlobalStyles";
+// Import custom styles from GlobalStyles
+
 import { useRoute } from '@react-navigation/native';
+// Import useRoute hook from React Navigation
+
 import { getAuth } from "firebase/auth";
+// Import Firebase authentication functions
+
+// Import Firebase Realtime Database functions
 import { onAuthStateChanged } from "firebase/auth";
 import {getDatabase, ref, onValue} from 'firebase/database';
-import { app } from "../App";
 
+import { app } from "../App";
+// Import the Firebase app instance
+
+// Define the EnergyTrackReport component
 const EnergyTrackReport = () => {
+  // Initialize the navigation object using the useNavigation hook
   const navigation = useNavigation();
 
+  // Define a function to handle navigation to other screens
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
@@ -22,6 +49,7 @@ const EnergyTrackReport = () => {
   const {energyData} = route.params;
     console.log("Energy: ", energyData);
 
+  // Initialize state variables using the useState hook
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
   const [sum, setSum] = useState('');
@@ -32,6 +60,7 @@ const EnergyTrackReport = () => {
   const [weeklyValues, setWeeklyValues] = useState([]);
   const [showWeeklyReport, setShowWeeklyReport] = useState(false);
 
+  // Get the Firebase authentication instance and database
   const auth = getAuth(app);
   const database = getDatabase();
 
@@ -46,6 +75,7 @@ const EnergyTrackReport = () => {
     return () => unsubscribe();
   }, [auth])
 
+  // Use the useEffect hook to fetch user data from the database when currentUser changes
   useEffect(() => {
     if(currentUser) 
     {
@@ -55,8 +85,10 @@ const EnergyTrackReport = () => {
       const email = user.email; 
       console.log('Current user email:', email);
 
+      // Create a reference to the "users" node in the Firebase Realtime Database
       const userRef = ref(database, 'users/');
 
+      // Use the onValue function to listen for changes to the user data in the database
       onValue(userRef, (snapshot) => {
         // Find matching user  
         const users = snapshot.val();
@@ -133,10 +165,12 @@ const EnergyTrackReport = () => {
     }
   }
 
+ // Use the useEffect hook to call the monthlyReport function when the component mounts
   useEffect(() => {
     monthlyReport();
   }, []);  
 
+  // Define the monthlyReport function to generate monthly energy consumption report
   function monthlyReport()
   {
     if(energyData.length > 0)
@@ -180,6 +214,7 @@ const EnergyTrackReport = () => {
     weeklyReport();
   }, []);  
 
+  // Define the weeklyReport function to generate weekly energy consumption report
   function weeklyReport()
   {
     if(energyData.length > 0)
@@ -190,6 +225,7 @@ const EnergyTrackReport = () => {
       const year = now.getFullYear();
 
       console.log('Getting this months data');
+      // Filter energy data for entries matching the current month and year
       const selectedEnergyData = Object.entries(energyData)
         .filter(([key, value]) => {
           const entryDate = new Date(value.x);
@@ -233,6 +269,7 @@ const EnergyTrackReport = () => {
           return week.reduce((sum, item) => {
             return sum + item.y;
           }, 0);
+          // Initialize sum to 0
         });
 
         // Create labels for each week
@@ -265,6 +302,7 @@ const EnergyTrackReport = () => {
     console.log("Weekly values: ", weeklyValues);
   }, [weeklyLabels, weeklyValues]);
 
+  // Render the JSX for the component
   return (
     <View style={styles.container}>
       {/* Background Image */}
@@ -432,6 +470,7 @@ const EnergyTrackReport = () => {
   );
 };
 
+// Define styles for the component using StyleSheet
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -695,3 +734,4 @@ const styles = StyleSheet.create({
 });
 
 export default EnergyTrackReport;
+// Export the EnergyTrackReport component
