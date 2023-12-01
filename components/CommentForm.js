@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Component: CommentForm.js
+Purpose: This component allows the user to enter comments on posts and then adds them to the database. Used in ForumView
+*/
+
 import * as React from "react";
 import { StyleSheet, View, TextInput, Pressable, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Image } from "expo-image";
@@ -24,11 +30,12 @@ const CommentForm = ({post}) => {
   // Get first part (before "@")
   const emailName = emailParts[0];
 
+  //get the user's name from database to display
   const getName = () => {
     const userRef = ref(database, 'users/');
 
     onValue(userRef, (snapshot) => {
-      // Find matching user  
+      // Find matching user by comparing emails
       const users = snapshot.val();
       const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
 
@@ -43,10 +50,12 @@ const CommentForm = ({post}) => {
     })
   }
 
+  //call getName when the page loads
   useEffect(() => {
     getName();
   }, [database]);
 
+  //function to add the comment to the database
   const addToDatabase = async (comment) => {
     // Get the current date
     const date = new Date();
@@ -54,6 +63,7 @@ const CommentForm = ({post}) => {
     console.log(formattedDate);
     const timeString = date.toLocaleTimeString();
     console.log(timeString);
+    //define the comment's key and entry. Entry includes the ID of the post being commented on
     const key = `${formattedDate}-${emailName}-${timeString}`;
     console.log('Defined key', key);
     const entry = 
@@ -68,6 +78,7 @@ const CommentForm = ({post}) => {
     };
     console.log('Defined entry')
 
+    //set in the Comments table
     set(ref(database, 'Comments/' + key), entry).then(() => 
     {
     }).catch((error) => 
@@ -77,13 +88,17 @@ const CommentForm = ({post}) => {
     });
   }
 
+  //function to update the number of comments on the post in the database
   const updatePostComments = async () => {
     const email = post.email;
     const emailParts = email.split('@');
     // Get first part (before "@")
     const emailName = emailParts[0];
+    //post key
     const key = `${post.date}-${emailName}-${post.title}`;
+    //increment number of comments
     let newComments = post.comments + 1;
+    //update database
     await update(ref(database, 'posts/' + key), 
     {
       comments: newComments,
@@ -91,7 +106,9 @@ const CommentForm = ({post}) => {
     console.log('Comment added');
   };
 
+  //function to publish comment
   const handleSubmit = async () => {
+    //if the comment field is empty
     if(!comment)
     {
       alert("Please enter a title for the post");
@@ -108,6 +125,7 @@ const CommentForm = ({post}) => {
     <View style={[styles.navigationComment, styles.navBgLayout]}>
       <View style={[styles.navBg, styles.navBgLayout]} />
       <View style={[styles.textInput, styles.ctaFlexBox]}>
+        {/*Hold and set comment*/}
         <TextInput
           style={styles.typeYourComment}
           placeholder="Type your comment here..."
@@ -127,6 +145,7 @@ const CommentForm = ({post}) => {
             locations={[0, 1]}
             colors={["#01427a", "#ac1af0"]}
           >
+            {/*Button to publish comment. calls handleSubmit on press*/}
             <Pressable style={[styles.pressable, styles.ctaFlexBox]} onPress={handleSubmit}>
               <Image
                 style={styles.iconSend}
