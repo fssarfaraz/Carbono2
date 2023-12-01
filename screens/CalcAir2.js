@@ -1,7 +1,8 @@
 /*
 Date: 19/11/2023
-Screen:
-Purpose
+Screen: Air Travel Carbon Footprint Calculation Screen 2
+Purpose: This screen allows users to enter the distance travelled via Air Transport. It calls the API to perform the calculation 
+        and then stores the result in the database.
 */
 
 // React and React Native basics for UI and state management
