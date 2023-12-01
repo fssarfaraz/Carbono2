@@ -1,3 +1,9 @@
+/*
+Date: 20/11/2023
+Screen: ForumCreate.js
+Purpose: Forms the screen that allows creation of new posts. Called from Forum.js
+*/
+
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, StatusBar, Pressable, Text, TextInput } from "react-native";
@@ -30,11 +36,12 @@ const ForumCreate = () => {
   const emailName = emailParts[0];
   console.log(emailName);
 
+  //function to get the user's name from the database
   const getName = () => {
     const userRef = ref(database, 'users/');
 
     onValue(userRef, (snapshot) => {
-      // Find matching user  
+      // Find matching user by comparing emails
       const users = snapshot.val();
       const matchingUser = Object.values(users).find((u) => u.email.toLowerCase() === email);
 
@@ -50,15 +57,17 @@ const ForumCreate = () => {
   }
 
   useEffect(() => {
-    // Fetch poster name
+    // Fetch poster name when page loads
     getName();
   }, [post]);
 
+  //function to add the post to the database
   const addToDatabase = async (title, post) => {
     // Get the current date
     const date = new Date();
     const formattedDate = date.toISOString().split('T')[0];
     console.log(formattedDate);
+    //key for post
     const key = `${formattedDate}-${emailName}-${title}`;
     console.log('Defined key', key);
     const entry = 
@@ -73,7 +82,7 @@ const ForumCreate = () => {
       name: name,
     };
     console.log('Defined entry')
-    // Set the user data in the database
+    // Set the data in the database
     set(ref(database, 'posts/' + key), entry).then(() => 
     {
     }).catch((error) => 
@@ -83,7 +92,9 @@ const ForumCreate = () => {
     });
   }
 
+  //fucntion that is called when Publish is clicked
   const handleSubmit = async () => {
+    //do not publish if title or post fields are empty
     if(!title)
     {
       alert("Please enter a title for the post");
@@ -108,6 +119,7 @@ const ForumCreate = () => {
         source={require("../assets/ellipse-1.png")}
       />
 
+      {/*Call handleSubmit when publish is clicked*/}
       <View style={styles.intro}>
         <Pressable style={[styles.publish, styles.publishFlexBox]}
           onPress={handleSubmit}>
@@ -120,6 +132,7 @@ const ForumCreate = () => {
           Create Post
         </Text>
 
+         {/*Discard post*/}
         <Pressable
           style={[styles.discard, styles.discardPosition]}
           onPress={() =>
@@ -130,6 +143,7 @@ const ForumCreate = () => {
         </Pressable>
       </View>
 
+       {/*Title input*/}
       <View style={styles.inputBoxes}>
         <TextInput
           style={styles.titleInput}
@@ -137,6 +151,7 @@ const ForumCreate = () => {
           value={title}
           onChangeText={setTitle}
         />
+        {/*Post content input*/}
         <TextInput
           style={styles.postInput}
           placeholder="What's on your mind?"
