@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Screen: Library of Quizzes
+Purpose: Allows users to select a quiz to play
+*/
+
 import React, { useState } from "react";
 import { Image, Pressable, Text, TextInput, View, ScrollView } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -44,6 +50,7 @@ const LibraryofResourcesQuizzes = () => {
           fontSize={18}
           zIndex={32}
         /> 
+        {/*Navigate to results*/}
         <Pressable 
           onPress={() => handleNavigation("SearchResults")}
           style={styles.searchIcon}
@@ -53,6 +60,7 @@ const LibraryofResourcesQuizzes = () => {
       </View>
 
       {/* make the entire content container scrollable vertically and keep the visuals behind the surfaceIcon */}
+      {/*The following pressables are components that will link to quizzes*/}
       <ScrollView style={styles.contentContainer}>
       <View style={styles.section1TitleCont}>
             <Text style={styles.subitle1}>Top Picks</Text>
@@ -67,7 +75,6 @@ const LibraryofResourcesQuizzes = () => {
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
               >
-              {/* Replace this with your TransportCard component */}
               <View style={styles.communityCard1Child} />
               <Image
                 style={styles.communityCard1Item}
@@ -81,7 +88,6 @@ const LibraryofResourcesQuizzes = () => {
             </Pressable>
 
             <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
-              {/* Replace this with your EnergyCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -99,7 +105,6 @@ const LibraryofResourcesQuizzes = () => {
             </Pressable>
 
             <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
-              {/* Replace this with your FoodCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -131,7 +136,6 @@ const LibraryofResourcesQuizzes = () => {
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
               >
-              {/* Replace this with your TransportCard component */}
               <View style={styles.communityCard1Child} />
               <Image
                 style={styles.communityCard1Item}
@@ -145,7 +149,6 @@ const LibraryofResourcesQuizzes = () => {
             </Pressable>
 
             <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
-              {/* Replace this with your EnergyCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -163,7 +166,6 @@ const LibraryofResourcesQuizzes = () => {
             </Pressable>
 
             <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
-              {/* Replace this with your FoodCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -180,7 +182,8 @@ const LibraryofResourcesQuizzes = () => {
               </LinearGradient>
             </Pressable>
           </ScrollView>
-          
+
+          {/*Horizontal scroll quiz components*/}
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -191,7 +194,6 @@ const LibraryofResourcesQuizzes = () => {
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
               >
-              {/* Replace this with your TransportCard component */}
               <View style={styles.communityCard1Child} />
               <Image
                 style={styles.communityCard1Item}
@@ -205,7 +207,6 @@ const LibraryofResourcesQuizzes = () => {
             </Pressable>
 
             <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesEnergy")}>
-              {/* Replace this with your EnergyCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
@@ -223,7 +224,6 @@ const LibraryofResourcesQuizzes = () => {
             </Pressable>
 
             <Pressable style={styles.communityCard1} onPress={() => navigation.navigate("LibraryofResourcesFood")}>
-              {/* Replace this with your FoodCard component */}
               <LinearGradient
                 colors={['#01427A', '#01427A00']} // Adjust gradient colors as needed
                 style={styles.communityCard1}
