@@ -1,3 +1,9 @@
+/*  
+Date: 19-11-2023
+Screen: VideoResource
+Purpose:Holds and displays video resources
+*/
+
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, Text, StatusBar } from "react-native";
@@ -15,6 +21,7 @@ const VideoResource = () => {
   };
 
   return (
+    {/*Background*/}
     <View style={styles.videoResource}>
       <Image
         style={[styles.videoResourceChild, styles.videoPosition]}
@@ -32,6 +39,7 @@ const VideoResource = () => {
         colors={["rgba(1, 66, 122, 0.53)", "rgba(44, 44, 46, 0)"]}
       />
 
+      {/*Back Button*/}
       <View style={styles.header}>
           <Pressable
             style={styles.backButton}
