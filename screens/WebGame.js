@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Screen: Web Games
+Purpose: Displays game to be played
+*/
+
 // import React, { useState, useEffect } from 'react';
 // import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 // import { Home } from './src/screens/Home'
@@ -31,7 +37,7 @@ const GameScreen = () => {
     <View style={styles.container}>
       {showGame ? (
         <>
-          {/* Header */}
+          {/* Header and back button */}
           <View style={styles.header}>
           <Pressable
             style={styles.backButton}
