@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Component: SectionForm1.js
+Purpose: This component holds the link to create a new post from the forum homepage
+*/
+
 import * as React from "react";
 import { StyleSheet, View, TextInput, Pressable, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,6 +17,7 @@ const SectionForm1 = () => {
   return (
     <View style={[styles.forumInner, styles.groupLayout]}>
       <View style={[styles.groupWrapper, styles.groupPosition]}>
+        {/*Navigate to forum create to create a new post by clicking anywhere on this component*/}
         <Pressable
           style={[styles.groupWrapper, styles.groupPosition]}
           onPress={() => navigation.navigate("ForumCreate")}
