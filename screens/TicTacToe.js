@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Button, StyleSheet, Image, Pressable } from 'react-native';
 import { Provider as PaperProvider, Appbar } from 'react-native-paper';
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 class TicTacToe extends Component {
   constructor(props) {
@@ -123,12 +124,6 @@ class TicTacToe extends Component {
         <Text style={styles.title}>
           Eco Tac Toe
         </Text>
-        <Button
-        
-          title={this.state.mode === 'vsComp' ? 'Play vs Computer' : 'Play vs Player'}
-          onPress={() => this.toggleMode()}
-          style={{backgroundColor:'#223824', borderRadius: 8}}
-        />
         <View style={{
           flexDirection: 'row',
           flexWrap: 'wrap',
@@ -161,6 +156,11 @@ class TicTacToe extends Component {
           title="Restart Game"
           onPress={() => this.restartGame()}
           style={styles.restartButton}
+        />
+        <Button
+          title={this.state.mode === 'vsComp' ? 'Switch to 2 player mode' : 'Switch to 1 player mode'}
+          onPress={() => this.toggleMode()}
+          style={{backgroundColor:'#223824', borderRadius: 8}}
         />
       </View>
     );
@@ -232,8 +232,18 @@ function calculateWinner(squares) {
 
 // Return the entire component
 export default function TicTac() {
+  const navigation = useNavigation();
+
   return (
     <PaperProvider>
+      <View style={styles.header}>
+        <Pressable
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <FontAwesome5 name="chevron-left" size={30} color="#01427A" />
+        </Pressable>
+      </View>
       <TicTacToe />
     </PaperProvider>
   );
