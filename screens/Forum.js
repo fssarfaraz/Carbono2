@@ -1,3 +1,9 @@
+/*
+Date: 20/11/2023
+Screen: Forum.js
+Purpose: Forms the homepage of the forum. Includes component to create a post as well as displays posts
+*/
+
 import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, Text, FlatList } from "react-native";
@@ -32,14 +38,17 @@ const Forum = () => {
   const database = getDatabase();
   const auth = getAuth(app);
 
+  //function to fetch all posts in the database
   const fetchPosts = () => {
     //fetching energy data
     const postsRef = ref(database, "posts/");
     const userRef = ref(database, "users/");
 
+    //snapshot of posts table in database
     onValue(postsRef, (snapshot) => {
       const data = snapshot.val();
 
+      //store all posts in the array
       const allThePosts = Object.entries(data).map(([id, entry]) => ({
         comments: entry.comments,
         date: entry.date,
@@ -61,10 +70,12 @@ const Forum = () => {
       else 
       {
         console.log("No energy data found for current user");
+        //set to empty array to prevent null errors
         setEnergyData([]);
       }
     });
 
+    //configuring user role in the database
     onValue(userRef, (snapshot) => {
       const data = snapshot.val();
       console.log("User data:", data);
@@ -79,7 +90,7 @@ const Forum = () => {
   }
 
   useEffect(() => {
-    // Fetch posts from the database
+    // Fetch posts from the database when page loads
     fetchPosts();
   }, [database]);
 
@@ -89,15 +100,17 @@ const Forum = () => {
       <Image style={[styles.ellipse1, styles]} contentFit="cover" source={require("../assets/ellipse-3.png")} />
       <Image style={[styles.ellipse2, styles]} contentFit="contain" source={require("../assets/ellipse-3.png")} />
 
-      {/*Whats on your mind*/}
+      {/*Component to creat a new post*/}
       <SectionForm1 />
       
       {/* Trending posts*/}
         <View style={{ top: -300 }}>
+          {/*If posts exist*/}
           {posts.length > 0 ? (
             posts.map((post, index) => (
               <View key={index}>
                 <Pressable onPress={() => navigation.navigate("ForumView", { post: post, role: role })}>
+                  {/*Call component to display post*/}
                   <SectionCardForm1 post={post} role={role} />
                 </Pressable>
               </View>
@@ -106,6 +119,7 @@ const Forum = () => {
             <Text>No posts to show</Text>
           )}
         </View>
+      {/*Search for post*/}
       <Search
         searchInputValue={require("../assets/search2.png")}
         searchPlaceholder="Search"
