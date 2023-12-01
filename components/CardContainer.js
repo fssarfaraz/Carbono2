@@ -1,3 +1,9 @@
+/*
+Date: 19/11/2023
+Component: CardContainer.js
+Purpose: This component holds and displays all the comments for a specific post
+*/
+
 import * as React from "react";
 import { Text, StyleSheet, View, FlatList, Pressable } from "react-native";
 import { Image } from "expo-image";
@@ -12,17 +18,20 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const CardContainer = ({post}) => {
 
+  //connect to database
   const database = getDatabase();
   const auth = getAuth(app);
 
   const [allComments, setComments] = useState([]);
-  
+
+  //function to retreive comments from the database
   const getComments = () => {
     const commentRef = ref(database, `Comments/`);
 
+    //create a snapshot of all comments in the database under the Comments table
     onValue(commentRef, (snapshot) => {
       const data = snapshot.val();
-      //filtering data to only those of the current user and then storing id, date and result in array
+      //filtering data to only those of the current post and then storing all relevant information in array
       const commentsss = Object.entries(data).filter(([key, value]) => value.postID === post.id)
       .map(([id, entry]) => ({
         id: entry.id,
@@ -41,14 +50,19 @@ const CardContainer = ({post}) => {
       else 
       {
         console.log("No comments found for post");
+        //set empty array to prevent null errors
         setComments([]);
       }
     });
   };
 
+  //function to update the likes of every comment
   const updateCommentLikes = async (item) => {
+    //key is the comment id
     const key = item.id;
+    //increment likes
     let newLikes = item.likes + 1;
+    //update the comment in the database with the new number of likes
     await update(ref(database, 'Comments/' + key), 
     {
       likes: newLikes,
@@ -58,6 +72,7 @@ const CardContainer = ({post}) => {
 
   return (
     <View style={[styles.comments, styles.recentFlexBox]}>
+    {/*Button to load comments. Once pressed, it will call the getComments function*/}
       <View style = {{top: 25, left: 210}}>
         <Button style={styles.loadCommButton} 
         title="Load Comments" 
@@ -65,9 +80,12 @@ const CardContainer = ({post}) => {
         titleStyle={styles.regsBtnText}
         onPress={() => { getComments()}}/>
       </View>
+          
       <View style={[styles.sectionTitle, styles.comment3FlexBox]}>
+      {/*If comments exist, display their number else display 0*/}
       <Text style={styles.comments45}>Comments {allComments.length > 0 ? `(${allComments.length})` : '(0)'}</Text>
         <View style={{top: 20, left: -105}}>
+        {/*If comments exist, display flatlist with the comment details such as commenter name, date, likes and comment*/}
         {allComments.length > 0 && (
           <FlatList
           data={allComments}
@@ -77,6 +95,7 @@ const CardContainer = ({post}) => {
             <Text style={{fontFamily: FontFamily.nunitoLight, fontSize: 12, top: 10, left: 2, color: "#727477"}}> {item.z} </Text>
             <Text style={{fontFamily: FontFamily.nunitoLight, fontSize: 12, left: 100, top: -6, color: "#727477"}}> {item.y} likes </Text>
             <View style={{top: 0}}>
+              {/*Press the image to like comment. Press calls the updateCommentLikes functio*/}
               <Pressable onPress={() => updateCommentLikes(item)}>
                   <Image
                     style={styles.vectorIcon}
@@ -87,7 +106,7 @@ const CardContainer = ({post}) => {
             </View>
           </View>
            )}
-          keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id}
           />
           )}
         </View>
