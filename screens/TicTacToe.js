@@ -1,9 +1,16 @@
+/*  
+Date: 19-11-2023
+Screen: TicTacToe
+Purpose: This page is for the making of the game ticTacToe
+*/
+
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Button, StyleSheet, Image, Pressable } from 'react-native';
 import { Provider as PaperProvider, Appbar } from 'react-native-paper';
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+//constructor
 class TicTacToe extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +28,7 @@ class TicTacToe extends Component {
     return;
   }
 
+  //states can be x or o
   const playerSymbol = this.state.xIsNext ? 'X' : 'O';
   squares[i] = playerSymbol;
 
@@ -62,6 +70,7 @@ class TicTacToe extends Component {
     });
   }
 
+  //playing against player or computer
   toggleMode() {
     if (this.state.mode === 'vsComp') {
       this.setState({
