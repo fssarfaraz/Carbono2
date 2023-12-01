@@ -1,5 +1,14 @@
+/*
+Date: 19/11/2023
+Component: API.js
+Purpose: Contains the API calls for all the calculations
+*/
+
+//method to connect to API
 import axios from 'axios';
- 
+
+//Function to call the API responsible to calculate footprint for car travel. Passing in the vehicle's make,
+//model and the distance travelled to send to the API
 export const calcCar = async(vehicleMake, vehicleModel, distanceNum) => {
     const options =
     {
@@ -25,6 +34,7 @@ export const calcCar = async(vehicleMake, vehicleModel, distanceNum) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
+        //if response is successfull
         if(response.status !== 200)
         {
             throw new Error('Request failed with status ' + response.status);
@@ -44,6 +54,7 @@ export const calcCar = async(vehicleMake, vehicleModel, distanceNum) => {
         {
             throw new Error('co2e_kg missing');
         }
+        //return co2e_kg from the result's json file
         return result.data.co2e_kg;
     }
     catch (error)
@@ -51,7 +62,9 @@ export const calcCar = async(vehicleMake, vehicleModel, distanceNum) => {
         console.error(error);
     }
 }
- 
+
+//Function to call the API responsible to calculate footprint for public tarbsport. Passing in the vehicle's type,
+//and the distance travelled to send to the API
 export const calcPublicTransport = async(type, distanceNum) => {
     const options =
     {
@@ -73,6 +86,7 @@ export const calcPublicTransport = async(type, distanceNum) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
+        //if response is successfull
         if(response.status !== 200)
         {
             throw new Error('Request failed with status ' + response.status);
@@ -92,6 +106,7 @@ export const calcPublicTransport = async(type, distanceNum) => {
         {
             throw new Error('co2e_kg missing');
         }
+        //return carbonEquivalent from the result's json 
         return result.carbonEquivalent;
     }
     catch (error)
@@ -99,7 +114,9 @@ export const calcPublicTransport = async(type, distanceNum) => {
         console.error(error);
     }
 }
- 
+
+//Function to call the API responsible to calculate footprint for air travel. Passing in the departure airport,
+//the arrival airport and the number of passengers to send to the API
 export const calcAirTravel = async(departure, arrival, numberP) => {
     const options =
     {
@@ -124,6 +141,7 @@ export const calcAirTravel = async(departure, arrival, numberP) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
+        //if response is successful
         if(response.status !== 200)
         {
             throw new Error('Request failed with status ' + response.status);
@@ -143,6 +161,7 @@ export const calcAirTravel = async(departure, arrival, numberP) => {
         {
             throw new Error('co2e_kg missing');
         }
+        //return co2e_kg from the result's json file
         return result.data.co2e_kg;
     }
     catch (error)
@@ -150,7 +169,9 @@ export const calcAirTravel = async(departure, arrival, numberP) => {
         console.error(error);
     }
 }
- 
+
+//Function to call the API responsible to calculate footprint for electricity. Passing in the consumption,
+//and the location to send to the API
 export const CalcElec = async(consu, loca) => {
     const options =
     {
@@ -173,6 +194,7 @@ export const CalcElec = async(consu, loca) => {
     {
         console.log('Calculating...');
         const response = await axios.request(options);
+        //if respose is successfull
         if(response.status !== 200)
         {
             throw new Error('Request failed with status ' + response.status);
@@ -192,11 +214,12 @@ export const CalcElec = async(consu, loca) => {
         {
             throw new Error('co2e_kg missing');
         }
-        // Extract the numeric value from the string
+        // Extract the numeric value from the result string
         const numericValue = result.carbon.match(/\d+\.?\d*/)[0];
         // Convert the numeric value to a float
         const numericResult = parseFloat(numericValue);
         console.log("numeric result: ", numericResult);
+        //return carbon footprint as a float
         return numericResult;
     }
     catch (error)
