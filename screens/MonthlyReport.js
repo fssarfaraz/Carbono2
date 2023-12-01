@@ -107,13 +107,13 @@ const MonthlyReport = () => {
         </View>
 
         {/* Labels for the X-axis (monthlyLabels) */}
-        <View style={{top: 200, left: 57}}>
+        <View>
           {monthlyLabels.map((label, i) => (
             <Text  
               key={i}
               x={-10}
               y={220 - i*(maxValue/monthlyLabels.length)*scale}
-              style={{fontFamily: "Nunito-Bold", fontSize: 13}}
+              style={{fontFamily: "Nunito-Bold", fontSize: 12, top: 200 + i*-16, left: i*57 + 55}}
             >
               {label}
           </Text>
@@ -138,7 +138,7 @@ const MonthlyReport = () => {
               x={i * (barWidth + 5) + 60 + barWidth / 2}
               y={220 - value * scale - 10}
               textAnchor="middle"
-              style={{fontFamily: "Nunito-Bold", fontSize: 10, top: 100, left: 65}}
+              style={{fontFamily: "Nunito-Bold", fontSize: 10, top: 100, left: i*55 + 65}}
             >
               {value}
             </Text>
